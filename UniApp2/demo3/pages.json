@@ -1,0 +1,50 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "中 国 宠 物 蚂 蚁 画 廊"
+			}
+		},
+		{
+			"path" : "pages/detail/detail",
+			"style" : 
+			{
+				"navigationBarTitleText" : "详情"
+				
+			}
+		},
+		{
+			"path" : "pages/user/user",
+			"style" : 
+			{
+				"navigationBarTitleText" : "- 用 户 -"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#e0f3ce",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {},
+	"tabBar": {
+		"color": "#666666",
+		"selectedColor": "#56b32f",
+		"list": [
+            {
+				"text": "首页",
+				"pagePath": "pages/index/index",
+				"iconPath": "static/images/index.png",
+				"selectedIconPath": "static/images/index_g.png"
+			},
+			{
+				"text": "用户",
+				"pagePath": "pages/user/user",
+				"iconPath": "static/images/member.png",
+				"selectedIconPath": "static/images/member_g.png"
+			}
+		]
+	}
+}
