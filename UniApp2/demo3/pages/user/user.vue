@@ -68,7 +68,6 @@
 		padding: 0rpx 30rpx;
 
 		.row {
-			border: 1rpx solid #cccccc;
 			margin-bottom: 30rpx;
 		}
 	}

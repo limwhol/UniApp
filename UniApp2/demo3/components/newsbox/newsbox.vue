@@ -41,14 +41,15 @@
 		data() {
 			return {};
 		},
-		methods:{
-		}
+		methods: {}
 	}
 </script>
 
 <style lang="scss">
 	.content {
 		display: flex;
+		padding-bottom: 30rpx;
+		border-bottom: 1rpx dashed #bebebe;
 
 		.pic {
 			width: 230rpx;
@@ -66,6 +67,7 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
+
 
 			.title {
 				font-size: 30rpx;
