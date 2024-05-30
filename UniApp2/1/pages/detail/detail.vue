@@ -9,11 +9,11 @@
 				发布时间:{{newsObj.posttime}}
 			</view>
 		</view>
-<!-- 		<view class="picurl">
+		<view class="picurl">
 			<image :src="newsObj.picurl" mode="aspectFill"></image>
-		</view> -->
+		</view>
 		<view class="content">
-			<rich-text :nodes="newsObj.content"></rich-text>
+			{{newsObj.content}}
 		</view>
 	</view>
 </template>
@@ -30,7 +30,10 @@
 			getNewsData() {
 				uni.request({
 					url: "https://ku.qingnian8.com/dataApi/news/detail.php",
-					data:this.options,
+					data:{
+						cid:this.options.classid,
+						id:this.options.id
+					},
 					success: res => {
 						console.log(res)
 						this.newsObj = res.data
@@ -78,9 +81,6 @@
 		.content {
 			color: #4f4f4f;
 			font-size: 30rpx;
-			img{
-				max-width: 100%;
-			}
 		}
 	}
 </style>
