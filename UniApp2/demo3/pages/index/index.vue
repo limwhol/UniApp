@@ -3,12 +3,13 @@
 		<view class="scrollNav">
 			<scroll-view scroll-x="true" class="navscroll">
 				<view class="item" :class="index==navIndex?'active':''" v-for="(item,index) in 10"
-					@click="onClickBtn(index)">按钮</view>
+					@click="onClickBtn(index)">
+					按钮</view>
 			</scroll-view>
 		</view>
 		<view class="content">
 			<view class="row" v-for="item in 10">
-				<newsbox :item="{title:`首页界面标题`,author:`首页`,hits:985211}"></newsbox>
+				<newsbox :item="{title:`首页界面标题`,author:`首页`,hits:985211}" @click.native="getDetails"></newsbox>
 			</view>
 
 		</view>
@@ -28,6 +29,12 @@
 		methods: {
 			onClickBtn(e) {
 				this.navIndex = e
+			},
+
+			getDetails(e) {
+				uni.navigateTo({
+					url: "/pages/detail/detail"
+				})
 			}
 		}
 	}
@@ -42,7 +49,7 @@
 				top: var(--window-top);
 				left: 0;
 				height: 100rpx;
-				background-color: #f5f5f5;
+				background-color: #f9f9f9;
 				white-space: nowrap;
 				z-index: 10;
 

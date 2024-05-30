@@ -8,7 +8,7 @@
 		</view>
 		<view class="user">
 			<view class="row" v-for="item in 10">
-				<newsbox :item="{title:`用户界面标题`,author:`用户界面`,posttime:'2024-5-6'}" />
+				<newsbox :item="{title:`用户界面标题`,author:`用户界面`,posttime:'2024-5-6'}" @click.native="getDetails" />
 			</view>
 		</view>
 	</view>
@@ -20,6 +20,13 @@
 			return {
 
 			};
+		},
+		methods:{
+			getDetails(e) {
+				uni.navigateTo({
+					url: "/pages/detail/detail"
+				})
+			}
 		}
 	}
 </script>

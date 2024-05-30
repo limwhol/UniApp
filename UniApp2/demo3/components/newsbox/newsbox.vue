@@ -40,6 +40,8 @@
 		},
 		data() {
 			return {};
+		},
+		methods:{
 		}
 	}
 </script>
