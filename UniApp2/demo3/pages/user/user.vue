@@ -7,8 +7,9 @@
 
 		</view>
 		<view class="user">
-			<view class="row" v-for="item in 10">
-				<newsbox :item="{title:`用户界面标题`,author:`用户界面`,posttime:'2024-5-6'}" @click.native="getDetails" />
+			<view class="row" v-for="item in newsArr" :key="item.id">
+				<newsbox :item="{title:item.title,author:item.author,picurl:item.picurl,posttime:item.posttime}"
+					@click.native="getDetails(item.id)" />
 			</view>
 		</view>
 	</view>
@@ -18,16 +19,29 @@
 	export default {
 		data() {
 			return {
-
+				newsArr: []
 			};
 		},
-		methods:{
+		methods: {
 			getDetails(e) {
 				uni.navigateTo({
-					url: "/pages/detail/detail"
+					url: `/pages/detail/detail?id=${e}`
+				})
+			},
+			getNewsData() {
+				uni.request({
+					url: "https://ku.qingnian8.com/dataApi/news/newslist.php",
+					success: res => {
+						console.log(res)
+						this.newsArr = res.data
+					}
 				})
 			}
+		},
+		onLoad() {
+			this.getNewsData()
 		}
+
 	}
 </script>
 
@@ -41,7 +55,7 @@
 			align-items: center;
 			justify-content: center;
 
-			.topimage{
+			.topimage {
 				width: 150rpx;
 				height: 150rpx;
 			}

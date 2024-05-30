@@ -78,7 +78,7 @@
 			}
 
 			.info {
-				font-size: 26rpx;
+				font-size: 22rpx;
 				color: #999999;
 				display: flex;
 				justify-content: space-between;

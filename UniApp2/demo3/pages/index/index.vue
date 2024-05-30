@@ -2,14 +2,15 @@
 	<view class="home">
 		<view class="scrollNav">
 			<scroll-view scroll-x="true" class="navscroll">
-				<view class="item" :class="index==navIndex?'active':''" v-for="(item,index) in 10"
-					@click="onClickBtn(index)">
-					按钮</view>
+				<view class="item" :class="index==navIndex?'active':''" v-for="(item,index) in navArr"
+					@click="onClickBtn(index)" :key="item.id">
+					{{item.classname}}
+				</view>
 			</scroll-view>
 		</view>
 		<view class="content">
-			<view class="row" v-for="item in 10">
-				<newsbox :item="{title:`首页界面标题`,author:`首页`,hits:985211}" @click.native="getDetails"></newsbox>
+			<view class="row" v-for="item in newsArr" :key="item.id">
+				<newsbox :item="{title:item.title,author:item.author,hits:item.hits,picurl:item.picurl}" @click.native="getDetails()"></newsbox>
 			</view>
 
 		</view>
@@ -20,20 +21,45 @@
 	export default {
 		data() {
 			return {
-				navIndex: 0
+				navIndex: 0,
+				navArr: [],
+				newsArr:[]
 			}
 		},
 		onLoad() {
-
+			this.getNavArr();
+			this.getNewsData()
 		},
 		methods: {
 			onClickBtn(e) {
 				this.navIndex = e
 			},
-
+			getNewsData() {
+				uni.request({
+					url: "https://ku.qingnian8.com/dataApi/news/newslist.php",
+					data:{
+						num:3,
+						cid:50
+					},
+					success: res => {
+						console.log(res)
+						this.newsArr=res.data
+					}
+				})
+			},
 			getDetails(e) {
 				uni.navigateTo({
-					url: "/pages/detail/detail"
+					url: `/pages/detail/detail`
+				})
+
+			},
+			getNavArr() {
+				uni.request({
+					url: "https://ku.qingnian8.com/dataApi/news/navlist.php",
+					success: res => {
+						console.log(res)
+						this.navArr = res.data
+					}
 				})
 			}
 		}

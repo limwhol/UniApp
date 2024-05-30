@@ -33,18 +33,20 @@
 		padding: 30rpx;
 
 		.title {
-			font-size: 30rpx;
+			font-size: 46rpx;
 			color: #333333;
-			margin-bottom: 10rpx;
+			margin-bottom: 30rpx;
 		}
 
 		.info {
-			margin-bottom: 10rpx;
+			margin-bottom: 30rpx;
 			font-size: 26rpx;
 			color: #999999;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			background-color: #f1f1f1;
+			padding: 20rpx;
 
 			.author {}
 
@@ -52,7 +54,11 @@
 		}
 
 		.picurl {
-			margin-bottom: 10rpx;
+			margin-bottom: 30rpx;
+		}
+		.content{
+			color: #4f4f4f;
+			font-size: 30rpx;
 		}
 	}
 </style>
