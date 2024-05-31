@@ -14,7 +14,7 @@
 				</view>
 				<view class="info" v-else>
 					<text>作者：{{item.author}}</text>
-					<text>发布时间：{{item.posttime}}</text>
+					<text>时间：{{item.posttime}}</text>
 				</view>
 			</view>
 		</view>
@@ -39,9 +39,11 @@
 			}
 		},
 		data() {
-			return {};
+			return {
+			};
 		},
-		methods: {}
+		methods: {
+		}
 	}
 </script>
 
