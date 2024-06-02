@@ -8,13 +8,10 @@
 				<view class="title">
 					{{item.title}}
 				</view>
-				<view class="info" v-if="!item.posttime">
+				<view class="info">
 					<text>作者：{{item.author}}</text>
 					<text>浏览：{{item.hits}}</text>
 				</view>
-				<view class="info" v-else>
-					<text>作者：{{item.author}}</text>
-					<text>时间：{{item.posttime}}</text>
 				</view>
 			</view>
 		</view>
@@ -82,7 +79,7 @@
 			}
 
 			.info {
-				font-size: 22rpx;
+				font-size: 24rpx;
 				color: #999999;
 				display: flex;
 				justify-content: space-between;

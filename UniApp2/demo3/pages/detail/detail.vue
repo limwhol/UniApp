@@ -39,12 +39,39 @@
 					success: res => {
 						console.log(res)
 						uni.setNavigationBarTitle({
-							title:res.data.title
+							title: res.data.title
 						})
 						this.newsObj = res.data
 						this.realtime = this.timestampToDate(this.newsObj.posttime)
+						this.saveHistory()
 					}
 				})
+			},
+			saveHistory() {
+				let historyArr = uni.getStorageSync("historyArr") || []
+				let item = {
+					id: this.newsObj.id,
+					classid: this.newsObj.classid,
+					title: this.newsObj.title,
+					picurl: this.newsObj.picurl,
+					author: this.newsObj.author,
+					hits:this.newsObj.hits
+				}
+				let exists = false;
+
+				for (let i = 0; i < historyArr.length; i++) {
+					if (historyArr[i].id == item.id) {
+						exists = true;
+						break; // Exit the loop if item already exists
+					}
+				}
+
+				// If item doesn't exist, add it to the beginning of the array
+				if (!exists) {
+					historyArr.unshift(item);
+				}
+
+				uni.setStorageSync("historyArr", historyArr)
 			},
 			timestampToDate(timestamp) {
 				timestamp = parseInt(timestamp);
@@ -63,7 +90,7 @@
 		},
 		onLoad(e) {
 			this.getNewsData()
-			console.log(e)
+			// console.log(e)
 			this.options = e
 		}
 	}
