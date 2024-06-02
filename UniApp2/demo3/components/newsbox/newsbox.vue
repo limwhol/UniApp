@@ -30,7 +30,9 @@
 						author: "李雨嘉",
 						posttime: "2024-5-6",
 						hits: 9962,
-						picurl: "../../static/images/member.png"
+						picurl: "../../static/images/member.png",
+						classid:0,
+						id:0
 					}
 				}
 			}
