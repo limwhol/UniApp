@@ -19,6 +19,20 @@
 			本人承诺遵守本次活动大家的共同约定,本着风险自担的原则,安全骑行。如果本骑行活动过程中给本人造成损害,除非损害为其他人故意或者重大过失行为造成,否则参与活动的其他人员不承担任何法律和经济责任(包括本次活动发起人或召集人以及交流平台、介绍人或邀请人),由本人依据法律规定和本声明依法解决。特此声明!
 			本声明自活动开始之日起生效。 免责声明人(签字): 年月日 免责声明 篇六 第一条 本网站所刊载的所有资料及图表仅供参考使用。
 		</view>
+		<view class="consolelog">
+			<view class="">
+				newsObj是：{{this.newsObj.title}}
+			</view>
+			<view class="">
+				options是：{{this.options}}
+			</view>
+			<view class="" v-if="this.newerror">
+				err是：{{this.newerror}}
+			</view>
+			<view class="" v-if="!this.newsObj">
+				newsObj不存在
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -28,7 +42,8 @@
 			return {
 				newsObj: {},
 				options: null,
-				realtime: ""
+				realtime: "",
+				newerror:""
 			};
 		},
 		methods: {
@@ -37,13 +52,22 @@
 					url: "https://ku.qingnian8.com/dataApi/news/detail.php",
 					data: this.options,
 					success: res => {
-						console.log(res)
+						if(res){
+							uni.showToast({
+								title:"res获取成功",
+								icon:'success'
+							})
+						}
 						uni.setNavigationBarTitle({
 							title: res.data.title
 						})
 						this.newsObj = res.data
+
 						this.realtime = this.timestampToDate(this.newsObj.posttime)
 						this.saveHistory()
+					},
+					fail:err => {
+						this.newerror=err.errMsg;
 					}
 				})
 			},
@@ -55,7 +79,7 @@
 					title: this.newsObj.title,
 					picurl: this.newsObj.picurl,
 					author: this.newsObj.author,
-					hits:this.newsObj.hits
+					hits: this.newsObj.hits
 				}
 				let exists = false;
 
@@ -89,9 +113,10 @@
 			}
 		},
 		onLoad(e) {
-			this.getNewsData()
+			
 			// console.log(e)
 			this.options = e
+			this.getNewsData()
 		}
 	}
 </script>

@@ -10,7 +10,7 @@
 		</view>
 		<view class="content">
 			<view class="row" v-for="item in newsArr" :key="item.id">
-				<newsbox :item="{title:item.title,author:item.author,hits:item.hits,picurl:item.picurl}"
+				<newsbox :item="item"
 					@click.native="navToDetails(item)"></newsbox>
 			</view>
 			<view class="isloading" v-if="!newsArr.length">
