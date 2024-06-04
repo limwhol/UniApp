@@ -15,7 +15,11 @@
 			}
 		},
 		onLoad() {
-
+			uniCloud.callFunction({
+				name: "myCoudFun"
+			}).then(res=>{
+				this.title=res.result
+			})
 		},
 		methods: {
 
