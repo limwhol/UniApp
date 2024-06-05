@@ -1,9 +1,20 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
+	<view class="out">
+		<!-- <view class="textbox" v-for="item in userArr" :key="item._id">
+			<view class="row">用户姓名 - {{item.name}}</view>
+			<view class="row">用户性别 - {{item.gender}}</view>
+			<view class="row">用户年龄 - {{item.age}}</view>
+			<view class="row">用户电话 - {{item.tel}}</view>
 		</view>
+		<view class="data">
+			一共查询到{{dataNumber}}条数据
+		</view> -->
+		<form @submit="onSubmit">
+			<input type="text" name="name" />
+			<input type="text" name="tel" />
+			<button form-type="submit">Submit</button>
+		</form>
+		<view @click="showUserData">Refresh</view>
 	</view>
 </template>
 
@@ -11,50 +22,57 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				userArr: [],
+				dataNumber: 0,
+				cloudData: {}
 			}
 		},
 		onLoad() {
-			uniCloud.callFunction({
-				name: "myCoudFun",
-				data:{
-					name:"Janet",
-					age:42
-				}
-			}).then(res=>{
-				this.title=res.result
-			})
 		},
 		methods: {
-
+			onSubmit(e) {
+				console.log(e)
+				let userObj=e.detail.value
+				uniCloud.callFunction({
+					name:"addData",
+					data:userObj
+				}).then(res=>{
+					console.log(res)
+				})
+			},
+			showUserData(){
+				uniCloud.callFunction({
+					name:"cloudDemo1",
+					data:{}
+				}).then(res=>{
+					console.log(res)
+				})
+			}
 		}
 	}
 </script>
 
-<style>
-	.content {
+<style lang="scss">
+	.out {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-	}
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
+		.textbox {
+			border-bottom: 1rpx dashed #c6c6c6;
+			padding: 30rpx;
 
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
+			.row {
+				width: 100%;
+			}
+		}
 
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
+		.data {
+			padding: 30rpx;
+			text-align: center;
+		}
+
+
 	}
 </style>
