@@ -16,7 +16,11 @@
 		},
 		onLoad() {
 			uniCloud.callFunction({
-				name: "myCoudFun"
+				name: "myCoudFun",
+				data:{
+					name:"Janet",
+					age:42
+				}
 			}).then(res=>{
 				this.title=res.result
 			})

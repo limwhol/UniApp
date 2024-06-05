@@ -1,3 +1,4 @@
 exports.main = async (event, context) => {
-return "张华大傻逼"
+let {name,age}=event;
+return `My name is ${name}, my age is ${age}`
 };
