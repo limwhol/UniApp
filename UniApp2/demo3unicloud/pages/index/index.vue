@@ -15,6 +15,15 @@
 			<button form-type="submit">Submit</button>
 		</form>
 		<view @click="showUserData">Refresh</view>
+		<view class="row" v-for="item in userArr" :key="item._id">
+			<view class="">
+				Name: {{item.name}}
+			</view>
+			<view class="">
+				Tel: {{item.tel}}
+			</view>
+		</view>
+		<view @click="cloudDemoUpdate">cloudDemoUpdate</view>
 	</view>
 </template>
 
@@ -28,8 +37,29 @@
 			}
 		},
 		onLoad() {
+			// this.cloudDemoGet()
+			// this.cloudDemoUpdate()
 		},
 		methods: {
+			cloudDemoUpdate(){
+				uniCloud.callFunction({
+					name:"cloudDemoUpdate"
+				}).then(res=>{
+					console.log(res)
+					// this.userArr=res.result.data
+				})
+			},
+			cloudDemoGet(){
+				uniCloud.callFunction({
+					name:"cloudDemoGet",
+					data:{
+						keyword:"Kelly"
+					}
+				}).then(res=>{
+					console.log(res)
+					this.userArr=res.result.data
+				})
+			},
 			onSubmit(e) {
 				console.log(e)
 				let userObj=e.detail.value
@@ -71,6 +101,10 @@
 		.data {
 			padding: 30rpx;
 			text-align: center;
+		}
+		.row{
+			padding: 30rpx;
+			border-bottom: 1rpx dashed #c6c6c6;
 		}
 
 
