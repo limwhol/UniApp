@@ -1,13 +1,8 @@
-const db = uniCloud.database()
-const dbCmd=db.command
+let db=uniCloud.database()
+let bdCmd=db.command
 exports.main = async (event, context) => {
-	let res = await db.collection("users").where({
-		age:dbCmd.in([42,46])
-	}).update({
-		name:"看看看"
-	})
-	return {
-		msg: "Update Completed!",
-		res
-	}
+ let res=await db.collection("users").doc("666045f2b9fb2360b0143046").update({
+	 "like.0":"jumping"
+ })
+ return res
 };
