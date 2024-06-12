@@ -1,6 +1,7 @@
 <template>
 	<view class="content">
-		<view class="row" v-for="item in newsArr" :key="item._id">
+		
+		<view class="row" v-for="item in newsArr" :key="item._id" @click="getDetail(item._id)">
 			<view class="pic">
 				<image src="../../static/logo.png" mode="aspectFill"></image>
 			</view>
@@ -13,17 +14,14 @@
 						{{item.author}}
 					</view>
 					<view class="hits">
-						{{item.posttime}}
-					</view>
-					<view class="delete">
-						删除
+						<uni-dateformat :date="item.posttime" format="yyyy-MM-dd" :threshold="[60000,7200000]"></uni-dateformat>
 					</view>
 				</view>
 			</view>
 
 		</view>
 		<view class="goedit" @click="goAdd">
-			+
+			<uni-icons type="compose" size="30" color="#ffffff"></uni-icons>
 		</view>
 	</view>
 </template>
@@ -46,12 +44,25 @@
 			},
 			get_article() {
 				uniCloud.callFunction({
-					name: "art_get_all"
+					name: "art_get_all",
+					data:{
+						skip:this.newsArr.length
+					}
 				}).then(res => {
 					// console.log(res)
-					this.newsArr=res.result.data
+					let oldlist=this.newsArr;
+					let nslist=[...oldlist,...res.result.data];
+					this.newsArr=nslist
+				})
+			},
+			getDetail(e){
+				uni.navigateTo({
+					url:`/pages/detail/detail?id=${e}`
 				})
 			}
+		},
+		onReachBottom() {
+			this.get_article()
 		}
 	}
 </script>

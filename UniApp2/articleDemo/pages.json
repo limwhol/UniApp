@@ -19,6 +19,13 @@
 			{
 				"navigationBarTitleText" : "Edit Article"
 			}
+		},
+		{
+			"path" : "pages/detail/detail",
+			"style" : 
+			{
+				"navigationBarTitleText" : "详情页"
+			}
 		}
 	],
 	"globalStyle": {

@@ -11,7 +11,8 @@
 				<textarea v-model="formvalue.content" name="content" placeholder="Pls input content" />
 			</view>
 			<view class="item">
-				<button form-type="submit" type="primary" :disabled="!formvalue.title||!formvalue.author||!formvalue.content">Submit</button>
+				<button form-type="submit" type="primary"
+					:disabled="!formvalue.title||!formvalue.author||!formvalue.content">Submit</button>
 				<button form-type="reset" type="default">Reset</button>
 			</view>
 		</form>
@@ -38,7 +39,15 @@
 						detail
 					}
 				}).then(res => {
-					console.log(res)
+					uni.showToast({
+						title: "发布成功"
+					});
+					setTimeout(() => {
+
+					}, 1500);
+					uni.reLaunch({
+						url: "/pages/index/index"
+					})
 				})
 			}
 		}
