@@ -2,16 +2,16 @@
 	<view class="add">
 		<form @submit="addRow">
 			<view class="item">
-				<input type="text" name="title" placeholder="Pls input title" />
+				<input v-model="formvalue.title" type="text" name="title" placeholder="Pls input title" />
 			</view>
 			<view class="item">
-				<input type="text" name="author" placeholder="Pls input author" />
+				<input v-model="formvalue.author" type="text" name="author" placeholder="Pls input author" />
 			</view>
 			<view class="item">
-				<textarea name="content" placeholder="Pls input content" />
+				<textarea v-model="formvalue.content" name="content" placeholder="Pls input content" />
 			</view>
 			<view class="item">
-				<button form-type="submit" type="primary">Submit</button>
+				<button form-type="submit" type="primary" :disabled="!formvalue.title||!formvalue.author||!formvalue.content">Submit</button>
 				<button form-type="reset" type="default">Reset</button>
 			</view>
 		</form>
@@ -22,7 +22,11 @@
 	export default {
 		data() {
 			return {
-
+				formvalue: {
+					title: "",
+					author: "",
+					content: ""
+				}
 			};
 		},
 		methods: {
@@ -30,7 +34,9 @@
 				let detail = e.detail.value
 				uniCloud.callFunction({
 					name: "art_add_row",
-					data: {detail}
+					data: {
+						detail
+					}
 				}).then(res => {
 					console.log(res)
 				})
