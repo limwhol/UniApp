@@ -1,6 +1,13 @@
 <template>
 	<view class="add">
 		<form @submit="addRow">
+			<view class="itemtop">
+				选择一张图片...
+			</view>
+			<view class="itemtop">
+				<uni-file-picker v-model="imageValue" limit="1" fileMediatype="image" mode="grid" @select="select"
+					@progress="progress" @success="success" @fail="fail" />
+			</view>
 			<view class="item">
 				<input v-model="formvalue.title" type="text" name="title" placeholder="Pls input title" />
 			</view>
@@ -27,10 +34,29 @@
 					title: "",
 					author: "",
 					content: ""
-				}
+				},
+				imageValue: []
 			};
 		},
 		methods: {
+			// 获取上传状态
+			select(e) {
+				console.log('选择文件：', e)
+			},
+			// 获取上传进度
+			progress(e) {
+				console.log('上传进度：', e)
+			},
+
+			// 上传成功
+			success(e) {
+				console.log('上传成功')
+			},
+
+			// 上传失败
+			fail(e) {
+				console.log('上传失败：', e)
+			},
 			addRow(e) {
 				let detail = e.detail.value
 				uniCloud.callFunction({
@@ -57,6 +83,10 @@
 <style lang="scss" scoped>
 	.add {
 		padding: 30rpx;
+
+		.itemtop {
+			margin: 20rpx 0rpx;
+		}
 
 		.item {
 
