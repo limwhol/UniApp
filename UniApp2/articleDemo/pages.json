@@ -3,7 +3,8 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "Content Management System Index"
+				"navigationBarTitleText": "Content Management System Index",
+				"enablePullDownRefresh": true
 			}
 		},
 		{

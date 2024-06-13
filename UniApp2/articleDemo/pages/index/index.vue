@@ -52,7 +52,8 @@
 					// console.log(res)
 					let oldlist=this.newsArr;
 					let nslist=[...oldlist,...res.result.data];
-					this.newsArr=nslist
+					this.newsArr=nslist;
+					uni.stopPullDownRefresh()
 				})
 			},
 			getDetail(e){
@@ -63,6 +64,11 @@
 		},
 		onReachBottom() {
 			this.get_article()
+		},
+		onPullDownRefresh() {
+			this.newsArr=[],
+			this.get_article();
+			
 		}
 	}
 </script>

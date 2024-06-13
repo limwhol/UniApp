@@ -18,10 +18,10 @@
 			</view>
 			<view class="bottomconsole">
 				<view class="edit">
-					<button size="mini">编辑</button>
+					<button size="mini" @click="onEdit">编辑</button>
 				</view>
 				<view class="delete">
-					<button size="mini" type="warn">删除</button>
+					<button size="mini" type="warn" @click="onRemove">删除</button>
 				</view>
 			</view>
 		</view>
@@ -52,11 +52,48 @@
 				this.newsObj = res.result.data[0]
 				this.isLoading = true
 				uni.setNavigationBarTitle({
-					title:this.newsObj.title
+					title: this.newsObj.title
 				})
 			})
 		},
+		methods: {
+			onEdit() {
+				uni.navigateTo({
+					url: `/pages/edit/edit?id=${id}`
+				})
+			},
+			onRemove() {
+				uni.showModal({
+					content: "是否确认删除记录？",
+					success: res => {
+						if (res.confirm) {
+							this.reMoveFunc()
+						}
+					}
+				})
 
+			},
+			reMoveFunc() {
+				uniCloud.callFunction({
+					name: "art_del_row",
+					data: {
+						id
+					}
+				}).then(res => {
+					console.log(res)
+
+					uni.showToast({
+						title: "删除成功"
+					});
+					setTimeout(() => {
+						uni.reLaunch({
+							url: "/pages/index/index"
+						})
+					}, 400);
+
+				})
+			}
+		}
 	}
 </script>
 
