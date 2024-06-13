@@ -5,7 +5,7 @@
 				选择一张图片...
 			</view>
 			<view class="itemtop">
-				<uni-file-picker v-model="imageValue" limit="1" fileMediatype="image" mode="grid" @select="select"
+				<uni-file-picker ref="files" v-model="imageValue" limit="1" :auto-upload="false" fileMediatype="image" file-extname="jpg,png,webp,gif" mode="grid" @select="select"
 					@progress="progress" @success="success" @fail="fail" />
 			</view>
 			<view class="item">
@@ -40,6 +40,9 @@
 		},
 		methods: {
 			// 获取上传状态
+			upload(){
+				this.$refs.files.upload()
+			},
 			select(e) {
 				console.log('选择文件：', e)
 			},
@@ -58,7 +61,8 @@
 				console.log('上传失败：', e)
 			},
 			addRow(e) {
-				let detail = e.detail.value
+				let detail = e.detail.value;
+				this.upload();
 				uniCloud.callFunction({
 					name: "art_add_row",
 					data: {
