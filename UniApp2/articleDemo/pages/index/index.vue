@@ -3,7 +3,7 @@
 		
 		<view class="row" v-for="item in newsArr" :key="item._id" @click="getDetail(item._id)">
 			<view class="pic">
-				<image src="../../static/logo.png" mode="aspectFill"></image>
+				<image :src="item.fileUrl[0]" mode="aspectFill"></image>
 			</view>
 			<view class="article">
 				<view class="title">

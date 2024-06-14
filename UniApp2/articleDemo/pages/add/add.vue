@@ -5,8 +5,9 @@
 				选择一张图片...
 			</view>
 			<view class="itemtop">
-				<uni-file-picker ref="files" v-model="imageValue" limit="1" :auto-upload="false" fileMediatype="image" file-extname="jpg,png,webp,gif" mode="grid" @select="select"
-					@progress="progress" @success="success" @fail="fail" />
+				<uni-file-picker ref="files" :image-styles="imgStyle" v-model="imageValue"
+					fileMediatype="image" file-extname="jpg,png,webp,gif" mode="grid"
+					@select="select" @progress="progress" @success="success" @fail="fail" />
 			</view>
 			<view class="item">
 				<input v-model="formvalue.title" type="text" name="title" placeholder="Pls input title" />
@@ -19,7 +20,7 @@
 			</view>
 			<view class="item">
 				<button form-type="submit" type="primary"
-					:disabled="!formvalue.title||!formvalue.author||!formvalue.content">Submit</button>
+					:disabled="!formvalue.title||!formvalue.author||!formvalue.content||!isUploaded">Submit</button>
 				<button form-type="reset" type="default">Reset</button>
 			</view>
 		</form>
@@ -33,14 +34,27 @@
 				formvalue: {
 					title: "",
 					author: "",
-					content: ""
+					content: "",
+					fileUrl:[]
 				},
-				imageValue: []
+				imageValue: [],
+				imgStyle: {
+					"width": 80,
+					"height": 80,
+					"border": {
+						"color":"#eee",
+						"width":"1px",
+						"style":"solid",
+						"radius":"10%"
+					}
+				},
+				isUploaded:false
+				
 			};
 		},
 		methods: {
 			// 获取上传状态
-			upload(){
+			upload() {
 				this.$refs.files.upload()
 			},
 			select(e) {
@@ -53,7 +67,10 @@
 
 			// 上传成功
 			success(e) {
-				console.log('上传成功')
+				
+				this.formvalue.fileUrl=e.tempFilePaths
+				this.isUploaded=true
+				console.log('上传成功',this.formvalue.fileUrl)
 			},
 
 			// 上传失败
@@ -62,6 +79,7 @@
 			},
 			addRow(e) {
 				let detail = e.detail.value;
+				detail.fileUrl = this.formvalue.fileUrl;
 				this.upload();
 				uniCloud.callFunction({
 					name: "art_add_row",
@@ -114,6 +132,7 @@
 
 			button {
 				margin-bottom: 20rpx;
+
 			}
 		}
 	}

@@ -14,6 +14,9 @@
 				</view>
 			</view>
 			<view class="content">
+				<view class="picUrl" v-for="(item,index) in newsObj.fileUrl" :key="index">
+					<image :src="item" mode="aspectFill"></image>
+				</view>
 				{{newsObj.content}}
 			</view>
 			<view class="bottomconsole">
@@ -122,6 +125,9 @@
 			color: #666666;
 			line-height: 1.7em;
 			margin-bottom: 30rpx;
+			.picUrl{
+				margin-bottom: 30rpx;
+			}
 		}
 
 		.bottomconsole {
