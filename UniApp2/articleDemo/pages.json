@@ -27,6 +27,13 @@
 			{
 				"navigationBarTitleText" : "详情页"
 			}
+		},
+		{
+			"path" : "pages/originalAdd/originalAdd",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
 		}
 	],
 	"globalStyle": {

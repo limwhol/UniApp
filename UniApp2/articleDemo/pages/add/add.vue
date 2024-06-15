@@ -7,7 +7,7 @@
 			<view class="itemtop">
 				<uni-file-picker ref="files" :image-styles="imgStyle" v-model="imageValue"
 					fileMediatype="image" file-extname="jpg,png,webp,gif" mode="grid"
-					@select="select" @progress="progress" @success="success" @fail="fail" />
+					@select="select" @success="success" @fail="fail" />
 			</view>
 			<view class="item">
 				<input v-model="formvalue.title" type="text" name="title" placeholder="Pls input title" />
@@ -70,6 +70,9 @@
 				
 				this.formvalue.fileUrl=e.tempFilePaths
 				this.isUploaded=true
+				uni.showToast({
+					title:"图片上传成功"
+				})
 				console.log('上传成功',this.formvalue.fileUrl)
 			},
 

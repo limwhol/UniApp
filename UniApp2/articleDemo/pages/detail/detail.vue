@@ -15,7 +15,7 @@
 			</view>
 			<view class="content">
 				<view class="picUrl" v-for="(item,index) in newsObj.fileUrl" :key="index">
-					<image :src="item" mode="aspectFill"></image>
+					<image :src="item" mode="aspectFill" @click="showNewsImg(index)"></image>
 				</view>
 				{{newsObj.content}}
 			</view>
@@ -60,6 +60,12 @@
 			})
 		},
 		methods: {
+			showNewsImg(index){
+				uni.previewImage({
+					urls:this.newsObj.fileUrl,
+					current:index
+				})
+			},
 			onEdit() {
 				uni.navigateTo({
 					url: `/pages/edit/edit?id=${id}`
