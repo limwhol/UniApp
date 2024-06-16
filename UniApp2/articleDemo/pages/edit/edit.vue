@@ -2,6 +2,11 @@
 	<view class="edit">
 		<form @submit="editRow">
 			<view class="item">
+				<uni-file-picker ref="files" :image-styles="imgStyle" v-model="imageValue"
+					fileMediatype="image" file-extname="jpg,png,webp,gif" mode="grid"
+					@select="select" @success="success" @fail="fail" />
+			</view>
+			<view class="item">
 				<input v-model="formvalue.title" type="text" name="title" placeholder="输入标题" />
 			</view>
 			<view class="item">
@@ -12,7 +17,7 @@
 			</view>
 			<view class="item">
 				<button form-type="submit" type="primary"
-					:disabled="!formvalue.title||!formvalue.author||!formvalue.content">Submit</button>
+					:disabled="!formvalue.title||!formvalue.author||!formvalue.content||imageValue.length<1">Submit</button>
 				<button form-type="reset" type="default">Reset</button>
 			</view>
 		</form>
@@ -27,11 +32,24 @@
 				formvalue: {
 					title: "",
 					author: "",
-					content: ""
+					content: "",
+					fileUrl:[]
 				},
-				newsObj: {}
+				newsObj: {},
+				imageValue: [],
+				imgStyle: {
+					"width": 80,
+					"height": 80,
+					"border": {
+						"color":"#eee",
+						"width":"1px",
+						"style":"solid",
+						"radius":"10%"
+					}
+				}
 			};
 		},
+		
 		onLoad(e) {
 			id = e.id
 			uniCloud.callFunction({
@@ -40,15 +58,47 @@
 					id
 				}
 			}).then(res => {
-				console.log(res)
+				// console.log(res)
 				this.formvalue = res.result.data[0]
+				if(!this.formvalue.fileUrl){return}
+				let urls=this.formvalue.fileUrl.map(item=>{
+					return {url:item}
+				})
+				this.imageValue=urls
 				uni.setNavigationBarTitle({
 					title: res.result.data[0].title
 				})
 			})
 		},
 		methods: {
+			upload() {
+				this.$refs.files.upload()
+			},
+			select(e) {
+				console.log('选择文件：', e)
+			},
+			// 获取上传进度
+			progress(e) {
+				console.log('上传进度：', e)
+			},
+			
+			// 上传成功
+			success(e) {
+				let oldlist=this.formvalue.fileUrl
+				let newlist=[...oldlist,...e.tempFilePaths]
+				this.formvalue.fileUrl=newlist
+				uni.showToast({
+					title:"图片上传成功"
+				})
+				console.log('上传成功',this.formvalue.fileUrl)
+			},
+			
+			// 上传失败
+			fail(e) {
+				console.log('上传失败：', e)
+			},
 			editRow() {
+				console.log(this.formvalue)
 				uniCloud.callFunction({
 					name: "art_edit_row",
 					data: {

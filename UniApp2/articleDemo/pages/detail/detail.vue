@@ -51,7 +51,7 @@
 					id
 				}
 			}).then(res => {
-				console.log(res)
+				// console.log(res)
 				this.newsObj = res.result.data[0]
 				this.isLoading = true
 				uni.setNavigationBarTitle({
@@ -89,7 +89,7 @@
 						id
 					}
 				}).then(res => {
-					console.log(res)
+					// console.log(res)
 
 					uni.showToast({
 						title: "删除成功"
@@ -133,6 +133,9 @@
 			margin-bottom: 30rpx;
 			.picUrl{
 				margin-bottom: 30rpx;
+				display: flex;
+				justify-content: center;
+				align-items: center;
 			}
 		}
 

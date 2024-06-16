@@ -20,10 +20,11 @@
 			</view>
 			<view class="item">
 				<button form-type="submit" type="primary"
-					:disabled="!formvalue.title||!formvalue.author||!formvalue.content||!isUploaded">Submit</button>
+					:disabled="!formvalue.title||!formvalue.author||!formvalue.content||imageValue.length<1">Submit</button>
 				<button form-type="reset" type="default">Reset</button>
 			</view>
 		</form>
+		<button @click="showImageValue">属性展示</button>
 	</view>
 </template>
 
@@ -47,12 +48,14 @@
 						"style":"solid",
 						"radius":"10%"
 					}
-				},
-				isUploaded:false
+				}
 				
 			};
 		},
 		methods: {
+			showImageValue(){
+				console.log(this.imageValue)
+			},
 			// 获取上传状态
 			upload() {
 				this.$refs.files.upload()
@@ -69,7 +72,6 @@
 			success(e) {
 				
 				this.formvalue.fileUrl=e.tempFilePaths
-				this.isUploaded=true
 				uni.showToast({
 					title:"图片上传成功"
 				})
