@@ -5,9 +5,10 @@
 				选择一张图片...
 			</view>
 			<view class="itemtop">
-				<uni-file-picker ref="files" :image-styles="imgStyle" v-model="imageValue"
-					fileMediatype="image" file-extname="jpg,png,webp,gif" mode="grid"
-					@select="select" @success="success" @fail="fail" />
+				<uni-file-picker ref="files" :image-styles="imgStyle"
+					v-model="imageValue" fileMediatype="image" file-extname="jpg,png,webp,gif"
+					mode="grid" @select="select" @success="onSuccess" @fail="fail"
+					@delete="onDelete" />
 			</view>
 			<view class="item">
 				<input v-model="formvalue.title" type="text" name="title" placeholder="Pls input title" />
@@ -36,24 +37,24 @@
 					title: "",
 					author: "",
 					content: "",
-					fileUrl:[]
+					fileUrl: []
 				},
 				imageValue: [],
 				imgStyle: {
 					"width": 80,
 					"height": 80,
 					"border": {
-						"color":"#eee",
-						"width":"1px",
-						"style":"solid",
-						"radius":"10%"
+						"color": "#eee",
+						"width": "1px",
+						"style": "solid",
+						"radius": "10%"
 					}
 				}
-				
+
 			};
 		},
 		methods: {
-			showImageValue(){
+			showImageValue() {
 				console.log(this.imageValue)
 			},
 			// 获取上传状态
@@ -67,15 +68,13 @@
 			progress(e) {
 				console.log('上传进度：', e)
 			},
-
+			onDelete(e) {
+				console.log('有图片被移除啦', e)
+			},
 			// 上传成功
-			success(e) {
-				
-				this.formvalue.fileUrl=e.tempFilePaths
-				uni.showToast({
-					title:"图片上传成功"
-				})
-				console.log('上传成功',this.formvalue.fileUrl)
+			onSuccess(e) {
+				this.formvalue.fileUrl = e.tempFilePaths
+				console.log('上传成功', this.formvalue.fileUrl)
 			},
 
 			// 上传失败

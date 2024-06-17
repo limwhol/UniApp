@@ -2,9 +2,9 @@
 	<view class="edit">
 		<form @submit="editRow">
 			<view class="item">
-				<uni-file-picker ref="files" :image-styles="imgStyle" v-model="imageValue"
-					fileMediatype="image" file-extname="jpg,png,webp,gif" mode="grid"
-					@select="select" @success="success" @fail="fail" />
+				<uni-file-picker ref="files" :image-styles="imgStyle" v-model="imageValue" fileMediatype="image"
+					file-extname="jpg,png,webp,gif" mode="grid" @select="select" @success="success" @fail="fail"
+					@delete="onDelete" />
 			</view>
 			<view class="item">
 				<input v-model="formvalue.title" type="text" name="title" placeholder="输入标题" />
@@ -33,7 +33,7 @@
 					title: "",
 					author: "",
 					content: "",
-					fileUrl:[]
+					fileUrl: []
 				},
 				newsObj: {},
 				imageValue: [],
@@ -41,15 +41,15 @@
 					"width": 80,
 					"height": 80,
 					"border": {
-						"color":"#eee",
-						"width":"1px",
-						"style":"solid",
-						"radius":"10%"
+						"color": "#eee",
+						"width": "1px",
+						"style": "solid",
+						"radius": "10%"
 					}
 				}
 			};
 		},
-		
+
 		onLoad(e) {
 			id = e.id
 			uniCloud.callFunction({
@@ -60,39 +60,45 @@
 			}).then(res => {
 				// console.log(res)
 				this.formvalue = res.result.data[0]
-				if(!this.formvalue.fileUrl){return}
-				let urls=this.formvalue.fileUrl.map(item=>{
-					return {url:item}
+				if (!this.formvalue.fileUrl) {
+					return
+				}
+				let urls = this.formvalue.fileUrl.map(item => {
+					return {
+						url: item
+					}
 				})
-				this.imageValue=urls
+				this.imageValue = urls
 				uni.setNavigationBarTitle({
 					title: res.result.data[0].title
 				})
 			})
 		},
 		methods: {
+			onDelete(e) {
+				console.log(e)
+				this.formvalue.fileUrl.splice(e.index, 1)
+				console.log('第'+e.index+'个图片移除',this.formvalue.fileUrl)
+			},
 			upload() {
 				this.$refs.files.upload()
 			},
 			select(e) {
-				console.log('选择文件：', e)
+				console.log(e)
+				let oldlist = this.formvalue.fileUrl
+				let newlist = [...oldlist, ...e.tempFilePaths]
+				this.formvalue.fileUrl = newlist
+				console.log('新增了1个图片',this.formvalue.fileUrl)
 			},
 			// 获取上传进度
 			progress(e) {
 				console.log('上传进度：', e)
 			},
-			
 			// 上传成功
 			success(e) {
-				let oldlist=this.formvalue.fileUrl
-				let newlist=[...oldlist,...e.tempFilePaths]
-				this.formvalue.fileUrl=newlist
-				uni.showToast({
-					title:"图片上传成功"
-				})
-				console.log('上传成功',this.formvalue.fileUrl)
+				console.log('上传成功', e)
 			},
-			
+
 			// 上传失败
 			fail(e) {
 				console.log('上传失败：', e)
@@ -102,7 +108,7 @@
 				uniCloud.callFunction({
 					name: "art_edit_row",
 					data: {
-						detail:this.formvalue
+						detail: this.formvalue
 					}
 				}).then(res => {
 					uni.showToast({
@@ -112,7 +118,7 @@
 
 					}, 1500);
 					uni.reLaunch({
-						url:`/pages/detail/detail?id=${id}`
+						url: `/pages/detail/detail?id=${id}`
 					})
 				})
 			}

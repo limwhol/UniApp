@@ -20,11 +20,20 @@
 				{{newsObj.content}}
 			</view>
 			<view class="bottomconsole">
-				<view class="edit">
-					<button size="mini" @click="onEdit">编辑</button>
+				<view class="item">
+					<view class="" @click="onEdit">
+						编辑
+					</view>
 				</view>
-				<view class="delete">
-					<button size="mini" type="warn" @click="onRemove">删除</button>
+				<view class="item">
+					<view class="" @click="backtoindex">
+						返回首页
+					</view>
+				</view>
+				<view class="item">
+					<view class="" @click="onRemove">
+						删除
+					</view>
 				</view>
 			</view>
 		</view>
@@ -60,10 +69,15 @@
 			})
 		},
 		methods: {
-			showNewsImg(index){
+			backtoindex() {
+				uni.reLaunch({
+					url: "/pages/index/index"
+				})
+			},
+			showNewsImg(index) {
 				uni.previewImage({
-					urls:this.newsObj.fileUrl,
-					current:index
+					urls: this.newsObj.fileUrl,
+					current: index
 				})
 			},
 			onEdit() {
@@ -131,7 +145,8 @@
 			color: #666666;
 			line-height: 1.7em;
 			margin-bottom: 30rpx;
-			.picUrl{
+
+			.picUrl {
 				margin-bottom: 30rpx;
 				display: flex;
 				justify-content: center;
@@ -141,11 +156,26 @@
 
 		.bottomconsole {
 			font-size: 24rpx;
-			color: #8f8f8f;
+			color: #5b5b5b;
 			margin-bottom: 30rpx;
 			display: flex;
 			justify-content: space-around;
 			align-items: center;
+
+			.item {
+				height: 14px;
+				border-radius: 30rpx;
+				background-color: #f0f0f0;
+				padding: 10px;
+				display: inline-block;
+				white-space: nowrap;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.item:last-child {
+			        background-color: #ffcc00; 
+			    }
 		}
 	}
 </style>

@@ -34,6 +34,13 @@
 			{
 				"navigationBarTitleText" : ""
 			}
+		},
+		{
+			"path" : "pages/aboutme/aboutme",
+			"style" : 
+			{
+				"navigationBarTitleText" : "关于我"
+			}
 		}
 	],
 	"globalStyle": {
@@ -42,5 +49,23 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	"uniIdRouter": {}
+	"uniIdRouter": {},
+	"tabBar": {
+		"color": "#666666",
+		"selectedColor": "#56b32f",
+		"list": [
+	        {
+				"text": "首页",
+				"pagePath": "pages/index/index",
+				"iconPath": "static/images/index.png",
+				"selectedIconPath": "static/images/index_g.png"
+			},
+			{
+				"text": "用户",
+				"pagePath": "pages/aboutme/aboutme",
+				"iconPath": "static/images/member.png",
+				"selectedIconPath": "static/images/member_g.png"
+			}
+		]
+	}
 }

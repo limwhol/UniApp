@@ -132,7 +132,7 @@
 			align-items: center;
 			position: fixed;
 			right: 60rpx;
-			bottom: 100rpx;
+			bottom: 130rpx;
 			box-shadow: 0 0 20rpx rgba(43, 153, 57, 0.7);
 		}
 	}
