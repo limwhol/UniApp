@@ -22,7 +22,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 .aboutme{
 	padding: 30rpx;
 	.title{
@@ -33,6 +33,7 @@
 		margin-bottom: 26rpx;
 	}
 	.content{
+		text-indent: 2em;
 		font-size: 30rpx;
 		color:#767676;
 		line-height: 1.8em;
