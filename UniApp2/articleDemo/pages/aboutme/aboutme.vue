@@ -17,7 +17,17 @@
 			}
 		},
 		methods: {
-			
+			// async getInfor(){
+			// 	let id,res
+			// 	res=await this.getNav()
+			// 	id=res.deta[0].id
+				
+			// 	res=await this.getList(id)
+			// 	id=res.data[0].id
+				
+			// 	res=await this.getCommnet(id)
+			// 	console.log(res)
+			// }
 		}
 	}
 </script>
