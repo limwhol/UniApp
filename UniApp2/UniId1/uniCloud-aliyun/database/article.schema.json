@@ -1,0 +1,33 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"title":{
+			"bsonType": "string",
+			"title": "文章标题",
+			"description": "就是文章的标题撒"
+		},
+		"content":{
+			"bsonType": "string",
+			"title": "文章内容",
+			"description": "文章的内容"
+		},
+		"posttime":{
+			"bsonType": "timestamp",
+			"title": "发布时间",
+			"description": "发布的时间撒",
+			"defaultValue":{
+				"$env": "now"
+			}
+		}
+	}
+}
