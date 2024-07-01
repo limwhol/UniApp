@@ -6,7 +6,9 @@
 			<view class="content">{{item.content}}</view>
 		</view> -->
 		<view class="">
-			<button @click="addData">增加记录</button>
+			<button @click="addData">增加文章</button>
+			<button @click="goRegister">登录页面</button>
+			<button @click="goUserinfo">个人中心</button>
 		</view>
 	</view>
 </template>
@@ -41,18 +43,34 @@
 				// 	this.articleArr=res.result.data
 				// })
 				db.collection("article").get().then(res=>{
-					console.log(res)
+					// console.log(res)
+				}).catch(err=>{
+					// console.log(err.message)
+					uni.showToast({
+						title:err.message,
+						icon:'none'
+					})
 				})
 			},
 			addData(){
 				// cloudObj1.add().then(res=>{
 				// 	console.log(res)
 				// })
-				db.collection("users").add({
-					name:"李秋风",
-					tel:888888888
+				db.collection("article").add({
+					title:"张华",
+					content:"真牛逼"
 				}).then(res=>{
 					console.log(res)
+				})
+			},
+			goRegister(){
+				uni.navigateTo({
+					url:"/uni_modules/uni-id-pages/pages/login/login-withpwd"
+				})
+			},
+			goUserinfo(){
+				uni.navigateTo({
+					url:"/uni_modules/uni-id-pages/pages/userinfo/userinfo"
 				})
 			}
 		}
