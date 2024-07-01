@@ -9,6 +9,7 @@
 			<button @click="addData">增加文章</button>
 			<button @click="goRegister">登录页面</button>
 			<button @click="goUserinfo">个人中心</button>
+			<button @click="goUpdate">修改文章</button>
 		</view>
 	</view>
 </template>
@@ -57,8 +58,8 @@
 				// 	console.log(res)
 				// })
 				db.collection("article").add({
-					title:"张华",
-					content:"真牛逼"
+					title:"李雨嘉",
+					content:"大傻子"
 				}).then(res=>{
 					console.log(res)
 				})
@@ -71,6 +72,15 @@
 			goUserinfo(){
 				uni.navigateTo({
 					url:"/uni_modules/uni-id-pages/pages/userinfo/userinfo"
+				})
+			},
+			goUpdate(){
+				db.collection("article").doc("6682bf2fbd02209c391eb50e").update({
+					title:"拳之王"
+				}).catch(err=>{
+					uni.showToast({
+						title:"请登录以获取权限"
+					})
 				})
 			}
 		}

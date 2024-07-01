@@ -3,8 +3,8 @@
 	"required": [],
 	"permission": {
 		"read": true,
-		"create": true,
-		"update": false,
+		"create": "auth.uid!=null",
+		"update": "doc.userid==auth.uid",
 		"delete": false
 	},
 	"properties": {
