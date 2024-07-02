@@ -11,6 +11,7 @@
 			<button @click="goUserinfo">个人中心</button>
 			<button @click="goUpdate">修改文章</button>
 			<button @click="goDemo1">Demo1</button>
+			<button @click="goDemo2">Demo2</button>
 		</view>
 	</view>
 </template>
@@ -78,6 +79,11 @@
 			goDemo1(){
 				uni.navigateTo({
 					url:"../../pages/demo1/demo1"
+				})
+			},
+			goDemo2(){
+				uni.navigateTo({
+					url:"../../pages/demo2/demo2"
 				})
 			},
 			goUpdate(){
