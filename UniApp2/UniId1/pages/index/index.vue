@@ -10,6 +10,7 @@
 			<button @click="goRegister">登录页面</button>
 			<button @click="goUserinfo">个人中心</button>
 			<button @click="goUpdate">修改文章</button>
+			<button @click="goDemo1">Demo1</button>
 		</view>
 	</view>
 </template>
@@ -72,6 +73,11 @@
 			goUserinfo(){
 				uni.navigateTo({
 					url:"/uni_modules/uni-id-pages/pages/userinfo/userinfo"
+				})
+			},
+			goDemo1(){
+				uni.navigateTo({
+					url:"../../pages/demo1/demo1"
 				})
 			},
 			goUpdate(){
