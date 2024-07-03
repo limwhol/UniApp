@@ -1,0 +1,23 @@
+{
+  "id": "4608425",
+  "name": "quanzi",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2076257",
+      "name": "结伴",
+      "font_class": "jieban",
+      "unicode": "e88e",
+      "unicode_decimal": 59534
+    },
+    {
+      "icon_id": "2428332",
+      "name": "游乐园",
+      "font_class": "youleyuan",
+      "unicode": "e8e3",
+      "unicode_decimal": 59619
+    }
+  ]
+}

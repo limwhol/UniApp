@@ -4,8 +4,8 @@
 	"permission": {
 		"read": true,
 		"create": "auth.uid!=null",
-		"update": "doc.userid==auth.uid",
-		"delete": false
+		"update": true,
+		"delete":  true
 	},
 	"properties": {
 		"_id": {
