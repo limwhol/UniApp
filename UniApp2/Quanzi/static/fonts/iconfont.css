@@ -1,23 +1,43 @@
 @font-face {
-	font-family: "iconfont";
-	/* Project id 4608425 */
-	src: url('@/static/fonts/iconfont.woff2?t=1719996616872') format('woff2'),
-		url('@/static/fonts/iconfont.woff?t=1719996616872') format('woff'),
-		url('@/static/fonts/iconfont.ttf?t=1719996616872') format('truetype');
+  font-family: "iconfont"; /* Project id 4608425 */
+  src: url('@/static/fonts/iconfont.woff2?t=1720067445294') format('woff2'),
+       url('@/static/fonts/iconfont.woff?t=1720067445294') format('woff'),
+       url('@/static/fonts/iconfont.ttf?t=1720067445294') format('truetype');
 }
 
 .iconfont {
-	font-family: "iconfont" !important;
-	font-size: 16px;
-	font-style: normal;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-xiaoxi:before {
+  content: "\e86f";
+}
+
+.icon-zan:before {
+  content: "\e870";
+}
+
+.icon-shezhi:before {
+  content: "\e892";
+}
+
+.icon-faxian:before {
+  content: "\e898";
+}
+
+.icon-xiugai:before {
+  content: "\e8cf";
 }
 
 .icon-jieban:before {
-	content: "\e88e";
+  content: "\e88e";
 }
 
 .icon-youleyuan:before {
-	content: "\e8e3";
+  content: "\e8e3";
 }
+

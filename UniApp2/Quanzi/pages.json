@@ -3,21 +3,28 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "圈子",
+				"navigationBarTitleText": "蚂 蚁 圈",
 				"enablePullDownRefresh": false
 			}
 		},
 		{
 			"path": "pages/self/self",
 			"style": {
-				"navigationBarTitleText": "我的",
+				"navigationBarTitleText": "设置",
 				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path" : "pages/edit/edit",
+			"style" : 
+			{
+				"navigationBarTitleText" : "编辑长文"
 			}
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "李秋风个人网站",
+		"navigationBarTitleText": "蚂 蚁 圈",
 		"navigationBarBackgroundColor": "#0199FE",
 		"backgroundColor": "#F8F8F8"
 	},
@@ -30,17 +37,17 @@
 			"text": "圈子",
 			"pagePath": "pages/index/index",
 			"iconfont": {
-				"text": "\ue8e3",
-				"selectedText": "\ue8e3",
+				"text": "\ue88e",
+				"selectedText": "\ue88e",
 				"color": "#333",
 				"selectedColor": "#0199FE"
 			}
 		}, {
-			"text": "我的",
+			"text": "设置",
 			"pagePath": "pages/self/self",
 			"iconfont": {
-				"text": "\ue88e",
-				"selectedText": "\ue88e",
+				"text": "\ue892",
+				"selectedText": "\ue892",
 				"color": "#333",
 				"selectedColor": "#0199FE"
 			}
