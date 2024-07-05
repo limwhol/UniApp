@@ -26,6 +26,7 @@
 </template>
 
 <script>
+	import {getImgSrc,getProvince} from "@/utils/tools.js"
 	export default {
 		data() {
 			return {
@@ -38,11 +39,16 @@
 					title:"",
 					content:"",
 					description:"",
-					picurls:""
+					picurls:"",
+					province:""
 				}
 			};
 		},
-		onLoad() {},
+		onLoad() {
+			getProvince().then(res=>{
+				console.log(res)
+			})
+		},
 		methods: {
 			onEditFocus() {
 				this.toolshow = true
@@ -61,7 +67,8 @@
 					success:res=>{
 						this.artObj.description=res.text.slice(0,100)
 						this.artObj.content=res.html
-						this.artObj.picurls=
+						this.artObj.picurls=getImgSrc(res.html)
+						this.artObj.province=getProvince()
 						console.log(this.artObj)
 					}
 				})
