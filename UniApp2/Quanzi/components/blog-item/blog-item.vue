@@ -15,7 +15,7 @@
 			</view>
 			<view class="rightElements">
 				<view class="threeDots">
-					...
+					<text class="iconfont icon-more"></text>
 				</view>
 			</view>
 		</view>

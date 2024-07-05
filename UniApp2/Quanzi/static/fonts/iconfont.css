@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4608425 */
-  src: url('@/static/fonts/iconfont.woff2?t=1720067445294') format('woff2'),
-       url('@/static/fonts/iconfont.woff?t=1720067445294') format('woff'),
-       url('@/static/fonts/iconfont.ttf?t=1720067445294') format('truetype');
+  src: url('@/static/fonts/iconfont.woff2?t=1720150559845') format('woff2'),
+       url('@/static/fonts/iconfont.woff?t=1720150559845') format('woff'),
+       url('@/static/fonts/iconfont.ttf?t=1720150559845') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,38 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-more:before {
+  content: "\e602";
+}
+
+.icon-fabusekuai:before {
+  content: "\ec46";
+}
+
+.icon-fengexian:before {
+  content: "\ec7f";
+}
+
+.icon-charutupian:before {
+  content: "\ec80";
+}
+
+.icon-zitijiacu:before {
+  content: "\ec83";
+}
+
+.icon-zitibiaoti:before {
+  content: "\ec84";
+}
+
+.icon-zitixieti:before {
+  content: "\ec85";
+}
+
+.icon-duigoux:before {
+  content: "\ec9e";
 }
 
 .icon-xiaoxi:before {
