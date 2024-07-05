@@ -4,14 +4,14 @@
 			<input type="text" placeholder="输入标题……" placeholder-class="placeholderClass" />
 		</view>
 		<view class="content">
-			<editor placeholder="输入内容……" ></editor>
+			<editor placeholder="输入内容……"></editor>
 		</view>
 		<view class="btnGroup">
-			<u-button text="确认发表" type="primary"></u-button>
+			<u-button text="确认发表" type="primary" disabled="false"></u-button>
 		</view>
-		<view class="tool">
+		<view class="tools">
 			<view class="item"><text class="iconfont icon-xiaoxi"></text></view>
-			<view class="item"><text class="iconfont icon-zan"></text></view>	
+			<view class="item"><text class="iconfont icon-zan"></text></view>
 			<view class="item"><text class="iconfont icon-shezhi"></text></view>
 			<view class="item"><text class="iconfont icon-faxian"></text></view>
 			<view class="item"><text class="iconfont icon-xiugai"></text></view>
@@ -31,36 +31,53 @@
 </script>
 
 <style lang="scss">
+	/deep/ .ql-blank::before {
+		font-style: normal;
+		color: #e4e4e4;
+		font-size: 36rpx;
+	}
+
 	.edit {
 		padding: 30rpx;
-		.title{
-			input{
+
+		.title {
+			input {
 				font-size: 46rpx;
 				height: 120rpx;
 				border-bottom: 1rpx solid #e4e4e4;
 				margin-bottom: 30rpx;
 			}
-			.placeholderClass{
+
+			.placeholderClass {
 				color: #e4e4e4;
 			}
 		}
-		.content{
+
+		.content {
 			height: calc(100vh - 500rpx);
 			margin-bottom: 30rpx;
 		}
-		.tool{
+
+		.tools {
 			width: 100%;
 			height: 80rpx;
 			display: flex;
+			border-top: 1rpx solid #f4f4f4;
+			position: fixed;
+			left: 0;
+			bottom: 0;
 			justify-content: space-around;
 			align-items: center;
-			.iconfont{
+
+			.iconfont {
 				font-size: 36rpx;
 				color: #333;
-				&.active{
+
+				&.active {
 					color: #0199FE;
 				}
 			}
+
 		}
 	}
 </style>
