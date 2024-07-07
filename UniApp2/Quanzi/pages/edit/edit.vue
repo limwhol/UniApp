@@ -26,7 +26,11 @@
 </template>
 
 <script>
-	import {getImgSrc,getProvince} from "@/utils/tools.js"
+	const db = uniCloud.database()
+	import {
+		getImgSrc,
+		getProvince
+	} from "@/utils/tools.js"
 	export default {
 		data() {
 			return {
@@ -35,18 +39,19 @@
 				boldshow: false,
 				dividershow: false,
 				italicshow: false,
-				artObj:{
-					title:"",
-					content:"",
-					description:"",
-					picurls:"",
-					province:""
+				artObj: {
+					title: "",
+					content: "",
+					description: "",
+					picurls: "",
+					province: ""
 				}
 			};
 		},
 		onLoad() {
-			getProvince().then(res=>{
+			getProvince().then(res => {
 				console.log(res)
+				this.artObj.province = res
 			})
 		},
 		methods: {
@@ -62,30 +67,49 @@
 					this.editorCtx = res.context
 				}).exec()
 			},
-			onSubmit(){
+			onSubmit() {
 				this.editorCtx.getContents({
-					success:res=>{
-						this.artObj.description=res.text.slice(0,100)
-						this.artObj.content=res.html
-						this.artObj.picurls=getImgSrc(res.html)
-						this.artObj.province=getProvince()
-						console.log(this.artObj)
+					success: res => {
+						this.artObj.description = res.text.slice(0, 100)
+						this.artObj.content = res.html
+						this.artObj.picurls = getImgSrc(res.html)
+						uni.showLoading({
+							title: "提交信息中…"
+						})
+						this.addData()
+						// console.log(this.artObj)
 					}
 				})
 			},
-			checkStatus(name,detail,obj){
-				if(detail.hasOwnProperty(name)){
-					this[obj]=true
-				}else{
-					this[obj]=false
+			addData() {
+				db.collection("mayiquanzi_article").add({
+					...this.artObj
+				}).then(res => {
+					console.log(res)
+					uni.hideLoading()
+					uni.showToast({
+						title: "发布成功！"
+					})
+					setTimeout(() => {
+						uni.reLaunch({
+							url: "/pages/index/index"
+						})
+					}, 2000);
+				})
+			},
+			checkStatus(name, detail, obj) {
+				if (detail.hasOwnProperty(name)) {
+					this[obj] = true
+				} else {
+					this[obj] = false
 				}
 			},
-			onStaChange(e){
+			onStaChange(e) {
 				console.log(e)
-				let detail=e.detail
-				this.checkStatus("header",detail,"headshow")
-				this.checkStatus("bold",detail,"boldshow")
-				this.checkStatus("italic",detail,"italicshow")
+				let detail = e.detail
+				this.checkStatus("header", detail, "headshow")
+				this.checkStatus("bold", detail, "boldshow")
+				this.checkStatus("italic", detail, "italicshow")
 			},
 			insertHead() {
 				this.headshow = !this.headshow
@@ -106,20 +130,20 @@
 				this.editorCtx.format("italic")
 				this.headshow = false
 			},
-			insertImage(){
+			insertImage() {
 				uni.chooseImage({
-					success:async res=>{
+					success: async res => {
 						uni.showLoading({
-							title:"正在上传图片…",
-							mask:true
+							title: "正在上传图片…",
+							mask: true
 						})
-						for(let item of res.tempFiles){
-							let res= await uniCloud.uploadFile({
-								filePath:item.path,
-								cloudPath:item.name
+						for (let item of res.tempFiles) {
+							let res = await uniCloud.uploadFile({
+								filePath: item.path,
+								cloudPath: item.name
 							})
 							this.editorCtx.insertImage({
-								src:res.fileID
+								src: res.fileID
 							})
 						}
 						uni.hideLoading()
@@ -157,11 +181,11 @@
 		}
 
 		.content {
-			.myEditor{
+			.myEditor {
 				height: calc(100vh - 500rpx);
 				margin-bottom: 10rpx;
 			}
-			
+
 		}
 
 		.btnGroup {

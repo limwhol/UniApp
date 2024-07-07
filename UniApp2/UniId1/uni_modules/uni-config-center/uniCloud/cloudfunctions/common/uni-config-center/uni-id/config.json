@@ -1,7 +1,7 @@
 {
-  "passwordSecret":"xianxiami888#$", 
+  "passwordSecret":"mayiquanzi#@", 
   "passwordStrength": "medium",
-  "tokenSecret": "xianxiami888#$", 
+  "tokenSecret": "mayiquanzi#@", 
   "requestAuthSecret": "",
   "tokenExpiresIn": 7200,
   "tokenExpiresThreshold": 3600, 

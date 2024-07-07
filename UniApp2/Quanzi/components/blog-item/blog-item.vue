@@ -3,14 +3,14 @@
 		<view class="head">
 			<view class="leftElements">
 				<view class="avatar">
-					<image src="@/static/images/logo1.png"></image>
+					<image :src="item.user_id[0].avatar_file.url?item.user_id[0].avatar_file.url:'@/static/images/1.png'"></image>
 				</view>
 				<view class="userName">
-					膜翅单倍体
+					{{item.user_id[0].nickname?item.user_id[0].nickname:item.user_id[0].username}}
 				</view>
 				<view class="postTime">
-					<uni-dateformat :date="Date.now()" format="MM月dd hh:mm"
-						:threshold="[60000,3600000*24*30]"></uni-dateformat>
+					<uni-dateformat :date="item.publish_date" format="MM月dd hh:mm"
+						:threshold="[60000,3600000*24*30]"></uni-dateformat>发布于{{item.province}}
 				</view>
 			</view>
 			<view class="rightElements">
@@ -20,31 +20,28 @@
 			</view>
 		</view>
 		<view class="body">
-			<view class="title">
-				“低调的丛林特种兵” - 横纹齿猛蚁 Odontoponera transversa 经验分享&&记录
+			<view class="title" @click="toDetail(item._id)">
+				{{item.title}}
 			</view>
-			<view class="content">
-				横纹齿猛蚁（Odontoponera
-				transversa）所在的齿猛蚁属分类鉴定一直相对模糊，但齿猛蚁属算得上是我国华南地区分布最为广泛，最为常见的猛蚁之一。其属下现存种在国内有分布的两个成员为横纹齿猛蚁和齿唇齿猛蚁。参考中国蚁网中该属的分布范围作为权威资料，在海南有分布的只有前者，因此暂认定本贴中为横纹齿猛蚁。
-
-
+			<view class="content" @click="toDetail(item._id)">
+				{{item.description}}
 			</view>
 			<view class="piclist">
-				<view class="pic" :class="picArr.length==1?'only':''" v-for="item in picArr">
-					<image src="../../static/images/1.png" mode="aspectFill"></image>
+				<view class="pic" :class="item.picurls.length==1?'only':''" v-for="(pic,index) in item.picurls" :key="index">
+					<image :src="pic" mode="aspectFill" @click="enlargePic(index)"></image>
 				</view>
 			</view>
 
 		</view>
 		<view class="info">
 			<view class="hits">
-				<text class="iconfont icon-faxian"></text> 231
+				<text class="iconfont icon-faxian"></text>{{item.view_count}}
 			</view>
-			<view class="comments">
-				<text class="iconfont icon-xiaoxi"></text>
+			<view class="comments" @click="toDetail(item._id)">
+				<text class="iconfont icon-xiaoxi"></text>{{item.comment_count?item.comment_count:"评论"}}
 			</view>
 			<view class="like">
-				<text class="iconfont icon-zan"></text> 76
+				<text class="iconfont icon-zan"></text>{{item.like_count?item.like_count:"点赞"}}
 			</view>
 		</view>
 	</view>
@@ -54,9 +51,28 @@
 	export default {
 		name: "blog-item",
 		data() {
-			return {
-				picArr: [1, 2]
-			};
+			return {}
+		},
+		props: {
+			item: {
+				type: Object,
+				default () {
+					return {}
+				}
+			}
+		},
+		methods:{
+			enlargePic(id){
+				uni.previewImage({
+					urls:this.item.picurls,
+					current:id
+				})
+			},
+			toDetail(e){
+				uni.navigateTo({
+					url: `/pages/details/details?id=${e}`
+				});
+			}
 		}
 	}
 </script>
@@ -171,8 +187,9 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				.iconfont{
-					margin-right: 6rpx;
+
+				.iconfont {
+					margin-right: 10rpx;
 				}
 			}
 
@@ -180,14 +197,18 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				.iconfont {
+					margin-right: 10rpx;
+				}
 			}
 
 			.like {
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				.iconfont{
-					margin-right: 6rpx;
+
+				.iconfont {
+					margin-right: 10rpx;
 				}
 			}
 		}

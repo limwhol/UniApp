@@ -1,25 +1,18 @@
 <template>
 	<view class="home">
 		<view class="topnav">
-			<u-tabs :list="navList" 
-			:activeStyle="{
+			<u-tabs :list="navList" :activeStyle="{
 				color:'#333',
 				fontWeight:'bold',
 				transform:'scale(1.06)'
-			}"
-			@click="clickNav"></u-tabs>
+			}" @click="clickNav"></u-tabs>
 		</view>
-		<view class="loadingState" v-if="loadingState">
-			<u-skeleton
-				    rows="5"
-				    title
-					loading
-					avatar
-				></u-skeleton>
+		<view class="loadingState" v-if="isloadingState">
+			<u-skeleton rows="5" title loading avatar></u-skeleton>
 		</view>
 		<view class="content">
-			<view class="item" v-for="item in dataArr">
-				<blog-item />
+			<view class="item" v-for="item in dataArr" :key="item._id">
+				<blog-item :item="item" />
 			</view>
 		</view>
 		<view class="edit">
@@ -29,43 +22,49 @@
 </template>
 
 <script>
+	const db = uniCloud.database()
 	export default {
 		data() {
 			return {
 				navList: [{
-						name: "最新"
+						name: "最新",
+						type:"publish_date"
 					},
 					{
-						name: "热门"
-					},
-					{
-						name: "婚飞"
-					},
-					{
-						name: "游戏"
-					},
-					{
-						name: "鉴定"
-					},
-					{
-						name: "论坛"
+						name: "热门",
+						type:"view_count"
 					}
 				],
-				loadingState:false,
-				dataArr:[1,2,3]
+				isloadingState: true,
+				dataArr: [],
+				navIndex:0
 			}
 		},
 		onLoad() {
-
+			this.getData()
 		},
 		methods: {
 			clickNav(e) {
+				this.isloadingState=true
+				this.dataArr=[]
 				console.log(e)
+				this.navIndex=e.index
+				this.getData()
 			},
-			goEdit(){
+			goEdit() {
 				uni.navigateTo({
-					url:"/pages/edit/edit"
+					url: "/pages/edit/edit"
 				})
+			},
+			getData(){
+				let artTemp=db.collection("mayiquanzi_article").field("title,user_id,description,picurls,comment_count,like_count,view_count,publish_date,province").getTemp()
+				let userTemp=db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
+				db.collection(artTemp,userTemp).orderBy(this.navList[this.navIndex].type,"desc").get().then(res=>{
+					console.log(res)
+					this.dataArr=res.result.data
+					this.isloadingState=false
+				})
+				
 			}
 		}
 	}
@@ -73,16 +72,19 @@
 
 <style lang="scss" scoped>
 	.home {
-		.topnav{
+		.topnav {
 			margin-bottom: 30rpx;
 		}
-		.loadingState{
+
+		.loadingState {
 			padding: 30rpx;
 		}
-		.content{
+
+		.content {
 			padding: 30rpx;
 		}
-		.edit{
+
+		.edit {
 			width: 100rpx;
 			height: 100rpx;
 			border-radius: 50%;
@@ -96,7 +98,8 @@
 			right: 60rpx;
 			bottom: 130rpx;
 			box-shadow: 0 0 20rpx rgba(0, 153, 254, 0.1);
-			.iconfont{
+
+			.iconfont {
 				font-size: 45rpx;
 			}
 		}
