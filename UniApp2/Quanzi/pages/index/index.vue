@@ -95,8 +95,8 @@
 			justify-content: center;
 			align-items: center;
 			position: fixed;
-			right: 60rpx;
-			bottom: 130rpx;
+			right: 10rpx;
+			bottom: 100rpx;
 			box-shadow: 0 0 20rpx rgba(0, 153, 254, 0.1);
 
 			.iconfont {

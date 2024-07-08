@@ -1,70 +1,126 @@
 <template>
 	<view class="detail">
-
-		<unicloud-db :where="`_id=='${artID}'`" v-slot:default="{data, loading, error, options}" :getone="true"
-			:collection="collectionList">
-			<view v-if="error">{{error.message}}</view>
-			<view v-else-if="loading">
-				<view class="loadingState" v-if="loading">
-					<u-skeleton rows="5" title loading avatar></u-skeleton>
-				</view>
+		<view v-if="isloadingState">
+			<u-skeleton rows="5" title loading avatar></u-skeleton>
+		</view>
+		<view v-else>
+			<view class="top">
+				{{dataObj.title}}
 			</view>
-			<view v-else>
-				<view class="top">
-					{{data.title}}
+			<view class="topinfo">
+				<view class="avatar">
+					<image
+						:src="dataObj.user_id[0].avatar_file.url?dataObj.user_id[0].avatar_file.url:'@/static/images/1.png'">
+					</image>
 				</view>
-				<view class="topinfo">
-					<view class="avatar">
-						<image
-							:src="data.user_id[0].avatar_file.url?data.user_id[0].avatar_file.url:'@/static/images/1.png'">
-						</image>
+				<view class="authorbox">
+					<view class="author">
+						{{dataObj.user_id[0].nickname?dataObj.user_id[0].nickname:dataObj.user_id[0].username}}
 					</view>
-					<view class="authorbox">
-						<view class="author">
-							{{data.user_id[0].nickname?data.user_id[0].nickname:data.user_id[0].username}}
-						</view>
-						<view class="timeandlocation">
-							<view class="posttime">
-								<uni-dateformat :date="data.publish_date"
-									format="yyyy年MM月dd hh:mm:ss "></uni-dateformat>发布于{{data.province}}
-							</view>
-							<view class="location">
-
-							</view>
+					<view class="timeandlocation">
+						<view class="posttime">
+							<uni-dateformat :date="dataObj.publish_date"
+								format="yyyy年MM月dd hh:mm:ss "></uni-dateformat>发布于{{dataObj.province}}
 						</view>
 					</view>
 				</view>
-				<view class="middlecontent">
-					<u-parse :content="data.content"></u-parse>
+			</view>
+			<view class="middlecontent">
+				<u-parse :content="dataObj.content" :tagStyle="tagStyleObj"></u-parse>
+			</view>
+			<view class="like">
+				<view class="btn" :class="dataObj.islike?'only':''" @click="clickLike">
+					<text class="iconfont icon-zan"></text>
+					<text v-if="dataObj.like_count>0">{{dataObj.like_count}}</text>
+					<text v-else></text>
+				</view>
+				<view class="users">
+					<image src="@/static/images/1.png" mode="aspectFill"></image>
+				</view>
+				<view class="text">
+					<text class="num">{{dataObj.view_count}}</text>人看过
 				</view>
 			</view>
-		</unicloud-db>
-
+		</view>
 	</view>
 </template>
 
 <script>
 	const db = uniCloud.database()
+	const utilsObj = uniCloud.importObject("utilsObj")
 	export default {
 		data() {
 			return {
 				artID: "",
-				collectionList: [
-					db.collection('mayiquanzi_article').field(
-						'title,user_id,description,picurls,comment_count,like_count,view_count,publish_date,province,content')
-					.getTemp(),
-					db.collection('uni-id-users').field('_id,username,nickname,avatar_file').getTemp()
-				]
+				isloadingState: true,
+				dataObj: null,
+				tagStyleObj: {
+					img: "border-radius:20rpx;margin-bottom:15rpx"
+				}
 			};
 		},
 		onLoad(e) {
-			console.log(e)
+			if (!e.id) {
+				this.errFunc()
+			}
 			this.artID = e.id
+			this.getData()
+			this.viewUpdate()
+		},
+		methods: {
+			getData() {
+				let artTemp = db.collection("mayiquanzi_article").where(`_id=="${this.artID}"`)
+					.getTemp()
+				let userTemp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
+				let likeTemp = db.collection("quanzi_like").getTemp()
+				db.collection(artTemp, userTemp, likeTemp).get({
+					getOne: true
+				}).then(res => {
+					if (!res.result.data) {
+						this.errFunc()
+					}
+					console.log(res)
+					this.isloadingState = false
+					let islike=res.result.data._id.quanzi_like.length?true:false
+					res.result.data.islike=islike
+					this.dataObj = res.result.data
+				})
+			},
+			errFunc() {
+				uni.showToast({
+					title: "缺少参数",
+					icon: 'none'
+				})
+				setTimeout(() => {
+					uni.reLaunch({
+						url: "/pages/index/index"
+					})
+				}, 2000)
+				return
+			},
+			viewUpdate() {
+				utilsObj.operation("mayiquanzi_article", "view_count", this.artID, 1).then(res => {
+					console.log(res)
+				})
+			},
+			async clickLike() {
+				let count = await db.collection("quanzi_like").where(
+					`article_id=="${this.artID}"&& user_id==$cloudEnv_uid`).count()
+				if (count.result.total) {
+					db.collection("quanzi_like").where(`article_id=="${this.artID}"&& user_id==$cloudEnv_uid`).remove()
+					utilsObj.operation("mayiquanzi_article", "like_count", this.artID, -1)
+				} else {
+					db.collection("quanzi_like").add({
+						article_id: this.artID,
+					})
+					utilsObj.operation("mayiquanzi_article", "like_count", this.artID, 1)
+				}
+			}
 		}
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.detail {
 
 		padding: 30rpx;
@@ -117,6 +173,61 @@
 					.posttime {
 						margin-right: 10rpx;
 					}
+				}
+			}
+		}
+
+		.middlecontent {
+			margin-bottom: 60rpx;
+		}
+
+		.like {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+			.btn {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				width: 260rpx;
+				height: 120rpx;
+				background-color: #999;
+				border-radius: 60rpx;
+				color: #f8f8f8;
+				margin-bottom: 20rpx;
+				font-size: 24rpx;
+
+				&.only {
+					background-color: #0199FE;
+				}
+
+				.iconfont {
+					font-size: 48rpx;
+
+
+				}
+			}
+
+			.users {
+				width: 40rpx;
+				height: 40rpx;
+				margin-bottom: 20rpx;
+
+				image {
+					width: 100%;
+					height: 100%;
+					border-radius: 50%;
+				}
+			}
+
+			.text {
+				font-size: 22rpx;
+
+				.num {
+					color: #0199FE;
 				}
 			}
 		}
