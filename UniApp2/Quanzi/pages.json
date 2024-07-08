@@ -21,6 +21,14 @@
 				"navigationBarTitleText" : "编辑长文"
 			}
 		}
+		,
+		{
+			"path" : "pages/details/details",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		}
 	,{
     "path": "uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate",
     "style": {

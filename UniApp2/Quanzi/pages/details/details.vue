@@ -29,7 +29,7 @@
 				<u-parse :content="dataObj.content" :tagStyle="tagStyleObj"></u-parse>
 			</view>
 			<view class="like">
-				<view class="btn" :class="dataObj.islike?'only':''" @click="clickLike">
+				<view class="btn" :class="dataObj.islike?'only':''" @click="likeFunc">
 					<text class="iconfont icon-zan"></text>
 					<text v-if="dataObj.like_count>0">{{dataObj.like_count}}</text>
 					<text v-else></text>
@@ -47,7 +47,9 @@
 
 <script>
 	const db = uniCloud.database()
-	const utilsObj = uniCloud.importObject("utilsObj")
+	const utilsObj = uniCloud.importObject("utilsObj", {
+		customUI: true
+	})
 	export default {
 		data() {
 			return {
@@ -56,7 +58,8 @@
 				dataObj: null,
 				tagStyleObj: {
 					img: "border-radius:20rpx;margin-bottom:15rpx"
-				}
+				},
+				likeTime: null
 			};
 		},
 		onLoad(e) {
@@ -81,9 +84,12 @@
 					}
 					console.log(res)
 					this.isloadingState = false
-					let islike=res.result.data._id.quanzi_like.length?true:false
-					res.result.data.islike=islike
+					let islike = res.result.data._id.quanzi_like.length ? true : false
+					res.result.data.islike = islike
 					this.dataObj = res.result.data
+					uni.setNavigationBarTitle({
+						title:this.dataObj.title
+					})
 				})
 			},
 			errFunc() {
@@ -104,6 +110,8 @@
 				})
 			},
 			async clickLike() {
+				this.dataObj.islike ? this.dataObj.like_count-- : this.dataObj.like_count++
+				this.dataObj.islike = !this.dataObj.islike
 				let count = await db.collection("quanzi_like").where(
 					`article_id=="${this.artID}"&& user_id==$cloudEnv_uid`).count()
 				if (count.result.total) {
@@ -115,6 +123,18 @@
 					})
 					utilsObj.operation("mayiquanzi_article", "like_count", this.artID, 1)
 				}
+			},
+			likeFunc() {
+				let time = Date.now()
+				if (time - this.likeTime < 2000) {
+					uni.showToast({
+						title: "操作频繁…",
+						icon: 'error'
+					})
+					return
+				}
+				this.likeTime = Date.now()
+				this.clickLike()
 			}
 		}
 	}
