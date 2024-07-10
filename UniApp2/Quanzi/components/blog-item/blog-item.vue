@@ -35,13 +35,13 @@
 		</view>
 		<view class="info">
 			<view class="hits">
-				<text class="iconfont icon-faxian"></text>{{item.view_count}}
+				<text class="iconfont icon-a-27-liulan"></text>{{item.view_count}}
 			</view>
 			<view class="comments" @click="toDetail(item._id)">
-				<text class="iconfont icon-xiaoxi"></text>{{item.comment_count?item.comment_count:"评论"}}
+				<text class="iconfont icon-a-5-xinxi"></text>{{item.comment_count?item.comment_count:"评论"}}
 			</view>
 			<view class="like">
-				<text class="iconfont icon-zan"></text>{{item.like_count?item.like_count:"点赞"}}
+				<text class="iconfont icon-a-106-xihuan"></text>{{item.like_count?item.like_count:"点赞"}}
 			</view>
 		</view>
 	</view>

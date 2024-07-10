@@ -16,7 +16,7 @@
 			</view>
 		</view>
 		<view class="edit">
-			<text class="iconfont icon-xiugai" @click="goEdit"></text>
+			<text class="iconfont icon-a-21-xiugai" @click="goEdit"></text>
 		</view>
 	</view>
 </template>
@@ -60,12 +60,16 @@
 				let artTemp=db.collection("quanzi_article").field("title,user_id,description,picurls,comment_count,like_count,view_count,publish_date,province").getTemp()
 				let userTemp=db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
 				db.collection(artTemp,userTemp).orderBy(this.navList[this.navIndex].type,"desc").get().then(res=>{
-					console.log(res)
+					// console.log(res)
 					this.dataArr=res.result.data
 					this.isloadingState=false
 				}).catch(err=>{
 					console.log(err)
 				})
+				// let obj={key:"lqf",value:46}
+				// let booler=Object.values(obj).length!=0?300:2
+				// console.log(booler)
+				
 				
 			}
 		}
