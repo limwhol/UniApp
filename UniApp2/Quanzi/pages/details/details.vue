@@ -72,7 +72,7 @@
 		},
 		methods: {
 			getData() {
-				let artTemp = db.collection("mayiquanzi_article").where(`_id=="${this.artID}"`)
+				let artTemp = db.collection("quanzi_article").where(`_id=="${this.artID}"`)
 					.getTemp()
 				let userTemp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
 				let likeTemp = db.collection("quanzi_like").getTemp()
@@ -105,7 +105,7 @@
 				return
 			},
 			viewUpdate() {
-				utilsObj.operation("mayiquanzi_article", "view_count", this.artID, 1).then(res => {
+				utilsObj.operation("quanzi_article", "view_count", this.artID, 1).then(res => {
 					console.log(res)
 				})
 			},
@@ -116,12 +116,12 @@
 					`article_id=="${this.artID}"&& user_id==$cloudEnv_uid`).count()
 				if (count.result.total) {
 					db.collection("quanzi_like").where(`article_id=="${this.artID}"&& user_id==$cloudEnv_uid`).remove()
-					utilsObj.operation("mayiquanzi_article", "like_count", this.artID, -1)
+					utilsObj.operation("quanzi_article", "like_count", this.artID, -1)
 				} else {
 					db.collection("quanzi_like").add({
 						article_id: this.artID,
 					})
-					utilsObj.operation("mayiquanzi_article", "like_count", this.artID, 1)
+					utilsObj.operation("quanzi_article", "like_count", this.artID, 1)
 				}
 			},
 			likeFunc() {

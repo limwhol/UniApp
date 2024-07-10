@@ -57,12 +57,14 @@
 				})
 			},
 			getData(){
-				let artTemp=db.collection("mayiquanzi_article").field("title,user_id,description,picurls,comment_count,like_count,view_count,publish_date,province").getTemp()
+				let artTemp=db.collection("quanzi_article").field("title,user_id,description,picurls,comment_count,like_count,view_count,publish_date,province").getTemp()
 				let userTemp=db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
 				db.collection(artTemp,userTemp).orderBy(this.navList[this.navIndex].type,"desc").get().then(res=>{
 					console.log(res)
 					this.dataArr=res.result.data
 					this.isloadingState=false
+				}).catch(err=>{
+					console.log(err)
 				})
 				
 			}

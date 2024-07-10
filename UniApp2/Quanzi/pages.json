@@ -136,6 +136,13 @@
 	{
 		"navigationBarTitleText" : "详情页"
 	}
+},
+{
+	"path" : "pages/test/test",
+	"style" : 
+	{
+		"navigationBarTitleText" : ""
+	}
 }
 ],
 	"globalStyle": {
