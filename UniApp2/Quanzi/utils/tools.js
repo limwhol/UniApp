@@ -58,3 +58,9 @@ function getNewIP(){
 		})
 	})
 }
+export function getUserAvatar(item){
+	return item.user_id[0]?.avatar_file?.url??'../../static/images/user-default.jpg'
+}
+export function getUserName(item){
+	return item.user_id[0].nickname||item.user_id[0].username||item.user_id[0].mobile
+}

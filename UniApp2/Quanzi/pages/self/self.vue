@@ -7,7 +7,7 @@
 					<view class="pic">
 						<image v-if="hasLogin&&userInfo.avatar_file&&userInfo.avatar_file.url"
 							:src="userInfo.avatar_file.url" mode="aspectFill"></image>
-						<image v-else src="../../static/images/2.jpg" mode="aspectFill"></image>
+						<image v-else src="../../static/images/user-default.jpg" mode="aspectFill"></image>
 					</view>
 					<view class="text" v-if="hasLogin">
 						<view class="nickname">{{userInfo.nickname||userInfo.username||userInfo.mobile}}</view>
@@ -31,12 +31,9 @@
 			<view class="bg">
 				<image v-if="hasLogin&&userInfo.avatar_file&&userInfo.avatar_file.url" :src="userInfo.avatar_file.url"
 					mode="aspectFill"></image>
-				<image v-else src="../../static/images/1.png" mode="aspectFill"></image>
+				<image v-else src="../../static/images/user-default.jpg" mode="aspectFill"></image>
 			</view>
 		</view>
-
-
-
 		<view class="main">
 			<view class="info">
 				<view class="item"><text>{{totalObj.likeNum}}</text>获赞</view>

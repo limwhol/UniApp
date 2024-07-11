@@ -9,13 +9,12 @@
 			</view>
 			<view class="topinfo">
 				<view class="avatar">
-					<image
-						:src="dataObj.user_id[0].avatar_file.url?dataObj.user_id[0].avatar_file.url:'@/static/images/1.png'">
+					<image :src="getUserAvatar(dataObj)">
 					</image>
 				</view>
 				<view class="authorbox">
 					<view class="author">
-						{{dataObj.user_id[0].nickname?dataObj.user_id[0].nickname:dataObj.user_id[0].username}}
+						{{getUserName(dataObj)}}
 					</view>
 					<view class="timeandlocation">
 						<view class="posttime">
@@ -30,7 +29,7 @@
 			</view>
 			<view class="like">
 				<view class="btn" :class="dataObj.islike?'only':''" @click="likeFunc">
-					<text class="iconfont icon-zan"></text>
+					<text class="iconfont icon-a-106-xihuan"></text>
 					<text v-if="dataObj.like_count>0">{{dataObj.like_count}}</text>
 					<text v-else></text>
 				</view>
@@ -46,6 +45,14 @@
 </template>
 
 <script>
+	import pageJson from "@/pages.json"
+	import {
+		store
+	} from '@/uni_modules/uni-id-pages/common/store.js'
+	import {
+		getUserAvatar,
+		getUserName
+	} from "../../utils/tools.js"
 	const db = uniCloud.database()
 	const utilsObj = uniCloud.importObject("utilsObj", {
 		customUI: true
@@ -57,7 +64,8 @@
 				isloadingState: true,
 				dataObj: null,
 				tagStyleObj: {
-					img: "border-radius:20rpx;margin-bottom:15rpx"
+					img: "border-radius:20rpx;margin-bottom:15rpx;",
+					p: "line-height: 1.6em;"
 				},
 				likeTime: null
 			};
@@ -71,12 +79,20 @@
 			this.viewUpdate()
 		},
 		methods: {
+			getUserAvatar,
+			getUserName,
 			getData() {
 				let artTemp = db.collection("quanzi_article").where(`_id=="${this.artID}"`)
 					.getTemp()
 				let userTemp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
-				let likeTemp = db.collection("quanzi_like").getTemp()
-				db.collection(artTemp, userTemp, likeTemp).get({
+				let likeTemp = db.collection("quanzi_like").where(`article_id=="${this.artid}" && user_id==$cloudEnv_uid`)
+					.getTemp();
+				let tempArr = [artTemp, userTemp]
+				console.log(store.hasLogin)
+				if (store.hasLogin) {
+					tempArr.push(likeTemp)
+				}
+				db.collection(...tempArr).get({
 					getOne: true
 				}).then(res => {
 					if (!res.result.data) {
@@ -84,11 +100,14 @@
 					}
 					console.log(res)
 					this.isloadingState = false
-					let islike = res.result.data._id.quanzi_like.length ? true : false
+					let islike = false
+					if (store.hasLogin) {
+						islike = res.result.data._id.quanzi_like.length ? true : false
+					}
 					res.result.data.islike = islike
 					this.dataObj = res.result.data
 					uni.setNavigationBarTitle({
-						title:this.dataObj.title
+						title: this.dataObj.title
 					})
 				})
 			},
@@ -110,6 +129,23 @@
 				})
 			},
 			async clickLike() {
+				if (!store.hasLogin) {
+					uni.showModal({
+						title: "缺少登录状态！",
+						content: "您需要登录后才能进行点赞操作。",
+						success: function(res) {
+							if (res.confirm) {
+								uni.navigateTo({
+									url: '/'+pageJson.uniIdRouter.loginPage
+								});
+							}
+							if (res.cancel) {
+								console.log('用户点击取消');
+								return
+							}
+						}
+					});
+				}
 				this.dataObj.islike ? this.dataObj.like_count-- : this.dataObj.like_count++
 				this.dataObj.islike = !this.dataObj.islike
 				let count = await db.collection("quanzi_like").where(

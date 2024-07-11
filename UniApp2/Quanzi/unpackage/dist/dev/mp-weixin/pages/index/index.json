@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "蚂 蚁 圈",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-tabs": "/uni_modules/uview-ui/components/u-tabs/u-tabs",
+    "u-skeleton": "/uni_modules/uview-ui/components/u-skeleton/u-skeleton",
+    "blog-item": "/components/blog-item/blog-item"
+  }
+}

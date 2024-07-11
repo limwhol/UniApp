@@ -3,10 +3,10 @@
 		<view class="head">
 			<view class="leftElements">
 				<view class="avatar">
-					<image :src="item.user_id[0].avatar_file.url?item.user_id[0].avatar_file.url:'@/static/images/1.png'"></image>
+					<image :src="getUserAvatar(item)"></image>
 				</view>
 				<view class="userName">
-					{{item.user_id[0].nickname?item.user_id[0].nickname:item.user_id[0].username}}
+					{{getUserName(item)}}
 				</view>
 				<view class="postTime">
 					<uni-dateformat :date="item.publish_date" format="MM月dd hh:mm"
@@ -23,11 +23,11 @@
 			<view class="title" @click="toDetail(item._id)">
 				{{item.title}}
 			</view>
-			<view class="content" @click="toDetail(item._id)">
+			<view class="content" @click="toDetail(item._id)" v-if="item.description">
 				{{item.description}}
 			</view>
 			<view class="piclist">
-				<view class="pic" :class="item.picurls.length==1?'only':''" v-for="(pic,index) in item.picurls" :key="index">
+				<view class="pic" :class="item.picurls.length==1?'only':''" v-for="(pic,index) in item.picurls" :key="index" v-if="item.picurls.length">
 					<image :src="pic" mode="aspectFill" @click="enlargePic(index)"></image>
 				</view>
 			</view>
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+	import {getUserAvatar,getUserName} from "../../utils/tools.js"
 	export default {
 		name: "blog-item",
 		data() {
@@ -62,6 +63,8 @@
 			}
 		},
 		methods:{
+			getUserAvatar,
+			getUserName,
 			enlargePic(id){
 				uni.previewImage({
 					urls:this.item.picurls,

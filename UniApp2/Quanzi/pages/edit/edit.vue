@@ -82,7 +82,7 @@
 				})
 			},
 			addData() {
-				db.collection("mayiquanzi_article").add({
+				db.collection("quanzi_article").add({
 					...this.artObj
 				}).then(res => {
 					console.log(res)
