@@ -147,6 +147,30 @@
         "navigationBarTitleText": "详情"
     }
 }
+,{
+    "path": "pages/quanzi_like/add",
+    "style": {
+        "navigationBarTitleText": "新增"
+    }
+}
+,{
+    "path": "pages/quanzi_like/edit",
+    "style": {
+        "navigationBarTitleText": "编辑"
+    }
+}
+,{
+    "path": "pages/quanzi_like/list",
+    "style": {
+        "navigationBarTitleText": "列表"
+    }
+}
+,{
+    "path": "pages/quanzi_like/detail",
+    "style": {
+        "navigationBarTitleText": "详情"
+    }
+}
 ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <unicloud-db ref="udb" :where="`user_id==$cloudEnv_uid`" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList" field="user_id,title,description,province,content,article_status,view_count,like_count,comment_count,last_comment_user_id,picurls,publish_date,publish_ip,last_modify_date,last_modify_ip">
+    <unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList" field="article_id,publish_date,user_id,comment_ip">
       <view v-if="error">{{error.message}}</view>
       <view v-else-if="data">
         <uni-list>
@@ -9,7 +9,7 @@
               <text>
                 <!-- 此处默认显示为_id，请根据需要自行修改为其他字段 -->
                 <!-- 如果使用了联表查询，请参考生成的 admin 项目中 list.vue 页面 -->
-                {{item.title}}
+                {{item._id}}
               </text>
             </template>
           </uni-list-item>
@@ -17,7 +17,7 @@
       </view>
       <uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
     </unicloud-db>
-    <!-- <uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="fabClick" /> -->
+    <uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="fabClick" />
   </view>
 </template>
 
@@ -26,7 +26,7 @@
   export default {
     data() {
       return {
-        collectionList: "quanzi_article",
+        collectionList: "quanzi_like",
         loadMore: {
           contentdown: '',
           contentrefresh: '',
@@ -47,24 +47,23 @@
     methods: {
       handleItemClick(id) {
         uni.navigateTo({
-          // url: './detail?id=' + id
-		  url: '../details/details?id=' + id
+          url: './detail?id=' + id
+        })
+      },
+      fabClick() {
+        // 打开新增页面
+        uni.navigateTo({
+          url: './add',
+          events: {
+            // 监听新增数据成功后, 刷新当前页面数据
+            refreshData: () => {
+              this.$refs.udb.loadData({
+                clear: true
+              })
+            }
+          }
         })
       }
-      // fabClick() {
-      //   // 打开新增页面
-      //   uni.navigateTo({
-      //     url: './add',
-      //     events: {
-      //       // 监听新增数据成功后, 刷新当前页面数据
-      //       refreshData: () => {
-      //         this.$refs.udb.loadData({
-      //           clear: true
-      //         })
-      //       }
-      //     }
-      //   })
-      // }
     }
   }
 </script>
