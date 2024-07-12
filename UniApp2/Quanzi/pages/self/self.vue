@@ -82,11 +82,6 @@
 				</view>
 			</view>
 		</view>
-		<view class="">
-			<button @click="onLogin">Login</button>
-			<button @click="toCenter">UserCenter</button>
-			<button @click="showUserData">ShowUserData</button>
-		</view>
 
 	</view>
 </template>
