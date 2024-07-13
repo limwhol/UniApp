@@ -118,6 +118,18 @@
 			}
 		},
 		{
+			"path": "uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback",
+			"style": {
+				"navigationBarTitleText": "反馈页"
+			}
+		},
+		{
+			"path": "uni_modules/uni-feedback/pages/opendb-feedback/list",
+			"style": {
+				"navigationBarTitleText": "反馈页列表"
+			}
+		},
+		{
 			"path": "pages/test/test",
 			"style": {
 				"navigationBarTitleText": ""
