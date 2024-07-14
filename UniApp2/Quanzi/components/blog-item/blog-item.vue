@@ -41,7 +41,7 @@
 			<view class="comments" @click="toDetail(item._id)">
 				<text class="iconfont icon-a-5-xinxi"></text>{{item.comment_count?item.comment_count:"评论"}}
 			</view>
-			<view class="like" :class="item.isLike?'active':''">
+			<view class="like" :class="item.isLike?'active':''" @click="clickLike">
 				<text class="iconfont icon-a-106-xihuan"></text>{{item.like_count?item.like_count:"点赞"}}
 			</view>
 		</view>
@@ -51,6 +51,9 @@
 </template>
 
 <script>
+	import {
+		store
+	} from '@/uni_modules/uni-id-pages/common/store.js'
 	import {
 		getUserAvatar,
 		getUserName
@@ -84,6 +87,9 @@
 			}
 		},
 		methods: {
+			clickLike(){
+				
+			},
 			clickMore() {
 				let id = uniCloud.getCurrentUserInfo().uid
 				this.sheetShow = true
