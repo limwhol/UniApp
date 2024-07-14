@@ -12,7 +12,7 @@
 		</view>
 		<view class="content">
 			<view class="item" v-for="item in dataArr" :key="item._id">
-				<blog-item :item="item" />
+				<blog-item @delEvent="P_delEvent" :item="item" />
 			</view>
 		</view>
 		<view class="edit">
@@ -22,33 +22,42 @@
 </template>
 
 <script>
+	import {
+		store,
+		mutations
+	} from '@/uni_modules/uni-id-pages/common/store.js'
 	const db = uniCloud.database()
+	const dbCmd = db.command
 	export default {
 		data() {
 			return {
 				navList: [{
 						name: "最新",
-						type:"publish_date"
+						type: "publish_date"
 					},
 					{
 						name: "热门",
-						type:"view_count"
+						type: "view_count"
 					}
 				],
 				isloadingState: true,
 				dataArr: [],
-				navIndex:0
+				navIndex: 0
 			}
 		},
 		onLoad() {
 			this.getData()
 		},
 		methods: {
+			P_delEvent() {
+				this.dataArr = []
+				this.getData()
+			},
 			clickNav(e) {
-				this.isloadingState=true
-				this.dataArr=[]
+				this.isloadingState = true
+				this.dataArr = []
 				console.log(e)
-				this.navIndex=e.index
+				this.navIndex = e.index
 				this.getData()
 			},
 			goEdit() {
@@ -56,21 +65,35 @@
 					url: "/pages/edit/edit"
 				})
 			},
-			getData(){
-				let artTemp=db.collection("quanzi_article").field("title,user_id,description,picurls,comment_count,like_count,view_count,publish_date,province").getTemp()
-				let userTemp=db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
-				db.collection(artTemp,userTemp).orderBy(this.navList[this.navIndex].type,"desc").get().then(res=>{
-					// console.log(res)
-					this.dataArr=res.result.data
-					this.isloadingState=false
-				}).catch(err=>{
-					console.log(err)
-				})
-				// let obj={key:"lqf",value:46}
-				// let booler=Object.values(obj).length!=0?300:2
-				// console.log(booler)
-				
-				
+			async getData() {
+				let artTemp = db.collection("quanzi_article").where(`delstate!=true`).field(
+						"title,user_id,description,picurls,comment_count,like_count,view_count,publish_date,province")
+					.getTemp()
+				let userTemp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
+				db.collection(artTemp, userTemp).orderBy(this.navList[this.navIndex].type, "desc").get().then(
+				async res => {
+
+						let idArr = []
+						let resDataArr = res.result.data
+						if (store.hasLogin) {
+							resDataArr.forEach(item => {
+								idArr.push(item._id)
+							})
+							let likeRes = await db.collection("quanzi_like").where({
+								article_id: dbCmd.in(idArr),
+								user_id: uniCloud.getCurrentUserInfo().uid
+							}).get()
+							likeRes.result.data.forEach(item => {
+								let findIndex = resDataArr.findIndex(find => {
+									return item.article_id == find._id
+								})
+								resDataArr[findIndex].isLike = true
+							})
+						}
+
+						this.dataArr = res.result.data
+						this.isloadingState = false
+					})
 			}
 		}
 	}

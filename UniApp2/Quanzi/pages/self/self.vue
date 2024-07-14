@@ -1,6 +1,6 @@
 <template>
 	<view class="user">
-
+		<view v-if="uniIDHasRole('admin')"></view>
 		<view class="top">
 			<view class="group" @click="toUserInfo">
 				<view class="userinfo">
@@ -37,7 +37,7 @@
 		<view class="main">
 			<view class="info">
 				<view class="item"><text>{{totalObj.likeNum}}</text>获赞</view>
-			<!-- 	<view class="item"><text>{{totalObj.viewNum}}</text>评论</view> -->
+				<!-- 	<view class="item"><text>{{totalObj.viewNum}}</text>评论</view> -->
 				<view class="item"><text>{{totalObj.artNum}}</text>发文</view>
 			</view>
 
@@ -114,8 +114,8 @@
 
 		},
 		methods: {
-			showUserData(){
-				if(userInfo!=null){
+			showUserData() {
+				if (userInfo != null) {
 					console.log(userInfo)
 				}
 			},
@@ -129,15 +129,15 @@
 					url: "/uni_modules/uni-id-pages/pages/userinfo/userinfo"
 				})
 			},
-			async getTotal(){
-				if(!this.hasLogin) return;
-				let artCount=await db.collection("quanzi_article").where(`user_id == $cloudEnv_uid`).count();
-				this.totalObj.artNum=artCount.result.total;
+			async getTotal() {
+				if (!this.hasLogin) return;
+				let artCount = await db.collection("quanzi_article").where(`user_id == $cloudEnv_uid`).count();
+				this.totalObj.artNum = artCount.result.total;
 
-				let likeCount=await db.collection("quanzi_article").where(`user_id == $cloudEnv_uid`)
-				.groupBy('user_id')
-				.groupField('sum(like_count) as totalScore').get()
-				this.totalObj.likeNum=likeCount.result.data[0].totalScore
+				let likeCount = await db.collection("quanzi_article").where(`user_id == $cloudEnv_uid`)
+					.groupBy('user_id')
+					.groupField('sum(like_count) as totalScore').get()
+				this.totalObj.likeNum = likeCount.result.data[0].totalScore
 
 				console.log(this.totalObj);
 

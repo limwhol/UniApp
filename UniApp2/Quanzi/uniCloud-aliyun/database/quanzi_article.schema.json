@@ -8,7 +8,7 @@
 	"permission": {
 		"read": true,
 		"create": "auth.uid != null",
-		"update": "doc.user_id == auth.uid",
+		"update": "doc.user_id == auth.uid||'webAdmin' in auth.role",
 		"delete": "doc.user_id == auth.uid"
 	},
 	"properties": {
@@ -42,6 +42,13 @@
 			"title": "省份",
 			"description": "省份",
 			"label": "省份",
+			"trim": "both"
+		},
+		"delstate": {
+			"bsonType": "bool",
+			"title": "是否已被删除",
+			"description": "true是被删除，false是没有被删除",
+			"defaultValue":false,
 			"trim": "both"
 		},
 		"content": {

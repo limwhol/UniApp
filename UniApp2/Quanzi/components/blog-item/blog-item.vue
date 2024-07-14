@@ -14,8 +14,8 @@
 				</view>
 			</view>
 			<view class="rightElements">
-				<view class="threeDots">
-					<text class="iconfont icon-more"></text>
+				<view class="threeDots" @click="clickMore">
+					<text class="iconfont icon-ellipsis"></text>
 				</view>
 			</view>
 		</view>
@@ -27,7 +27,8 @@
 				{{item.description}}
 			</view>
 			<view class="piclist">
-				<view class="pic" :class="item.picurls.length==1?'only':''" v-for="(pic,index) in item.picurls" :key="index" v-if="item.picurls.length">
+				<view class="pic" :class="item.picurls.length==1?'only':''" v-for="(pic,index) in item.picurls"
+					:key="index" v-if="item.picurls.length">
 					<image :src="pic" mode="aspectFill" @click="enlargePic(index)"></image>
 				</view>
 			</view>
@@ -40,19 +41,39 @@
 			<view class="comments" @click="toDetail(item._id)">
 				<text class="iconfont icon-a-5-xinxi"></text>{{item.comment_count?item.comment_count:"评论"}}
 			</view>
-			<view class="like">
+			<view class="like" :class="item.isLike?'active':''">
 				<text class="iconfont icon-a-106-xihuan"></text>{{item.like_count?item.like_count:"点赞"}}
 			</view>
 		</view>
+		<u-action-sheet @select="sheetSelect" @close="sheetClose" :actions="list" cancelText="取消" :show="sheetShow"
+			:closeOnClickOverlay="true" :closeOnClickAction="true"></u-action-sheet>
 	</view>
 </template>
 
 <script>
-	import {getUserAvatar,getUserName} from "../../utils/tools.js"
+	import {
+		getUserAvatar,
+		getUserName
+	} from "../../utils/tools.js"
+	const db = uniCloud.database()
 	export default {
 		name: "blog-item",
 		data() {
-			return {}
+			return {
+				list: [{
+						name: '修改',
+						type: "edit",
+						disabled: true
+					},
+					{
+						name: '删除',
+						type: "delete",
+						color: "#dd0606",
+						disabled: true
+					}
+				],
+				sheetShow: false
+			}
 		},
 		props: {
 			item: {
@@ -62,16 +83,65 @@
 				}
 			}
 		},
-		methods:{
-			getUserAvatar,
-			getUserName,
-			enlargePic(id){
-				uni.previewImage({
-					urls:this.item.picurls,
-					current:id
+		methods: {
+			clickMore() {
+				let id = uniCloud.getCurrentUserInfo().uid
+				this.sheetShow = true
+				console.log(id)
+				if (id == this.item.user_id[0]._id || this.uniIDHasRole('admin') || this.uniIDHasRole('webAdmin')) {
+					for (let i = 0; i < this.list.length; i++) {
+						this.list[i].disabled = false
+					}
+				}
+			},
+			sheetSelect(e) {
+				this.sheetShow = false
+				let type = e.type
+				if (type == "delete") {
+					this.delFunc()
+				}
+				if (type == "edit") {
+					this.editFunc()
+				}
+				console.log("type is " + type)
+			},
+			delFunc() {
+				uni.showModal({
+					title: "是否删除文章?",
+					success: res => {
+						if (res.confirm) {
+							db.collection("quanzi_article").doc(this.item._id).update({
+								delstate: true
+							}).then(res => {
+								uni.showToast({
+									title: "删除成功",
+									icon: "none"
+								})
+								this.$emit("delEvent", true)
+							}).catch(err => {
+								console.log(err)
+							})
+						}
+					}
 				})
 			},
-			toDetail(e){
+			editFunc() {
+				uni.navigateTo({
+					url: "#"
+				})
+			},
+			sheetClose() {
+				this.sheetShow = false
+			},
+			getUserAvatar,
+			getUserName,
+			enlargePic(id) {
+				uni.previewImage({
+					urls: this.item.picurls,
+					current: id
+				})
+			},
+			toDetail(e) {
 				uni.navigateTo({
 					url: `/pages/details/details?id=${e}`
 				});
@@ -200,6 +270,7 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
+
 				.iconfont {
 					margin-right: 10rpx;
 				}
@@ -213,6 +284,11 @@
 				.iconfont {
 					margin-right: 10rpx;
 				}
+
+			}
+
+			.like.active {
+				color: #0199FE;
 			}
 		}
 	}

@@ -18,9 +18,17 @@
 		{
 			"path": "uni_modules/uni-id-pages/pages/login/login-withpwd",
 			"style": {
-				"topWindow": false,
-				"leftWindow": false,
+				"topWindow": true,
+				"leftWindow": true,
 				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "uni_modules/uni-id-pages/pages/register/register",
+			"style": {
+				"topWindow": true,
+				"leftWindow": true,
+				"navigationBarTitleText": "注册"
 			}
 		},
 		{
