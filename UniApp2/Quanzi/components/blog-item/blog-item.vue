@@ -51,6 +51,7 @@
 </template>
 
 <script>
+	import pageJson from "@/pages.json"
 	import {
 		store
 	} from '@/uni_modules/uni-id-pages/common/store.js'
@@ -188,21 +189,21 @@
 				.userName {
 					padding-right: 10rpx;
 					padding-left: 10rpx;
-					font-size: 24rpx;
+					font-size: 26rpx;
 					color: #333333;
 				}
 
 				.postTime {
 					padding-right: 10rpx;
 					padding-left: 10rpx;
-					font-size: 20rpx;
+					font-size: 26rpx;
 					color: #999999;
 				}
 			}
 
 			.rightElements {
 				.threeDots {
-					font-size: 22rpx;
+					font-size: 26rpx;
 				}
 			}
 
@@ -210,7 +211,7 @@
 
 		.body {
 			.title {
-				font-size: 34rpx;
+				font-size: 38rpx;
 				margin-top: 20rpx;
 				margin-bottom: 20rpx;
 				font-weight: bold;
@@ -218,7 +219,7 @@
 			}
 
 			.content {
-				font-size: 24rpx;
+				font-size: 26rpx;
 				margin-bottom: 20rpx;
 				color: #666;
 				line-height: 1.8em;
@@ -259,7 +260,7 @@
 			justify-content: space-around;
 			align-items: center;
 			margin-bottom: 20rpx;
-			font-size: 22rpx;
+			font-size: 26rpx;
 			color: #666;
 
 			.hits {

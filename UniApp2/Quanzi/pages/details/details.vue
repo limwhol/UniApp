@@ -34,7 +34,10 @@
 					<text v-else></text>
 				</view>
 				<view class="users">
-					<image src="@/static/images/1.png" mode="aspectFill"></image>
+					<view v-for="item in likeUserArr">
+						<image v-if="item.user_id[0].avatar_file" :src="getUserAvatar(item)" mode="aspectFill"></image>
+					</view>
+					
 				</view>
 				<view class="text">
 					<text class="num">{{dataObj.view_count}}</text>人看过
@@ -67,7 +70,8 @@
 					img: "border-radius:20rpx;margin-bottom:15rpx;",
 					p: "line-height: 1.6em;"
 				},
-				likeTime: null
+				likeTime: null,
+				likeUserArr:[]
 			};
 		},
 		onLoad(e) {
@@ -77,8 +81,18 @@
 			this.artID = e.id
 			this.getData()
 			this.viewUpdate()
+			this.getUserLike()
 		},
 		methods: {
+			getUserLike(){
+				let likeTemp = db.collection("quanzi_like").where(`article_id=="${this.artID}"`).getTemp()
+				let userTemp=db.collection("uni-id-users").field("_id,avatar_file").getTemp()
+				db.collection(likeTemp,userTemp).limit(5).get().then(res=>{
+					console.log(res)
+					this.likeUserArr=res.result.data
+				})
+					
+			},
 			getUserAvatar,
 			getUserName,
 			getData() {

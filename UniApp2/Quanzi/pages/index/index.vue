@@ -15,6 +15,9 @@
 				<blog-item @delEvent="P_delEvent" :item="item" />
 			</view>
 		</view>
+		<view class="">
+			<uni-load-more :status="uniloading"></uni-load-more>
+		</view>
 		<view class="edit">
 			<text class="iconfont icon-a-21-xiugai" @click="goEdit"></text>
 		</view>
@@ -31,6 +34,7 @@
 	export default {
 		data() {
 			return {
+				uniloading:"more",
 				navList: [{
 						name: "最新",
 						type: "publish_date"
@@ -48,6 +52,15 @@
 		onLoad() {
 			this.getData()
 		},
+		onReachBottom() {
+			// console.log("chudi")
+			// if(!this.noMore)
+			// {
+			// 	console.log("222"+this.noMore)
+			// 	this.uniloading="loading"
+			// }
+			this.getData()
+		},
 		methods: {
 			P_delEvent() {
 				this.dataArr = []
@@ -56,6 +69,7 @@
 			clickNav(e) {
 				this.isloadingState = true
 				this.dataArr = []
+				this.noMore=false
 				console.log(e)
 				this.navIndex = e.index
 				this.getData()
@@ -70,11 +84,18 @@
 						"title,user_id,description,picurls,comment_count,like_count,view_count,publish_date,province")
 					.getTemp()
 				let userTemp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
-				db.collection(artTemp, userTemp).orderBy(this.navList[this.navIndex].type, "desc").get().then(
+				db.collection(artTemp, userTemp).orderBy(this.navList[this.navIndex].type, "desc").skip(this.dataArr.length).limit(5).get().then(
 				async res => {
 
 						let idArr = []
-						let resDataArr = res.result.data
+						let oldArr=this.dataArr
+						// if(res.result.data.length==0){
+						// 	this.uniloading="noMore"
+						// 	this.noMore=true
+						// 	console.log("333"+this.noMore)
+						// }
+						res.result.data.length?this.uniloading="loading":this.uniloading="noMore"
+						let resDataArr = [...this.dataArr,...res.result.data]
 						if (store.hasLogin) {
 							resDataArr.forEach(item => {
 								idArr.push(item._id)
@@ -91,7 +112,8 @@
 							})
 						}
 
-						this.dataArr = res.result.data
+						this.dataArr = resDataArr
+						// console.log(this.dataArr)
 						this.isloadingState = false
 					})
 			}

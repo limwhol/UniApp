@@ -219,7 +219,7 @@
 	.user {
 
 		.top {
-			height: 300rpx;
+			height: 400rpx;
 			background: #bbb;
 			padding: 0 30rpx;
 			padding-top: var(--status-bar-height);
@@ -242,8 +242,8 @@
 					align-items: center;
 
 					.pic {
-						width: 120rpx;
-						height: 120rpx;
+						width: 100rpx;
+						height: 100rpx;
 						border-radius: 50%;
 						overflow: hidden;
 						border: 2px solid #fff;
@@ -258,12 +258,12 @@
 						padding-left: 20rpx;
 
 						.nickname {
-							font-size: 44rpx;
+							font-size: 50rpx;
 							font-weight: 600;
 						}
 
 						.year {
-							font-size: 26rpx;
+							font-size: 30rpx;
 							opacity: 0.6;
 							padding-top: 5rpx;
 						}
@@ -330,7 +330,7 @@
 						justify-content: space-between;
 						align-items: center;
 						padding: 25rpx 0;
-						font-size: 36rpx;
+						font-size: 30rpx;
 						color: #555;
 						border-bottom: 1rpx solid #efefef;
 
@@ -339,14 +339,14 @@
 							align-items: center;
 
 							.iconfont {
-								font-size: 38rpx;
+								font-size: 30rpx;
 								margin-right: 10rpx;
 							}
 						}
 
 						.right {
 							.iconfont {
-								font-size: 26rpx;
+								font-size: 30rpx;
 							}
 						}
 					}
