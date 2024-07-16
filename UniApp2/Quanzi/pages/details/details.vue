@@ -89,7 +89,7 @@
 				let likeTemp = db.collection("quanzi_like").where(`article_id=="${this.artID}"`).getTemp()
 				let userTemp = db.collection("uni-id-users").field("_id,avatar_file").getTemp()
 				db.collection(likeTemp, userTemp).limit(5).get().then(res => {
-					console.log(res)
+					// console.log(res)
 					this.likeUserArr = res.result.data
 				})
 
@@ -120,6 +120,7 @@
 					if (store.hasLogin) {
 						islike = res.result.data._id.quanzi_like.length ? true : false
 					}
+					console.log(islike)
 					res.result.data.islike = islike
 					this.dataObj = res.result.data
 					uni.setNavigationBarTitle({
@@ -141,7 +142,7 @@
 			},
 			viewUpdate() {
 				utilsObj.operation("quanzi_article", "view_count", this.artID, 1).then(res => {
-					console.log(res)
+					// console.log(res)
 				})
 			},
 			async clickLike() {
@@ -170,7 +171,7 @@
 					})
 					return
 				}
-				console.log(this.dataObj.islike)
+				// console.log(this.dataObj.islike)
 				this.dataObj.islike ? this.dataObj.like_count-- : this.dataObj.like_count++
 				this.dataObj.islike = !this.dataObj.islike
 				this.likeTime = Date.now()

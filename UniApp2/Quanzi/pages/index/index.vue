@@ -88,12 +88,6 @@
 				async res => {
 
 						let idArr = []
-						let oldArr=this.dataArr
-						// if(res.result.data.length==0){
-						// 	this.uniloading="noMore"
-						// 	this.noMore=true
-						// 	console.log("333"+this.noMore)
-						// }
 						res.result.data.length?this.uniloading="loading":this.uniloading="noMore"
 						let resDataArr = [...this.dataArr,...res.result.data]
 						if (store.hasLogin) {
@@ -108,12 +102,10 @@
 								let findIndex = resDataArr.findIndex(find => {
 									return item.article_id == find._id
 								})
-								resDataArr[findIndex].isLike = true
+								resDataArr[findIndex].islike = true
 							})
 						}
-
 						this.dataArr = resDataArr
-						// console.log(this.dataArr)
 						this.isloadingState = false
 					})
 			}

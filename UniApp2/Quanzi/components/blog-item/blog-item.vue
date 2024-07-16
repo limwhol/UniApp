@@ -41,8 +41,11 @@
 			<view class="comments" @click="toDetail(item._id)">
 				<text class="iconfont icon-a-5-xinxi"></text>{{item.comment_count?item.comment_count:"评论"}}
 			</view>
-			<view class="like" :class="item.isLike?'active':''" @click="clickLike()">
+			<view class="like" :class="item.islike?'active':''" @click="clickLike()">
 				<text class="iconfont icon-a-106-xihuan"></text>{{item.like_count?item.like_count:"点赞"}}
+			</view>
+			<view class="">
+				{{item.islike?"true":"false"}}
 			</view>
 		</view>
 		<u-action-sheet @select="sheetSelect" @close="sheetClose" :actions="list" cancelText="取消" :show="sheetShow"
