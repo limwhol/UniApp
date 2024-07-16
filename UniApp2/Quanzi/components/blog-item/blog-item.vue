@@ -41,7 +41,7 @@
 			<view class="comments" @click="toDetail(item._id)">
 				<text class="iconfont icon-a-5-xinxi"></text>{{item.comment_count?item.comment_count:"评论"}}
 			</view>
-			<view class="like" :class="item.isLike?'active':''" @click="clickLike">
+			<view class="like" :class="item.isLike?'active':''" @click="clickLike()">
 				<text class="iconfont icon-a-106-xihuan"></text>{{item.like_count?item.like_count:"点赞"}}
 			</view>
 		</view>
@@ -57,7 +57,8 @@
 	} from '@/uni_modules/uni-id-pages/common/store.js'
 	import {
 		getUserAvatar,
-		getUserName
+		getUserName,
+		likeFun
 	} from "../../utils/tools.js"
 	const db = uniCloud.database()
 	export default {
@@ -88,8 +89,36 @@
 			}
 		},
 		methods: {
-			clickLike(){
-				
+			async clickLike() {
+				if (!store.hasLogin) {
+					uni.showModal({
+						title: "缺少登录状态！",
+						content: "您需要登录后才能进行点赞操作。",
+						success: function(res) {
+							if (res.confirm) {
+								uni.navigateTo({
+									url: '/' + pageJson.uniIdRouter.loginPage
+								});
+							}
+							if (res.cancel) {
+								console.log('用户点击取消');
+								return
+							}
+						}
+					});
+				}
+				let time = Date.now()
+				if (time - this.likeTime < 2000) {
+					uni.showToast({
+						title: "操作频繁…",
+						icon: 'error'
+					})
+					return
+				}
+				this.likeTime = Date.now()
+				this.item.islike ? this.item.like_count-- : this.item.like_count++
+				this.item.islike = !this.item.islike
+				likeFun(this.item._id)
 			},
 			clickMore() {
 				let id = uniCloud.getCurrentUserInfo().uid
@@ -142,6 +171,7 @@
 			},
 			getUserAvatar,
 			getUserName,
+			likeFun,
 			enlargePic(id) {
 				uni.previewImage({
 					urls: this.item.picurls,

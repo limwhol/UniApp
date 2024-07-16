@@ -28,7 +28,7 @@
 				<u-parse :content="dataObj.content" :tagStyle="tagStyleObj"></u-parse>
 			</view>
 			<view class="like">
-				<view class="btn" :class="dataObj.islike?'only':''" @click="likeFunc">
+				<view class="btn" :class="dataObj.islike?'only':''" @click="clickLike">
 					<text class="iconfont icon-a-106-xihuan"></text>
 					<text v-if="dataObj.like_count>0">{{dataObj.like_count}}</text>
 					<text v-else></text>
@@ -37,7 +37,7 @@
 					<view v-for="item in likeUserArr">
 						<image v-if="item.user_id[0].avatar_file" :src="getUserAvatar(item)" mode="aspectFill"></image>
 					</view>
-					
+
 				</view>
 				<view class="text">
 					<text class="num">{{dataObj.view_count}}</text>人看过
@@ -54,7 +54,8 @@
 	} from '@/uni_modules/uni-id-pages/common/store.js'
 	import {
 		getUserAvatar,
-		getUserName
+		getUserName,
+		likeFun
 	} from "../../utils/tools.js"
 	const db = uniCloud.database()
 	const utilsObj = uniCloud.importObject("utilsObj", {
@@ -71,7 +72,7 @@
 					p: "line-height: 1.6em;"
 				},
 				likeTime: null,
-				likeUserArr:[]
+				likeUserArr: []
 			};
 		},
 		onLoad(e) {
@@ -84,17 +85,18 @@
 			this.getUserLike()
 		},
 		methods: {
-			getUserLike(){
+			getUserLike() {
 				let likeTemp = db.collection("quanzi_like").where(`article_id=="${this.artID}"`).getTemp()
-				let userTemp=db.collection("uni-id-users").field("_id,avatar_file").getTemp()
-				db.collection(likeTemp,userTemp).limit(5).get().then(res=>{
+				let userTemp = db.collection("uni-id-users").field("_id,avatar_file").getTemp()
+				db.collection(likeTemp, userTemp).limit(5).get().then(res => {
 					console.log(res)
-					this.likeUserArr=res.result.data
+					this.likeUserArr = res.result.data
 				})
-					
+
 			},
 			getUserAvatar,
 			getUserName,
+			likeFun,
 			getData() {
 				let artTemp = db.collection("quanzi_article").where(`_id=="${this.artID}"`)
 					.getTemp()
@@ -102,7 +104,7 @@
 				let likeTemp = db.collection("quanzi_like").where(`article_id=="${this.artid}" && user_id==$cloudEnv_uid`)
 					.getTemp();
 				let tempArr = [artTemp, userTemp]
-				console.log(store.hasLogin)
+				// console.log(store.hasLogin)
 				if (store.hasLogin) {
 					tempArr.push(likeTemp)
 				}
@@ -112,7 +114,7 @@
 					if (!res.result.data) {
 						this.errFunc()
 					}
-					console.log(res)
+					// console.log(res)
 					this.isloadingState = false
 					let islike = false
 					if (store.hasLogin) {
@@ -150,7 +152,7 @@
 						success: function(res) {
 							if (res.confirm) {
 								uni.navigateTo({
-									url: '/'+pageJson.uniIdRouter.loginPage
+									url: '/' + pageJson.uniIdRouter.loginPage
 								});
 							}
 							if (res.cancel) {
@@ -160,21 +162,6 @@
 						}
 					});
 				}
-				this.dataObj.islike ? this.dataObj.like_count-- : this.dataObj.like_count++
-				this.dataObj.islike = !this.dataObj.islike
-				let count = await db.collection("quanzi_like").where(
-					`article_id=="${this.artID}"&& user_id==$cloudEnv_uid`).count()
-				if (count.result.total) {
-					db.collection("quanzi_like").where(`article_id=="${this.artID}"&& user_id==$cloudEnv_uid`).remove()
-					utilsObj.operation("quanzi_article", "like_count", this.artID, -1)
-				} else {
-					db.collection("quanzi_like").add({
-						article_id: this.artID,
-					})
-					utilsObj.operation("quanzi_article", "like_count", this.artID, 1)
-				}
-			},
-			likeFunc() {
 				let time = Date.now()
 				if (time - this.likeTime < 2000) {
 					uni.showToast({
@@ -183,8 +170,12 @@
 					})
 					return
 				}
+				console.log(this.dataObj.islike)
+				this.dataObj.islike ? this.dataObj.like_count-- : this.dataObj.like_count++
+				this.dataObj.islike = !this.dataObj.islike
 				this.likeTime = Date.now()
-				this.clickLike()
+				
+				likeFun(this.artID)
 			}
 		}
 	}
