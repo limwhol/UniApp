@@ -132,14 +132,18 @@
 			async getTotal() {
 				if (!this.hasLogin) return;
 				let artCount = await db.collection("quanzi_article").where(`user_id == $cloudEnv_uid`).count();
+				console.log(artCount)
 				this.totalObj.artNum = artCount.result.total;
 
 				let likeCount = await db.collection("quanzi_article").where(`user_id == $cloudEnv_uid`)
 					.groupBy('user_id')
 					.groupField('sum(like_count) as totalScore').get()
-				this.totalObj.likeNum = likeCount.result.data[0].totalScore
-
-				console.log(this.totalObj);
+				if (likeCount.result.data.length > 0 && likeCount.result.data[0]?.totalScore !== undefined) {
+					this.totalObj.likeNum = likeCount.result.data[0].totalScore;
+				} else {
+					this.totalObj.likeNum = 0;
+				}
+				console.log(this.totalObj.likeNum);
 
 			},
 

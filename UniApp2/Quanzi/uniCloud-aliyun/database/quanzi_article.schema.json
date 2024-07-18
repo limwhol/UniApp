@@ -78,7 +78,7 @@
 			"bsonType": "int",
 			"title": "阅读数量",
 			"description": "阅读数量",
-			"defaultValue":23,
+			"defaultValue":0,
 			"permission": {
 				"write": false
 			}
