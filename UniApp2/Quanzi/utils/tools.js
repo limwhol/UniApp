@@ -69,7 +69,7 @@ const db = uniCloud.database()
 const utilsObj = uniCloud.importObject("utilsObj", {
 	customUI: true
 })
-
+//当用户点赞后，获得点赞表中文章以及用户信息都匹配的记录并计数，如果计数结果大于0，则在点赞数汇总这个字段里移除这个点赞记录，反之则增加这个点赞记录
 export async function  likeFun(artid){				
 	let count= await db.collection("quanzi_like").where(`article_id=="${artid}" && user_id==$cloudEnv_uid`).count()				
 	if(count.result.total){

@@ -46,7 +46,8 @@
 				],
 				isloadingState: true,
 				dataArr: [],
-				navIndex: 0
+				navIndex: 0,
+				totalItems:0
 			}
 		},
 		onLoad() {
@@ -88,6 +89,18 @@
 					.getTemp()
 				//在用户表里筛选所有用户的相关字段并设置为一个临时表便于下一步连表查询
 				let userTemp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
+				// await db.collection(artTemp, userTemp).orderBy(this.navList[this.navIndex].type, "desc").get().then(res=>{
+				// 	// console.log(res)
+				// 	this.totalItems=res.result.data.length
+				// })
+				let res;
+				try {
+				  res = await db.collection(artTemp, userTemp).orderBy(this.navList[this.navIndex].type, "desc").get();
+				  console.log(res);
+				  this.totalItems = res.result.data.length;
+				} catch (error) {
+				  console.error("Database query failed:", error);
+				}
 				//将上面2个临时表连表查询，规则如下面代码所示，较为容易理解，其中orderBy的第一个字符串由首页顶部导航按钮决定，按钮选项里TYPE的值决定了按照什么字段查询
 				db.collection(artTemp, userTemp).orderBy(this.navList[this.navIndex].type, "desc").skip(this.dataArr
 					.length).limit(5).get().then(
@@ -95,7 +108,13 @@
 						//新建一个空数组
 						let idArr = []
 						//查询结果的DATA数组长度是否为真，为真的话，底部栏状态为加载中，为假的话，底部栏状态为没有更多数据了
-						res.result.data.length ? this.uniloading = "loading" : this.uniloading = "noMore"
+						if (res.result.data.length > 0) {
+						  this.uniloading = this.totalItems == res.result.data.length ? "noMore" : "loading";
+						} else {
+						  this.uniloading = "noMore";
+						}
+						// res.result.data.length ? this.uniloading = "loading" : this.uniloading = "noMore"
+						// console.log(res)
 						//新建一个数组，将老的文章数据数组和刚刚查询出来的最新的文章数据数组进行拼接，组成最新的文章数据数组
 						let resDataArr = [...this.dataArr, ...res.result.data]
 						

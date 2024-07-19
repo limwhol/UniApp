@@ -28,9 +28,9 @@
 				<u-parse :content="dataObj.content" :tagStyle="tagStyleObj"></u-parse>
 			</view>
 			<view class="like">
-				<view class="btn" :class="this.dataObj.isLike?'only':''" @click="clickLike">
-					<text class="iconfont icon-a-106-xihuan">{{this.dataObj.isLike}}</text>
-					<text v-if="dataObj.like_count>0">{{dataObj.like_count}}</text>
+				<view class="btn" :class="dataObj.isLike?'only':''" @click="clickLike">
+					<text class="iconfont icon-a-106-xihuan"></text>
+					<text v-if="dataObj.like_count">{{dataObj.like_count}}</text>
 					<text v-else></text>
 				</view>
 				<view class="users">
@@ -63,7 +63,7 @@
 	export default {
 		data() {
 			return {
-				artID: "",
+				artid: "",
 				isloadingState: true,
 				dataObj: {},
 				tagStyleObj: {
@@ -77,8 +77,9 @@
 		onLoad(e) {
 			if (!e.id) {
 				this.errFunc()
+				return
 			}
-			this.artID = e.id
+			this.artid = e.id
 			this.getData()
 			this.viewUpdate()
 			//收集一共多少用户点赞了这篇文章
@@ -87,28 +88,29 @@
 		methods: {
 			getUserLike() {
 				//在点赞表中查询文章ID符合要求的记录，首页传文章ID过来，和表里的article_id能对应上就选中之
-				let likeTemp = db.collection("quanzi_like").where(`article_id=="${this.artID}"`).getTemp()
+				let likeTemp = db.collection("quanzi_like").where(`article_id=="${this.artid}"`).getTemp()
 				//在用户表里查询所有的_id和avatar_file字段，其中_id用来关联主表里的user_id，其下将具有avatar_file字段，
 				let userTemp = db.collection("uni-id-users").field("_id,avatar_file").getTemp()
 				//联合查询上面的两张表，将符合要求的文章下的所有赞里的头像信息都导出
 				db.collection(likeTemp, userTemp).limit(5).get().then(res => {
 					//将导出信息赋值给likeUserArr
 					this.likeUserArr = res.result.data
-					this.likeUserArr=this.likeUserArr.reverse()
+					this.likeUserArr = this.likeUserArr.reverse()
 				})
 			},
 			getUserAvatar,
 			getUserName,
 			likeFun,
 			getData() {
-				//在文章表里查询ID和首页传值过来的ID相同的记录
-				let artTemp = db.collection("quanzi_article").where(`_id=="${this.artID}"`)
+				//在文章表里查询ID和首页传值过来的ID相同的记录，这应该只能查到一条数据，因为文章ID是唯一的
+				let artTemp = db.collection("quanzi_article").where(`_id=="${this.artid}"`)
 					.getTemp()
 				//在用户表里查询所有的用户信息，指定字段包括了以_id为锚点，变为主表下user_id下的username,nickname以及avatar_file等字段
 				let userTemp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
 				//在点赞表里查询所有和首页传来的文章ID相同，且是当前用户点过的赞的记录
 				let likeTemp = db.collection("quanzi_like").where(`article_id=="${this.artid}" && user_id==$cloudEnv_uid`)
 					.getTemp();
+					
 				//先将临时的文章表和用户表做成一个数组
 				let tempArr = [artTemp, userTemp]
 				// console.log(store.hasLogin)
@@ -121,28 +123,47 @@
 				db.collection(...tempArr).get({
 					getOne: true
 				}).then(res => {
-					console.log(res)
+					// console.log(res)
 					if (!res.result.data) {
 						this.errFunc()
+						return
 						//如果在查询结果中的res.result.data中没有任何数据则走errFunc函数，errFunc会展示错误信息并返回，不执行下面的后继代码
 					}
 					//将isloadingState状态改变，取消骨架屏的显示
 					this.isloadingState = false
 					//新建一个变量并赋值为false
-					let isLike = false
-					//再次对登录状态进行判断，如果用户已经登录则判断res.result.data._id.quanzi_like.length是否有元素，有的话给islike返回true，没有就返回false
-					if (store.hasLogin) {
-						isLike= res.result.data._id.quanzi_like.length ? true : false
-					}
+					// let isLike = false
+					// //再次对登录状态进行判断，如果用户已经登录则判断res.result.data._id.quanzi_like.length是否有元素，有的话给islike返回true，没有就返回false
+					// // if (store.hasLogin) {
+					// // 	isLike = res.result.data._id.quanzi_like.length ? true : false
+					// // }
+					// likeTemp.then(res=>{
+					// 	console.log(res)
+					// 	isLike =res.result.data.length? true : false
+					// })
+					// //无论是什么结果，都把islike的值赋给res.result.data.islike
+					// res.result.data.isLike = isLike
+					// //再将res.result.data赋给dataObj
+					// this.dataObj = res.result.data
+					//将对象中的文章标题属性值赋给页面抬头
+					uni.setNavigationBarTitle({
+						title: "this.dataObj.title"
+					})
+				}).catch(err=>{
+					console.log(err)
+					this.errFunc()
+					return
+				})
+				let isLike = false
+				db.collection("quanzi_like").where(`article_id=="${this.artid}"&&user_id==$cloudEnv_uid`).get().then(res=>{
+					console.log(res)
+					isLike =res.result.data.length? true : false
 					//无论是什么结果，都把islike的值赋给res.result.data.islike
 					res.result.data.isLike = isLike
 					//再将res.result.data赋给dataObj
 					this.dataObj = res.result.data
-					//将对象中的文章标题属性值赋给页面抬头
-					uni.setNavigationBarTitle({
-						title: this.dataObj.title
-					})
 				})
+				
 			},
 			errFunc() {
 				uni.showToast({
@@ -158,7 +179,7 @@
 			},
 			viewUpdate() {
 				//调用utilsObj下的operation函数，输入查询表名，需要查询的字段名，输入文章ID和希望增加的浏览数，函数会为改文章的浏览量数据增加1点
-				utilsObj.operation("quanzi_article", "view_count", this.artID, 1).then(res => {
+				utilsObj.operation("quanzi_article", "view_count", this.artid, 1).then(res => {
 					// console.log(res)
 				})
 			},
@@ -191,6 +212,7 @@
 					})
 					return
 				}
+
 				// console.log(this.dataObj.islike)
 				//查看dataObj.islike的值，如果为true的话，则点击后like_count的值需要-1；如果点击后为false的话说明用户没有点过赞，现在点赞后like_count数值需要+1
 				this.dataObj.isLike ? this.dataObj.like_count-- : this.dataObj.like_count++
@@ -199,7 +221,7 @@
 				//将最新的时间赋值给likeTime方便阻止用户下次继续过于密集点赞
 				this.likeTime = Date.now()
 				//调用likeFun函数，该函数的作用是，将文章ID作为参数，函数可以查询用户是否为此文章点过赞，如果点过，就减去点过的赞；反之则在数据库中增加对此文章的点赞。该函数主要负责将数据记录至数据库，上面的代码更多负责前端点赞状态的展示。
-				likeFun(this.artID)
+				await likeFun(this.artid)
 			}
 		}
 	}
