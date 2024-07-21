@@ -42,6 +42,18 @@
 					<text class="num">{{dataObj.view_count}}</text>人看过
 				</view>
 			</view>
+			<view class="comment">
+				<view style="padding-bottom:50rpx" v-if="!commentList.length && noComment">
+					<u-empty mode="comment" icon="https://cdn.uviewui.com/uview/empty/comment.png">
+					</u-empty>
+				</view>
+				<view class="content" v-if="commentList.length">
+					<view class="item" v-for="item in commentList">
+						<comment-item :item="item" @removeEnv="PremoveEnv"></comment-item>
+					</view>
+				</view>
+			</view>
+			<comment-frame :commentObj="commentObj" @commentEnv="PcommentEnv"></comment-frame>
 		</view>
 	</view>
 </template>
@@ -71,7 +83,13 @@
 					p: "line-height: 1.6em;"
 				},
 				likeTime: null,
-				likeUserArr: []
+				likeUserArr: [],
+				commentObj:{
+					article_id:"",
+					comment_type:0
+				},
+				commentList:[],
+				noComment:false
 			};
 		},
 		onLoad(e) {
@@ -102,68 +120,38 @@
 			getUserName,
 			likeFun,
 			getData() {
-				//在文章表里查询ID和首页传值过来的ID相同的记录，这应该只能查到一条数据，因为文章ID是唯一的
 				let artTemp = db.collection("quanzi_article").where(`_id=="${this.artid}"`)
 					.getTemp()
-				//在用户表里查询所有的用户信息，指定字段包括了以_id为锚点，变为主表下user_id下的username,nickname以及avatar_file等字段
 				let userTemp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
-				//在点赞表里查询所有和首页传来的文章ID相同，且是当前用户点过的赞的记录
-				let likeTemp = db.collection("quanzi_like").where(`article_id=="${this.artid}" && user_id==$cloudEnv_uid`)
-					.getTemp();
-					
-				//先将临时的文章表和用户表做成一个数组
+				let likeTemp = db.collection("quanzi_like").where(`user_id==$cloudEnv_uid`).getTemp()
 				let tempArr = [artTemp, userTemp]
-				// console.log(store.hasLogin)
-				//对用户登录状态做判断，如果用户登录了，在tempArr数组里再添加点赞表备用，用以准确展示用户对当前文章页的点赞状态；如果用户没有登录，则不添加点赞表到数组，随后查询结果不包含用户的点赞情况
 				if (store.hasLogin) {
 					tempArr.push(likeTemp)
-					//将点赞表加入到数组中
 				}
-				//将数组展开后进行查询，且只返回一个查询结果
 				db.collection(...tempArr).get({
 					getOne: true
 				}).then(res => {
-					// console.log(res)
+					console.log(res)
 					if (!res.result.data) {
 						this.errFunc()
 						return
-						//如果在查询结果中的res.result.data中没有任何数据则走errFunc函数，errFunc会展示错误信息并返回，不执行下面的后继代码
 					}
-					//将isloadingState状态改变，取消骨架屏的显示
 					this.isloadingState = false
-					//新建一个变量并赋值为false
-					// let isLike = false
-					// //再次对登录状态进行判断，如果用户已经登录则判断res.result.data._id.quanzi_like.length是否有元素，有的话给islike返回true，没有就返回false
-					// // if (store.hasLogin) {
-					// // 	isLike = res.result.data._id.quanzi_like.length ? true : false
-					// // }
-					// likeTemp.then(res=>{
-					// 	console.log(res)
-					// 	isLike =res.result.data.length? true : false
-					// })
-					// //无论是什么结果，都把islike的值赋给res.result.data.islike
-					// res.result.data.isLike = isLike
-					// //再将res.result.data赋给dataObj
-					// this.dataObj = res.result.data
-					//将对象中的文章标题属性值赋给页面抬头
+					let isLike = false
+					if (store.hasLogin) {
+						isLike = res.result.data._id.quanzi_like.length ? true : false
+					}
+					res.result.data.isLike = isLike
+					this.dataObj = res.result.data
 					uni.setNavigationBarTitle({
-						title: "this.dataObj.title"
+						title: this.dataObj.title
 					})
-				}).catch(err=>{
+				}).catch(err => {
 					console.log(err)
 					this.errFunc()
 					return
 				})
-				let isLike = false
-				db.collection("quanzi_like").where(`article_id=="${this.artid}"&&user_id==$cloudEnv_uid`).get().then(res=>{
-					console.log(res)
-					isLike =res.result.data.length? true : false
-					//无论是什么结果，都把islike的值赋给res.result.data.islike
-					res.result.data.isLike = isLike
-					//再将res.result.data赋给dataObj
-					this.dataObj = res.result.data
-				})
-				
+
 			},
 			errFunc() {
 				uni.showToast({
@@ -231,7 +219,7 @@
 	.detail {
 
 		padding: 30rpx;
-		background-color: #f8f8f8;
+		background-color: #fff;
 		min-height: calc(100vh-var(--window-top));
 
 		.top {
@@ -348,5 +336,13 @@
 				}
 			}
 		}
+
+		.comment{
+				padding:30rpx;
+				padding-bottom:120rpx;
+				.item{
+					padding:10rpx 0;
+				}
+			}
 	}
 </style>

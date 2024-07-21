@@ -83,20 +83,14 @@
 				})
 			},
 			async getData() {
-				//在文章表里筛选所有的delstate状态不为true的记录,并拿取相关字段，设置为一个临时表便于下一步连表查询
 				let artTemp = db.collection("quanzi_article").where(`delstate!=true`).field(
 						"title,user_id,description,picurls,comment_count,like_count,view_count,publish_date,province")
 					.getTemp()
-				//在用户表里筛选所有用户的相关字段并设置为一个临时表便于下一步连表查询
 				let userTemp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
-				// await db.collection(artTemp, userTemp).orderBy(this.navList[this.navIndex].type, "desc").get().then(res=>{
-				// 	// console.log(res)
-				// 	this.totalItems=res.result.data.length
-				// })
 				let res;
 				try {
-				  res = await db.collection(artTemp, userTemp).orderBy(this.navList[this.navIndex].type, "desc").get();
-				  console.log(res);
+				  res = await db.collection(artTemp, userTemp).orderBy(this.navList[this.navIndex].type, "desc").get()
+				  //totalItems用来记录符合查询要求的文章数组的总长度，让其与当前文章数组进行比较，相等则意味着当前查询结果已经到底了，从而决定底部栏的状态
 				  this.totalItems = res.result.data.length;
 				} catch (error) {
 				  console.error("Database query failed:", error);
@@ -120,21 +114,28 @@
 						
 						if (store.hasLogin) {
 							resDataArr.forEach(item => {
-								//查询用户登录状态，如果用户已经登录的话，将最新的数组进行遍历，将数组里的每一个元素的_id字段数据复制给上面新建的idArr数组
+								//查询用户登录状态，如果用户已经登录的话，将所有未删除的文章_id填充为一个数组
 								idArr.push(item._id)
 							})
+							//在点赞表里把所有文章ID存在于IDARR数组里的，当前用户登录状态正确的点赞记录筛选出来
+							//实际上likeRes表已经是用户点过的所有文章的记录了，除了那些被删除的文章
 							let likeRes = await db.collection("quanzi_like").where({
 								article_id: dbCmd.in(idArr),
 								user_id: uniCloud.getCurrentUserInfo().uid
 							}).get()
+							// console.log(likeRes)
+							//遍历筛选出来的点赞记录，每次遍历，一旦点赞记录里的文章ID和整体文章表ID一致，就返回一致时文章记录的数组index号。
+							//通过下面的遍历，通过likeRes和resDataArr的比较，将当前用户点过赞的文章都加入新字段isLike并赋值为true
 							likeRes.result.data.forEach(item => {
 								let findIndex = resDataArr.findIndex(find => {
 									return item.article_id == find._id
 								})
-								resDataArr[findIndex].islike = true
+								resDataArr[findIndex].isLike = true
+								// console.log("resDataArr[findIndex].isLike "+resDataArr[findIndex].isLike)
 							})
 						}
-						//将当前版本的数据再次赋值给老数组，方便继续进行拼接
+						//将当前isLike赋过值的数据再次赋值给老数组，方便继续进行拼接，同时也将isLike数据封装到item里并传递给blog-item
+						//方便在首页上blog-item组件有正确的点赞显示
 						this.dataArr = resDataArr
 						//关闭骨架屏
 						this.isloadingState = false

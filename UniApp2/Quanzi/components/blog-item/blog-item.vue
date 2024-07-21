@@ -44,9 +44,6 @@
 			<view class="like" :class="item.isLike?'active':''" @click="clickLike()">
 				<text class="iconfont icon-a-106-xihuan"></text>{{item.like_count?item.like_count:"点赞"}}
 			</view>
-			<view class="">
-				{{item.isLike?"true":"false"}}
-			</view>
 		</view>
 		<u-action-sheet @select="sheetSelect" @close="sheetClose" :actions="list" cancelText="取消" :show="sheetShow"
 			:closeOnClickOverlay="true" :closeOnClickAction="true"></u-action-sheet>
@@ -120,7 +117,7 @@
 					})
 					return
 				}
-				this.likeTime = Date.now()
+				this.likeTime = time
 				this.item.isLike ? this.item.like_count-- : this.item.like_count++
 				this.item.isLike = !this.item.isLike
 				likeFun(this.item._id)
