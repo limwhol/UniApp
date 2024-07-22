@@ -100,6 +100,7 @@
 			this.artid = e.id
 			this.getData()
 			this.viewUpdate()
+			this.commentObj.article_id==e.id
 			//收集一共多少用户点赞了这篇文章
 			this.getUserLike()
 		},
@@ -131,7 +132,7 @@
 				db.collection(...tempArr).get({
 					getOne: true
 				}).then(res => {
-					console.log(res)
+					// console.log(res)
 					if (!res.result.data) {
 						this.errFunc()
 						return

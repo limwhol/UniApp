@@ -9,12 +9,39 @@
 </template>
 
 <script>
+	const db=uniCloud.database()
+	import {
+		getImgSrc,
+		getProvince
+	} from "@/utils/tools.js"
 	export default {
 		name:"comment-frame",
 		data() {
 			return {
-				
+				placeholder:"写点儿什么吧~",
+				replyContent:""
 			};
+		},
+		props:{
+			commentObj: {
+				type: Object,
+				default () {
+					return {}
+				}
+			}
+		},
+		methods:{
+			async goComment(){
+				let province=await getProvince()
+				console.log(this.replyContent)
+				db.collection("quanzi-comment").add({
+					"comment_content":this.replyContent,
+					"province":province,
+					...this.commentObj
+				}).then(res=>{
+					console.log(res)
+				})
+			}
 		}
 	}
 </script>
