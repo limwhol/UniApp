@@ -100,11 +100,20 @@
 			this.artid = e.id
 			this.getData()
 			this.viewUpdate()
-			this.commentObj.article_id==e.id
+			this.commentObj.article_id=e.id
+			this.getComment()
 			//收集一共多少用户点赞了这篇文章
 			this.getUserLike()
 		},
 		methods: {
+			getComment(){
+				let commentTemp=db.collection("quanzi-comment").where(`article_id=="${this.artid}"`).getTemp()
+				let userTemp=db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
+				db.collection(commentTemp,userTemp).orderBy("comment_date desc").limit(5).get().then(res=>{
+					console.log(res)
+					this.commentList=res.result.data
+				})
+			},
 			getUserLike() {
 				//在点赞表中查询文章ID符合要求的记录，首页传文章ID过来，和表里的article_id能对应上就选中之
 				let likeTemp = db.collection("quanzi_like").where(`article_id=="${this.artid}"`).getTemp()

@@ -2,12 +2,12 @@
 	<view>
 		<view class="comment-item" @click="goReply">
 			<view class="avatar">
-				<u-avatar :src="giveAvatar(item)" size="26"></u-avatar>
+				<u-avatar :src="getUserAvatar(item)" size="26"></u-avatar>
 			</view>
 
 			<view class="wrap">
 				<view class="username">
-					{{giveName(item)}}
+					{{getUserName(item)}}
 					<text v-if="!closeBtn" class="iconfont icon-a-43-guanbi" @click.stop="delComment"></text>
 				</view>
 				<view class="comment-content">{{item.comment_content}}</view>
@@ -25,12 +25,28 @@
 </template>
 
 <script>
+	import {
+		getUserAvatar,
+		getUserName
+	} from "../../utils/tools.js"
 	export default {
 		name: "comment-item",
 		data() {
 			return {
 
 			};
+		},
+		props: {
+			item: {
+				type: Object,
+				default () {
+					return {}
+				}
+			}
+		},
+		methods: {
+			getUserAvatar,
+			getUserName
 		}
 	}
 </script>
@@ -38,11 +54,17 @@
 <style lang="scss" scoped>
 	.comment-item {
 		display: flex;
+border-bottom: 1rpx dashed #e3e3e3;
+		.avatar {
+			padding-top: 10rpx;
+			// background-color: #990c1f;
+		}
 
 		.wrap {
 			flex: 1;
 			padding-left: 20rpx;
 			padding-bottom: 20rpx;
+			// background-color: #999;
 
 			.username {
 				font-size: 26rpx;
@@ -51,6 +73,7 @@
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
+				// background-color: #719943;
 
 				.iconfont {
 					font-size: 20rpx;
@@ -60,9 +83,10 @@
 			}
 
 			.comment-content {
-				font-size: 34rpx;
+				font-size: 26rpx;
 				color: #111;
 				line-height: 1.8em;
+				// background-color: #995142;
 			}
 
 			.info {
@@ -71,6 +95,7 @@
 				display: flex;
 				padding: 10rpx 0;
 				align-items: center;
+				// background-color: #751999;
 
 				view {
 					margin-right: 25rpx;
