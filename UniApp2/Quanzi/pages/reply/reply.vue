@@ -2,7 +2,7 @@
 	<view class="reply">
 		<view class="top">
 			<comment-item :item="replyItem"></comment-item>
-			 <!-- :closeBtn="true" :childState="true" -->
+			<!-- :closeBtn="true" :childState="true" -->
 		</view>
 <!-- 		<view class="list">
 			<view class="row" v-for="item in childReplyArr">
@@ -10,10 +10,10 @@
 			</view>
 		</view> -->
 
-<!-- 		<view>
+		<view>
 			<comment-frame @commentEnv="commentEnv" :commentObj="commentObj"
 				:placeholder="`回复：${getUserName(this.replyItem)}`"></comment-frame>
-		</view> -->
+		</view>
 
 	</view>
 </template>
@@ -27,26 +27,53 @@
 	export default {
 		data() {
 			return {
-				replyItem: {}
+				replyItem: {},
+				childReplyArr: [],
+				commentObj: {
+					article_id: "",
+					comment_type: 1,
+					reply_user_id: "",
+					reply_comment_id: ""
+				}
 			}
 		},
 		onLoad() {
-			if(uni.getStorageSync("replyItem")){
-				this.replyItem=uni.getStorageSync("replyItem")
-				return
-			}else{
-				uni.showToast({
-					title:"缓存获取失败！",
-					icon:"fail"
-				})
-			}
-			uni.navigateBack()
+			this.getStorageData()
+			this.commentObj.article_id = this.replyItem.article_id
+			this.commentObj.reply_user_id = this.replyItem.user_id[0]._id
+			this.commentObj.reply_comment_id = this.replyItem._id
+			// this.getData()
 		},
 		onUnload() {
 			uni.removeStorageSync("replyItem")
 		},
 		methods: {
+			getUserAvatar,
+			getUserName,
+			// getData() {
+			// 	db.collection("quanzi-comment").where({
+			// 		article_id:commentObj.commentObj,
+					
+					
+			// 	}).orderBy("comment_date desc").get().then(res => {
 
+			// 	})
+			// },
+			commentEnv() {
+
+			},
+			getStorageData() {
+				if (uni.getStorageSync("replyItem")) {
+					this.replyItem = uni.getStorageSync("replyItem")
+					return
+				} else {
+					uni.showToast({
+						title: "缓存获取失败！",
+						icon: "fail"
+					})
+				}
+				uni.navigateBack()
+			}
 		}
 	}
 </script>

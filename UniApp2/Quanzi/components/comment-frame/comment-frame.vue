@@ -21,7 +21,6 @@
 		name: "comment-frame",
 		data() {
 			return {
-				placeholder: "写点儿什么吧~",
 				replyContent: ""
 			};
 		},
@@ -31,6 +30,10 @@
 				default () {
 					return {}
 				}
+			},
+			placeholder:{
+				type: String,
+				default:"随便写点什么吧！"
 			}
 		},
 		methods: {

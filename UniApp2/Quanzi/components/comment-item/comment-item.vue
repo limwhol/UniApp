@@ -38,7 +38,7 @@
 		data() {
 			return {
 				closeBtn: false,
-				childState: false
+				childState: false,
 			};
 		},
 		props: {
