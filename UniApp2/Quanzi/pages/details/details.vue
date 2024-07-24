@@ -84,12 +84,12 @@
 				},
 				likeTime: null,
 				likeUserArr: [],
-				commentObj:{
-					article_id:"",
-					comment_type:0
+				commentObj: {
+					article_id: "",
+					comment_type: 0
 				},
-				commentList:[],
-				noComment:false
+				commentList: [],
+				noComment: false
 			};
 		},
 		onLoad(e) {
@@ -100,28 +100,39 @@
 			this.artid = e.id
 			this.getData()
 			this.viewUpdate()
-			this.commentObj.article_id=e.id
+			this.commentObj.article_id = e.id
 			this.getComment()
 			//收集一共多少用户点赞了这篇文章
 			this.getUserLike()
 		},
 		methods: {
+			//删除评论后的回调
+			PremoveEnv(e) {
+				console.log(e);
+				let index = this.commentList.findIndex(item => {
+					return item._id==e
+				})
+				this.commentList.splice(index, 1)
+				this.noComment = this.commentList.length ? false : true
+			},
 			//评论完毕后回调，在父级页面评论列表数组增加记录
-			PcommentEnv(e){
+			PcommentEnv(e) {
 				console.log(e)
 				this.commentList.unshift({
 					...this.commentObj,
 					...e,
-					user_id:[store.userInfo]
+					user_id: [store.userInfo]
 				})
 			},
-			getComment(){
-				let commentTemp=db.collection("quanzi-comment").where(`article_id=="${this.artid}"`).getTemp()
-				let userTemp=db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
-				db.collection(commentTemp,userTemp).orderBy("comment_date desc").limit(5).get().then(res=>{
+			getComment() {
+				let commentTemp = db.collection("quanzi-comment").where(`article_id=="${this.artid}"`).getTemp()
+				let userTemp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
+				db.collection(commentTemp, userTemp).orderBy("comment_date desc").limit(5).get().then(res => {
 					console.log(res)
-					this.commentList=res.result.data
-					if(res.result.data.length==0){this.noComment=true}
+					this.commentList = res.result.data
+					if (res.result.data.length == 0) {
+						this.noComment = true
+					}
 				})
 			},
 			getUserLike() {
@@ -357,12 +368,13 @@
 			}
 		}
 
-		.comment{
-				padding:30rpx;
-				padding-bottom:120rpx;
-				.item{
-					padding:10rpx 0;
-				}
+		.comment {
+			padding: 30rpx;
+			padding-bottom: 120rpx;
+
+			.item {
+				padding: 10rpx 0;
 			}
+		}
 	}
 </style>

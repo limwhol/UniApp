@@ -30,6 +30,9 @@
 		getUserAvatar,
 		getUserName
 	} from "../../utils/tools.js"
+	const utilsObj = uniCloud.importObject("utilsObj", {
+		customUI: true
+	})
 	export default {
 		name: "comment-item",
 		data() {
@@ -50,11 +53,47 @@
 			getUserAvatar,
 			getUserName,
 			delComment() {
-				db.collection("quanzi-comment").doc(this.item._id).remove()
+				let id = uniCloud.getCurrentUserInfo().uid
+				if (id == this.item.user_id[0]._id || this.uniIDHasRole('admin') || this.uniIDHasRole('webAdmin')) {
+					this.removeComment()
+				} else {
+					uni.showToast({
+						title: "权限不足",
+						icon: "error"
+					})
+				}
+			},
+			removeComment() {
+				uni.showModal({
+					title: "是否删除评论?",
+					success: res => {
+						if (res.confirm) {
+							db.collection("quanzi-comment").doc(this.item._id).remove().then(res => {
+								uni.showToast({
+									title: "删除成功",
+									icon: "success"
+								})
+								this.reduceCom()
+								this.$emit("removeEnv", this.item._id)
+							}).catch(err => {
+								console.log(err)
+							})
+						}
+					}
+				})
+			},
+			reduceCom() {
+				utilsObj.operation("quanzi_article", "comment_count", this.item.article_id, -1).then(res => {
+					// console.log(res)
+				})
 			},
 			goReply() {
+				uni.setStorageSync("replyItem",this.item)
+				uni.navigateTo({
+					url: "/pages/reply/reply"
+				})
+			},
 
-			}
 		}
 	}
 </script>

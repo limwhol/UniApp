@@ -147,6 +147,13 @@
     "style": {
         "navigationBarTitleText": "列表"
     }
+},
+{
+	"path" : "pages/reply/reply",
+	"style" : 
+	{
+		"navigationBarTitleText" : "回复页面"
+	}
 }
 ],
 	"globalStyle": {

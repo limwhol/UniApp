@@ -14,6 +14,9 @@
 		getImgSrc,
 		getProvince
 	} from "@/utils/tools.js"
+	const utilsObj = uniCloud.importObject("utilsObj", {
+		customUI: true
+	})
 	export default {
 		name: "comment-frame",
 		data() {
@@ -31,6 +34,11 @@
 			}
 		},
 		methods: {
+			addCom(){
+				utilsObj.operation("quanzi_article","comment_count",this.commentObj.article_id,1).then(res => {
+					// console.log(res)
+				})
+			},
 			async goComment() {
 				let province = await getProvince()
 				if (!this.replyContent) {
@@ -51,6 +59,7 @@
 						title: "评论成功！",
 						icon: "success"
 					})
+					this.addCom()
 					this.$emit("commentEnv", {
 						_id: res.result.id,
 						comment_content: this.replyContent,

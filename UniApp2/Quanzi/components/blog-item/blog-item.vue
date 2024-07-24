@@ -39,7 +39,7 @@
 				<text class="iconfont icon-a-27-liulan"></text>{{item.view_count}}
 			</view>
 			<view class="comments" @click="toDetail(item._id)">
-				<text class="iconfont icon-a-5-xinxi"></text>{{item.comment_count?item.comment_count:"评论"}}
+				<text class="iconfont icon-a-5-xinxi"></text>{{item.comment_count>0?item.comment_count:"评论"}}
 			</view>
 			<view class="like" :class="item.isLike?'active':''" @click="clickLike()">
 				<text class="iconfont icon-a-106-xihuan"></text>{{item.like_count?item.like_count:"点赞"}}
