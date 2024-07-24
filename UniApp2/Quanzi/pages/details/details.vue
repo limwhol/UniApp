@@ -106,12 +106,22 @@
 			this.getUserLike()
 		},
 		methods: {
+			//评论完毕后回调，在父级页面评论列表数组增加记录
+			PcommentEnv(e){
+				console.log(e)
+				this.commentList.unshift({
+					...this.commentObj,
+					...e,
+					user_id:[store.userInfo]
+				})
+			},
 			getComment(){
 				let commentTemp=db.collection("quanzi-comment").where(`article_id=="${this.artid}"`).getTemp()
 				let userTemp=db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
 				db.collection(commentTemp,userTemp).orderBy("comment_date desc").limit(5).get().then(res=>{
 					console.log(res)
 					this.commentList=res.result.data
+					if(res.result.data.length==0){this.noComment=true}
 				})
 			},
 			getUserLike() {

@@ -9,20 +9,20 @@
 </template>
 
 <script>
-	const db=uniCloud.database()
+	const db = uniCloud.database()
 	import {
 		getImgSrc,
 		getProvince
 	} from "@/utils/tools.js"
 	export default {
-		name:"comment-frame",
+		name: "comment-frame",
 		data() {
 			return {
-				placeholder:"写点儿什么吧~",
-				replyContent:""
+				placeholder: "写点儿什么吧~",
+				replyContent: ""
 			};
 		},
-		props:{
+		props: {
 			commentObj: {
 				type: Object,
 				default () {
@@ -30,16 +30,34 @@
 				}
 			}
 		},
-		methods:{
-			async goComment(){
-				let province=await getProvince()
+		methods: {
+			async goComment() {
+				let province = await getProvince()
+				if (!this.replyContent) {
+					uni.showToast({
+						title: "内容不能为空",
+						icon: "error"
+					})
+					return
+				}
 				console.log(this.replyContent)
 				db.collection("quanzi-comment").add({
-					"comment_content":this.replyContent,
-					"province":province,
+					"comment_content": this.replyContent,
+					"province": province,
 					...this.commentObj
-				}).then(res=>{
+				}).then(res => {
 					console.log(res)
+					uni.showToast({
+						title: "评论成功！",
+						icon: "success"
+					})
+					this.$emit("commentEnv", {
+						_id: res.result.id,
+						comment_content: this.replyContent,
+						"province": province,
+						comment_date: Date.now()
+					})
+					this.replyContent=""
 				})
 			}
 		}

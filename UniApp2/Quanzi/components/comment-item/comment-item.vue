@@ -25,6 +25,7 @@
 </template>
 
 <script>
+	const db = uniCloud.database()
 	import {
 		getUserAvatar,
 		getUserName
@@ -33,7 +34,8 @@
 		name: "comment-item",
 		data() {
 			return {
-
+				closeBtn: false,
+				childState: false
 			};
 		},
 		props: {
@@ -46,7 +48,13 @@
 		},
 		methods: {
 			getUserAvatar,
-			getUserName
+			getUserName,
+			delComment() {
+				db.collection("quanzi-comment").doc(this.item._id).remove()
+			},
+			goReply() {
+
+			}
 		}
 	}
 </script>
@@ -54,7 +62,8 @@
 <style lang="scss" scoped>
 	.comment-item {
 		display: flex;
-border-bottom: 1rpx dashed #e3e3e3;
+		border-bottom: 1rpx dashed #e3e3e3;
+
 		.avatar {
 			padding-top: 10rpx;
 			// background-color: #990c1f;
