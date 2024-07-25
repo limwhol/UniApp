@@ -108,32 +108,53 @@
 		methods: {
 			//删除评论后的回调
 			PremoveEnv(e) {
-				console.log(e);
+				// console.log(e);
 				let index = this.commentList.findIndex(item => {
-					return item._id==e
+					return item._id == e
 				})
 				this.commentList.splice(index, 1)
 				this.noComment = this.commentList.length ? false : true
 			},
 			//评论完毕后回调，在父级页面评论列表数组增加记录
 			PcommentEnv(e) {
-				console.log(e)
+				// console.log(e)
 				this.commentList.unshift({
 					...this.commentObj,
 					...e,
 					user_id: [store.userInfo]
 				})
 			},
-			getComment() {
-				let commentTemp = db.collection("quanzi-comment").where(`article_id=="${this.artid}"`).getTemp()
+			async getComment() {
+				let commentTemp = db.collection("quanzi-comment").where(`article_id=="${this.artid}"&&comment_type==0`)
+					.getTemp()
 				let userTemp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
-				db.collection(commentTemp, userTemp).orderBy("comment_date desc").limit(5).get().then(res => {
-					console.log(res)
-					this.commentList = res.result.data
-					if (res.result.data.length == 0) {
-						this.noComment = true
-					}
-				})
+				let res = await db.collection(commentTemp, userTemp).orderBy("comment_date desc").limit(10).get()
+				console.log(res)
+				let idArr = res.result.data.map((item) => {
+					return item._id;
+				});
+				console.log(idArr)
+				let replyArr = await db
+					.collection("quanzi-comment")
+					.where({
+						reply_comment_id: db.command.in(idArr),
+					})
+					.groupBy("reply_comment_id")
+					.groupField("count(*) as totalReply")
+					.get();
+				console.log(replyArr)
+				//res.result.data是本文所有的一级回复对象组成的数组
+				res.result.data.forEach((item) => {
+					let index = replyArr.result.data.findIndex((find) => {
+						return find.reply_comment_id == item._id;
+					});
+					if (index > -1)
+						item.totalReply = replyArr.result.data[index].totalReply;
+				});
+				this.commentList = res.result.data
+				if (res.result.data.length == 0) {
+					this.noComment = true
+				}
 			},
 			getUserLike() {
 				//在点赞表中查询文章ID符合要求的记录，首页传文章ID过来，和表里的article_id能对应上就选中之
@@ -373,7 +394,9 @@
 			padding-bottom: 120rpx;
 
 			.item {
-				padding: 10rpx 0;
+				padding-bottom: 15rpx;
+				padding-top: 15rpx;
+				border-bottom: 1rpx dashed #eee;
 			}
 		}
 	}

@@ -1,14 +1,14 @@
 <template>
 	<view class="reply">
 		<view class="top">
-			<comment-item :item="replyItem"></comment-item>
-			<!-- :closeBtn="true" :childState="true" -->
+			<comment-item :closeBtn="true" :childState="true" :item="replyItem"></comment-item>
+			
 		</view>
-<!-- 		<view class="list">
+		<view class="list">
 			<view class="row" v-for="item in childReplyArr">
 				<comment-item @removeEnv="commentEnv" :childState="true" :item="item"></comment-item>
 			</view>
-		</view> -->
+		</view>
 
 		<view>
 			<comment-frame @commentEnv="commentEnv" :commentObj="commentObj"
@@ -20,6 +20,9 @@
 
 <script>
 	import {
+		store
+	} from '@/uni_modules/uni-id-pages/common/store.js'
+	import {
 		getUserAvatar,
 		getUserName
 	} from "../../utils/tools.js"
@@ -29,6 +32,7 @@
 			return {
 				replyItem: {},
 				childReplyArr: [],
+				childState: false,
 				commentObj: {
 					article_id: "",
 					comment_type: 1,
@@ -42,7 +46,7 @@
 			this.commentObj.article_id = this.replyItem.article_id
 			this.commentObj.reply_user_id = this.replyItem.user_id[0]._id
 			this.commentObj.reply_comment_id = this.replyItem._id
-			// this.getData()
+			this.getData()
 		},
 		onUnload() {
 			uni.removeStorageSync("replyItem")
@@ -50,17 +54,33 @@
 		methods: {
 			getUserAvatar,
 			getUserName,
-			// getData() {
-			// 	db.collection("quanzi-comment").where({
-			// 		article_id:commentObj.commentObj,
-					
-					
-			// 	}).orderBy("comment_date desc").get().then(res => {
-
-			// 	})
-			// },
-			commentEnv() {
-
+			getData() {
+				let commentTemp = db.collection("quanzi-comment").where({
+					article_id:this.commentObj.article_id,
+					comment_type:1,
+					reply_comment_id:this.replyItem._id
+				}).getTemp()
+				let userTemp = db.collection("uni-id-users").field("_id,username,nickname,avatar_file").getTemp()
+				db.collection(commentTemp, userTemp).orderBy("comment_date desc").get().then(res => {
+					console.log(res)
+					this.childReplyArr = res.result.data
+					if (!this.childReplyArr) {
+						uni.showToast({
+							title: "二级评论数据获取失败",
+							icon: "fail"
+						})
+					}
+				})
+			},
+			commentEnv(e) {
+				console.log(e)
+				this.childReplyArr=[]
+				this.getData()
+				this.childReplyArr.unshift({
+					...this.commentObj,
+					...e,
+					user_id: [store.userInfo]
+				})
 			},
 			getStorageData() {
 				if (uni.getStorageSync("replyItem")) {
@@ -91,6 +111,8 @@
 
 			.row {
 				padding-bottom: 15rpx;
+				padding-top: 15rpx;
+				border-bottom: 1rpx dashed #eee;
 			}
 		}
 	}
