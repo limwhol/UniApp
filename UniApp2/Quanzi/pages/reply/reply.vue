@@ -30,6 +30,7 @@
 	export default {
 		data() {
 			return {
+				closeBtn:false,
 				replyItem: {},
 				childReplyArr: [],
 				childState: false,
