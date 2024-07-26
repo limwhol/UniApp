@@ -148,8 +148,7 @@
 					let index = replyArr.result.data.findIndex((find) => {
 						return find.reply_comment_id == item._id;
 					});
-					if (index > -1)
-						item.totalReply = replyArr.result.data[index].totalReply;
+					if (index > -1){item.totalReply = replyArr.result.data[index].totalReply}
 				});
 				this.commentList = res.result.data
 				if (res.result.data.length == 0) {

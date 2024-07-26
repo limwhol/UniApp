@@ -6,12 +6,12 @@
 		</view>
 		<view class="list">
 			<view class="row" v-for="item in childReplyArr">
-				<comment-item @removeEnv="commentEnv" :childState="true" :item="item"></comment-item>
+				<comment-item @removeEnv="PremoveEnv" :childState="true" :item="item"></comment-item>
 			</view>
 		</view>
 
 		<view>
-			<comment-frame @commentEnv="commentEnv" :commentObj="commentObj"
+			<comment-frame @commentEnv="PcommentEnv" :commentObj="commentObj"
 				:placeholder="`回复：${getUserName(this.replyItem)}`"></comment-frame>
 		</view>
 
@@ -30,10 +30,8 @@
 	export default {
 		data() {
 			return {
-				closeBtn:false,
 				replyItem: {},
 				childReplyArr: [],
-				childState: false,
 				commentObj: {
 					article_id: "",
 					comment_type: 1,
@@ -73,7 +71,15 @@
 					}
 				})
 			},
-			commentEnv(e) {
+			PremoveEnv(e) {
+				// console.log(e);
+				let index = this.childReplyArr.findIndex(item => {
+					return item._id == e
+				})
+				this.childReplyArr.splice(index, 1)
+				this.noComment = this.childReplyArr.length ? false : true
+			},
+			PcommentEnv(e) {
 				console.log(e)
 				this.childReplyArr=[]
 				this.getData()

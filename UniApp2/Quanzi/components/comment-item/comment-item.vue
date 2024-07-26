@@ -37,8 +37,8 @@
 		name: "comment-item",
 		data() {
 			return {
-				closeBtn: false,
-				childState: false,
+
+
 			};
 		},
 		props: {
@@ -47,6 +47,14 @@
 				default () {
 					return {}
 				}
+			},
+			childState: {
+				type: Boolean,
+				default: false,
+			},
+			closeBtn: {
+				type: Boolean,
+				default: false,
 			}
 		},
 		methods: {
@@ -88,10 +96,12 @@
 				})
 			},
 			goReply() {
-				uni.setStorageSync("replyItem",this.item)
-				uni.navigateTo({
-					url: "/pages/reply/reply"
-				})
+				if(!this.childState){
+					uni.setStorageSync("replyItem", this.item)
+					uni.navigateTo({
+						url: "/pages/reply/reply"
+					})
+				}
 			},
 
 		}
