@@ -23,6 +23,12 @@
 			"title": "平台名称",
 			"description": "平台名称",
 			"trim": "both"
+		},
+		"iconDescription": {
+			"bsonType": "string",
+			"title": "ICON描述",
+			"description": "ICON描述",
+			"trim": "both"
 		}
 	},
 	"version": "0.0.1"

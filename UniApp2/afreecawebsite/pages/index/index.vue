@@ -50,9 +50,9 @@
 		methods: {
 			getData() {
 				db.collection("afree-product").get().then(res=>{
-					console.log(res);
 					this.newsArr=res.result.data
 				})
+				
 			}
 		}
 	}

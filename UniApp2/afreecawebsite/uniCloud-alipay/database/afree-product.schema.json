@@ -38,7 +38,9 @@
 		"platformIcon_id": {
 			"bsonType": "string",
 			"title": "平台ICON图片ID",
+			"foreignKey": "platformImage._id",
 			"description": "平台ICON图片ID",
+			"defaultValue":"",
 			"trim": "both"
 		},
 		"productContent": {
