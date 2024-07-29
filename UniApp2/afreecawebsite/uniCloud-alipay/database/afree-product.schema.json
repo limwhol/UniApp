@@ -1,0 +1,53 @@
+{
+	"bsonType": "object",
+	"required": [
+		"user_id",
+		"title",
+		"content"
+	],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID（用户 ID），系统自动生成"
+		},
+		"title": {
+			"bsonType": "string",
+			"title": "游戏名",
+			"description": "游戏名",
+			"label": "游戏名",
+			"trim": "both"
+		},
+		"description": {
+			"bsonType": "string",
+			"title": "游戏描述",
+			"description": "游戏描述",
+			"label": "游戏描述",
+			"trim": "right"
+		},
+		"productImgUrl": {
+			"bsonType": "string",
+			"title": "游戏大图地址",
+			"description": "游戏大图地址",
+			"trim": "both"
+		},
+		"platformIcon_id": {
+			"bsonType": "string",
+			"title": "平台ICON图片ID",
+			"description": "平台ICON图片ID",
+			"trim": "both"
+		},
+		"productContent": {
+			"bsonType": "string",
+			"title": "游戏介绍",
+			"description": "游戏介绍",
+			"label": "游戏介绍",
+			"trim": "right"
+		}
+	},
+	"version": "0.0.1"
+}
