@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList" field="iconUrl,platformName">
+    <unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList" field="iconUrl,platformUrl,platformName,product_id">
       <view v-if="error">{{error.message}}</view>
       <view v-else-if="data">
         <uni-list>

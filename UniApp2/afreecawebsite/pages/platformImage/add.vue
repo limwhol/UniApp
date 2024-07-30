@@ -2,10 +2,16 @@
   <view class="uni-container">
     <uni-forms ref="form" :model="formData" validate-trigger="submit" err-show-type="toast">
       <uni-forms-item name="iconUrl" label="平台ICON地址">
-        <uni-easyinput placeholder="平台ICON地址" v-model="formData.iconUrl" trim="both"></uni-easyinput>
+        <uni-easyinput placeholder="平台ICON地址,iconUrl" v-model="formData.iconUrl" trim="both"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="platformUrl" label="平台网址">
+        <uni-easyinput placeholder="平台网址" v-model="formData.platformUrl" trim="both"></uni-easyinput>
       </uni-forms-item>
       <uni-forms-item name="platformName" label="平台名称">
         <uni-easyinput placeholder="平台名称" v-model="formData.platformName" trim="both"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="product_id" label="产品ID">
+        <uni-easyinput placeholder="产品ID" v-model="formData.product_id" trim="both"></uni-easyinput>
       </uni-forms-item>
       <view class="uni-button-group">
         <button type="primary" class="uni-button" @click="submit">提交</button>
@@ -36,7 +42,9 @@
     data() {
       let formData = {
         "iconUrl": "",
-        "platformName": ""
+        "platformUrl": "",
+        "platformName": "",
+        "product_id": ""
       }
       return {
         formData,

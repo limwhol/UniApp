@@ -1,5 +1,8 @@
 <template>
   <view class="uni-container">
+	  <view class="myhead">
+	  	<h1>游戏产品录入系统 CMS</h1>
+	  </view>
     <uni-forms ref="form" :model="formData" validate-trigger="submit" err-show-type="toast">
       <uni-forms-item name="title" label="游戏名" required>
         <uni-easyinput placeholder="游戏名" v-model="formData.title" trim="both"></uni-easyinput>
@@ -10,11 +13,8 @@
       <uni-forms-item name="productImgUrl" label="游戏大图地址">
         <uni-easyinput placeholder="游戏大图地址" v-model="formData.productImgUrl" trim="both"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="platformIcon_id" label="平台ICON图片ID">
-        <uni-easyinput placeholder="平台ICON图片ID" v-model="formData.platformIcon_id" trim="both"></uni-easyinput>
-      </uni-forms-item>
-      <uni-forms-item name="productContent" label="游戏介绍">
-        <uni-easyinput placeholder="游戏介绍" v-model="formData.productContent" trim="right"></uni-easyinput>
+      <uni-forms-item name="icon_id" label="icon的ID集合">
+        <uni-easyinput placeholder="icon的ID集合" v-model="formData.icon_id" trim="both"></uni-easyinput>
       </uni-forms-item>
       <view class="uni-button-group">
         <button type="primary" class="uni-button" @click="submit">提交</button>
@@ -47,8 +47,7 @@
         "title": "",
         "description": "",
         "productImgUrl": "",
-        "platformIcon_id": "",
-        "productContent": ""
+        "icon_id": "_id"
       }
       return {
         formData,
@@ -83,7 +82,7 @@
        */
       submitForm(value) {
         // 使用 clientDB 提交数据
-        return db.collection("afree-product").add(value).then((res) => {
+        return db.collection(dbCollectionName).add(value).then((res) => {
           uni.showToast({
             icon: 'none',
             title: '新增成功'
@@ -103,7 +102,14 @@
 
 <style>
   .uni-container {
-    padding: 15px;
+    padding: 00px 500px;
+  }
+  .myhead{
+	  height: 100px;
+	  /* background-color: aqua; */
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
   }
 
   .uni-input-border,

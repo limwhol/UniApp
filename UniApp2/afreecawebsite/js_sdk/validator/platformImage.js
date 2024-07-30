@@ -11,6 +11,15 @@ const validator = {
     "title": "平台ICON地址",
     "label": "平台ICON地址"
   },
+  "platformUrl": {
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "title": "平台网址",
+    "label": "平台网址"
+  },
   "platformName": {
     "rules": [
       {
@@ -19,6 +28,16 @@ const validator = {
     ],
     "title": "平台名称",
     "label": "平台名称"
+  },
+  "product_id": {
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "title": "产品ID",
+    "defaultValue": "",
+    "label": "产品ID"
   }
 }
 

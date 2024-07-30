@@ -35,20 +35,13 @@
 			"description": "游戏大图地址",
 			"trim": "both"
 		},
-		"platformIcon_id": {
+		"icon_id": {
 			"bsonType": "string",
-			"title": "平台ICON图片ID",
-			"foreignKey": "platformImage._id",
-			"description": "平台ICON图片ID",
-			"defaultValue":"",
+			"title": "icon的ID集合",
+			"description": "icon的ID集合",
+			"foreignKey": "platformImage.product_id",
+			"defaultValue":"_id",
 			"trim": "both"
-		},
-		"productContent": {
-			"bsonType": "string",
-			"title": "游戏介绍",
-			"description": "游戏介绍",
-			"label": "游戏介绍",
-			"trim": "right"
 		}
 	},
 	"version": "0.0.1"

@@ -32,23 +32,15 @@ const validator = {
     "title": "游戏大图地址",
     "label": "游戏大图地址"
   },
-  "platformIcon_id": {
+  "icon_id": {
     "rules": [
       {
         "format": "string"
       }
     ],
-    "title": "平台ICON图片ID",
-    "label": "平台ICON图片ID"
-  },
-  "productContent": {
-    "rules": [
-      {
-        "format": "string"
-      }
-    ],
-    "label": "游戏介绍",
-    "title": "游戏介绍"
+    "title": "icon的ID集合",
+    "defaultValue": "_id",
+    "label": "icon的ID集合"
   }
 }
 

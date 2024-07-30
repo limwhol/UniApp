@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="options" :collection="collectionList" field="iconUrl,platformName" :where="queryWhere" :getone="true" :manual="true">
+    <unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="options" :collection="collectionList" field="iconUrl,platformUrl,platformName,product_id" :where="queryWhere" :getone="true" :manual="true">
       <view v-if="error">{{error.message}}</view>
       <view v-else-if="loading">
         <uni-load-more :contentText="loadMore" status="loading"></uni-load-more>
@@ -11,8 +11,16 @@
           <text>{{data.iconUrl}}</text>
         </view>
         <view>
+          <text>平台网址</text>
+          <text>{{data.platformUrl}}</text>
+        </view>
+        <view>
           <text>平台名称</text>
           <text>{{data.platformName}}</text>
+        </view>
+        <view>
+          <text>产品ID</text>
+          <text>{{data.product_id}}</text>
         </view>
       </view>
     </unicloud-db>

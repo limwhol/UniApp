@@ -10,11 +10,8 @@
       <uni-forms-item name="productImgUrl" label="游戏大图地址">
         <uni-easyinput placeholder="游戏大图地址" v-model="formData.productImgUrl" trim="both"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="platformIcon_id" label="平台ICON图片ID">
-        <uni-easyinput placeholder="平台ICON图片ID" v-model="formData.platformIcon_id" trim="both"></uni-easyinput>
-      </uni-forms-item>
-      <uni-forms-item name="productContent" label="游戏介绍">
-        <uni-easyinput placeholder="游戏介绍" v-model="formData.productContent" trim="right"></uni-easyinput>
+      <uni-forms-item name="icon_id" label="icon的ID集合">
+        <uni-easyinput placeholder="icon的ID集合" v-model="formData.icon_id" trim="both"></uni-easyinput>
       </uni-forms-item>
       <view class="uni-button-group">
         <button type="primary" class="uni-button" @click="submit">提交</button>
@@ -47,8 +44,7 @@
         "title": "",
         "description": "",
         "productImgUrl": "",
-        "platformIcon_id": "",
-        "productContent": ""
+        "icon_id": "_id"
       }
       return {
         formData,
@@ -113,7 +109,7 @@
         uni.showLoading({
           mask: true
         })
-        db.collection(dbCollectionName).doc(id).field("title,description,productImgUrl,platformIcon_id,productContent").get().then((res) => {
+        db.collection(dbCollectionName).doc(id).field("title,description,productImgUrl,icon_id").get().then((res) => {
           const data = res.result.data[0]
           if (data) {
             this.formData = data

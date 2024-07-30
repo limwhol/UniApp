@@ -15,7 +15,13 @@
 		"iconUrl": {
 			"bsonType": "string",
 			"title": "平台ICON地址",
-			"description": "平台ICON地址",
+			"description": "平台ICON地址,iconUrl",
+			"trim": "both"
+		},
+		"platformUrl": {
+			"bsonType": "string",
+			"title": "平台网址",
+			"description": "平台网址",
 			"trim": "both"
 		},
 		"platformName": {
@@ -24,10 +30,11 @@
 			"description": "平台名称",
 			"trim": "both"
 		},
-		"iconDescription": {
+		"product_id": {
 			"bsonType": "string",
-			"title": "ICON描述",
-			"description": "ICON描述",
+			"title": "产品ID",
+			"description": "产品ID",
+			"defaultValue":"",
 			"trim": "both"
 		}
 	},

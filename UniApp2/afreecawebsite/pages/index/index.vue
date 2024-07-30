@@ -9,7 +9,7 @@
 		</view>
 		<view class="gamescontainer">
 			<view class="container">
-				<view class="" v-for="item in newsArr">
+				<view class="" v-for="item in newsArr" :key="item._id">
 					<product-item :item="item"></product-item>
 				</view>
 			</view>
@@ -48,10 +48,17 @@
 			this.getData()
 		},
 		methods: {
-			getData() {
-				db.collection("afree-product").get().then(res=>{
+			async getData() {
+				let productTemp=db.collection("afree-product").field("icon_id,description,title,productImgUrl").getTemp()
+				let platformImgTemp=db.collection("platformImage").field("product_id,iconDescription,iconUrl,platformUrl").getTemp()
+				let res
+				try{
+					res=await db.collection(productTemp,platformImgTemp).get()
 					this.newsArr=res.result.data
-				})
+					console.log(res);
+				}catch(error){
+					console.log("Database query failed:", error);
+				}
 				
 			}
 		}

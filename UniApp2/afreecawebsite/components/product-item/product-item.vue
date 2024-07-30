@@ -1,29 +1,14 @@
 <template>
 	<view class="subbox">
 		<view class="uppic">
-			<img class="imgview" src="@/static/images/11.png" alt="" />
+			<img class="imgview" :src="item.productImgUrl" alt="" />
 		</view>
 		<view class="downinfo">
 			<view class="gamename">《{{item.title}}》</view>
 			<view class="gamedes">{{item.description}}</view>
 			<view class="launchgame">
-				<view class="platform">
-					<img src="@/static/images/telegram.png" alt="" class="platformImg" />
-				</view>
-				<view class="platform">
-					<img src="@/static/images/android.png" alt="" class="platformImg" />
-				</view>
-				<view class="platform">
-					<img src="@/static/images/ios.png" alt="" class="platformImg" />
-				</view>
-				<view class="platform">
-					<img src="@/static/images/tk.png" alt="" class="platformImg" />
-				</view>
-				<view class="platform">
-					<img src="@/static/images/facebook.png" alt="" class="platformImg" />
-				</view>
-				<view class="platform">
-					<img src="@/static/images/wx.png" alt="" class="platformImg" />
+				<view class="platform" v-for="(find,index) in item.icon_id" :key="index">
+					<img :src="find.iconUrl" alt="" class="platformImg" @click="goPlatform(find.platformUrl)" />
 				</view>
 			</view>
 		</view>
@@ -46,6 +31,12 @@
 				}
 			}
 		},
+		methods: {
+			goPlatform(e) {
+				console.log(e)
+			}
+
+		}
 	}
 </script>
 
@@ -66,6 +57,7 @@
 				width: 100%;
 				height: 100%;
 				border-radius: 10px;
+				border: 1rpx solid #e2e2e2
 			}
 		}
 
