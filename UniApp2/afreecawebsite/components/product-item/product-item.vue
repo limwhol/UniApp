@@ -1,14 +1,14 @@
 <template>
 	<view class="subbox">
 		<view class="uppic">
-			<img class="imgview" :src="item.productImgUrl" alt="" />
+			<img class="imgview" :src="item.game_imgUrl" alt="" />
 		</view>
 		<view class="downinfo">
-			<view class="gamename">《{{item.title}}》</view>
-			<view class="gamedes">{{item.description}}</view>
+			<view class="gamename">《{{item.game_title}}》</view>
+			<view class="gamedes">{{item.game_description}}</view>
 			<view class="launchgame">
-				<view class="platform" v-for="(find,index) in item.icon_id" :key="index">
-					<img :src="find.iconUrl" alt="" class="platformImg" @click="goPlatform(find.platformUrl)" />
+				<view class="platform" v-for="(find,index) in item.platforms" :key="index">
+					<img :src="find.platform_iconUrl" alt="" class="platformImg" @click="goPlatform(find.platform_link)" />
 				</view>
 			</view>
 		</view>
@@ -42,6 +42,7 @@
 
 <style lang="scss">
 	.subbox {
+		width: 300px;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -77,6 +78,10 @@
 				margin-top: 6px;
 				font-size: 14px;
 				color: #858585;
+				white-space: pre-wrap;
+				// background-color: #858585;
+				text-indent: 2em;
+				margin-bottom: 1em;
 			}
 
 			.launchgame {

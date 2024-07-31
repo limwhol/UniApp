@@ -1,17 +1,23 @@
 <template>
   <view class="uni-container">
     <uni-forms ref="form" :model="formData" validate-trigger="submit" err-show-type="toast">
-      <uni-forms-item name="title" label="游戏名" required>
-        <uni-easyinput placeholder="游戏名" v-model="formData.title" trim="both"></uni-easyinput>
+      <uni-forms-item name="publish_date" label="游戏产品注册时间">
+        <uni-datetime-picker return-type="timestamp" v-model="formData.publish_date"></uni-datetime-picker>
       </uni-forms-item>
-      <uni-forms-item name="description" label="游戏描述">
-        <uni-easyinput placeholder="游戏描述" v-model="formData.description" trim="right"></uni-easyinput>
+      <uni-forms-item name="game_title" label="游戏名" required>
+        <uni-easyinput placeholder="如：暗黑破坏神" v-model="formData.game_title" trim="both"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="productImgUrl" label="游戏大图地址">
-        <uni-easyinput placeholder="游戏大图地址" v-model="formData.productImgUrl" trim="both"></uni-easyinput>
+      <uni-forms-item name="game_type" label="游戏类型" required>
+        <uni-easyinput placeholder="如：放置挂机类" v-model="formData.game_type" trim="both"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="icon_id" label="icon的ID集合">
-        <uni-easyinput placeholder="icon的ID集合" v-model="formData.icon_id" trim="both"></uni-easyinput>
+      <uni-forms-item name="game_description" label="游戏描述" required>
+        <uni-easyinput placeholder="如：这是一款以中世纪题材为背景的游戏，讲述的是亚瑟王和他的武士们打天下的故事。" v-model="formData.game_description" trim="right"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="game_imgUrl" label="游戏大图地址" required>
+        <uni-easyinput placeholder="游戏产品在首页的展示大图" v-model="formData.game_imgUrl" trim="both"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="platforms" label="">
+        <uni-data-checkbox :multiple="true" v-model="formData.platforms"></uni-data-checkbox>
       </uni-forms-item>
       <view class="uni-button-group">
         <button type="primary" class="uni-button" @click="submit">提交</button>
@@ -41,10 +47,12 @@
   export default {
     data() {
       let formData = {
-        "title": "",
-        "description": "",
-        "productImgUrl": "",
-        "icon_id": "_id"
+        "publish_date": null,
+        "game_title": "",
+        "game_type": "",
+        "game_description": "",
+        "game_imgUrl": "",
+        "platforms": []
       }
       return {
         formData,
@@ -109,7 +117,7 @@
         uni.showLoading({
           mask: true
         })
-        db.collection(dbCollectionName).doc(id).field("title,description,productImgUrl,icon_id").get().then((res) => {
+        db.collection(dbCollectionName).doc(id).field("publish_date,game_title,game_type,game_description,game_imgUrl,platforms").get().then((res) => {
           const data = res.result.data[0]
           if (data) {
             this.formData = data

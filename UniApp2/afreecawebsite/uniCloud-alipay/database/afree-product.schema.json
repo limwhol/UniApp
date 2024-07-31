@@ -1,10 +1,6 @@
 {
 	"bsonType": "object",
-	"required": [
-		"user_id",
-		"title",
-		"content"
-	],
+	"required": ["game_title", "game_description", "game_type", "game_imgUrl"],
 	"permission": {
 		"read": true,
 		"create": true,
@@ -13,36 +9,67 @@
 	},
 	"properties": {
 		"_id": {
-			"description": "存储文档 ID（用户 ID），系统自动生成"
+			"bsonType": "objectId",
+			"description": "存储文档 ID（系统自动生成）"
 		},
-		"title": {
+		"publish_date": {
+			"bsonType": "timestamp",
+			"title": "游戏产品注册时间",
+			"description": "游戏产品注册时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"game_title": {
 			"bsonType": "string",
 			"title": "游戏名",
-			"description": "游戏名",
-			"label": "游戏名",
+			"description": "如：暗黑破坏神",
 			"trim": "both"
 		},
-		"description": {
+		"game_type": {
+			"bsonType": "string",
+			"title": "游戏类型",
+			"description": "如：放置挂机类",
+			"trim": "both"
+		},
+		"game_description": {
 			"bsonType": "string",
 			"title": "游戏描述",
-			"description": "游戏描述",
-			"label": "游戏描述",
+			"description": "如：这是一款以中世纪题材为背景的游戏，讲述的是亚瑟王和他的武士们打天下的故事。",
 			"trim": "right"
 		},
-		"productImgUrl": {
+		"game_imgUrl": {
 			"bsonType": "string",
 			"title": "游戏大图地址",
-			"description": "游戏大图地址",
+			"description": "游戏产品在首页的展示大图",
 			"trim": "both"
 		},
-		"icon_id": {
-			"bsonType": "string",
-			"title": "icon的ID集合",
-			"description": "icon的ID集合",
-			"foreignKey": "platformImage.product_id",
-			"defaultValue":"_id",
-			"trim": "both"
+		"platforms": {
+			"bsonType": "array",
+			"description": "平台信息数组",
+			"items": {
+				"bsonType": "object",
+				"required": ["platform_name", "platform_iconUrl", "platform_link"],
+				"properties": {
+					"platform_name": {
+						"bsonType": "string",
+						"title": "平台名称",
+						"description": "如：抖音平台"
+					},
+					"platform_iconUrl": {
+						"bsonType": "string",
+						"title": "平台ICON",
+						"description": "平台ICON的图片链接"
+					},
+					"platform_link": {
+						"bsonType": "string",
+						"title": "跳转链接",
+						"description": "平台的跳转链接"
+					}
+				}
+			},
+			"minItems": 1 // 至少需要一个平台信息
 		}
 	},
-	"version": "0.0.1"
+	"version": "0.0.2"
 }

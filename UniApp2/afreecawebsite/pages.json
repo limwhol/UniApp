@@ -5,55 +5,38 @@
 			"style": {
 				"navigationBarTitleText": ""
 			}
-		}, {
-			"path": "pages/platformImage/add",
-			"style": {
-				"navigationBarTitleText": "新增"
-			}
-		}, {
-			"path": "pages/platformImage/edit",
-			"style": {
-				"navigationBarTitleText": "编辑"
-			}
-		}, {
-			"path": "pages/platformImage/list",
-			"style": {
-				"navigationBarTitleText": "列表"
-			}
-		}, {
-			"path": "pages/platformImage/detail",
-			"style": {
-				"navigationBarTitleText": "详情"
-			}
-		}, {
-			"path": "pages/afree-product/add",
-			"style": {
-				"navigationBarTitleText": "新增"
-			}
-		}, {
-			"path": "pages/afree-product/edit",
-			"style": {
-				"navigationBarTitleText": "编辑"
-			}
-		}, {
-			"path": "pages/afree-product/list",
-			"style": {
-				"navigationBarTitleText": "列表"
-			}
-		}, {
-			"path": "pages/afree-product/detail",
-			"style": {
-				"navigationBarTitleText": "详情"
-			}
 		},
 		{
-			"path" : "pages/newAdd/newAdd",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
+			"path": "pages/newAdd/newAdd",
+			"style": {
+				"navigationBarTitleText": ""
 			}
 		}
-	],
+	,{
+    "path": "pages/afree-product/add",
+    "style": {
+        "navigationBarTitleText": "新增"
+    }
+}
+,{
+    "path": "pages/afree-product/edit",
+    "style": {
+        "navigationBarTitleText": "编辑"
+    }
+}
+,{
+    "path": "pages/afree-product/list",
+    "style": {
+        "navigationBarTitleText": "列表"
+    }
+}
+,{
+    "path": "pages/afree-product/detail",
+    "style": {
+        "navigationBarTitleText": "详情"
+    }
+}
+],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

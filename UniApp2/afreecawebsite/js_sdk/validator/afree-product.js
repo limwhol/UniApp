@@ -2,7 +2,19 @@
 
 
 const validator = {
-  "title": {
+  "publish_date": {
+    "rules": [
+      {
+        "format": "timestamp"
+      }
+    ],
+    "title": "游戏产品注册时间",
+    "defaultValue": {
+      "$env": "now"
+    },
+    "label": "游戏产品注册时间"
+  },
+  "game_title": {
     "rules": [
       {
         "required": true
@@ -11,20 +23,38 @@ const validator = {
         "format": "string"
       }
     ],
-    "label": "游戏名",
-    "title": "游戏名"
+    "title": "游戏名",
+    "label": "游戏名"
   },
-  "description": {
+  "game_type": {
     "rules": [
+      {
+        "required": true
+      },
       {
         "format": "string"
       }
     ],
-    "label": "游戏描述",
-    "title": "游戏描述"
+    "title": "游戏类型",
+    "label": "游戏类型"
   },
-  "productImgUrl": {
+  "game_description": {
     "rules": [
+      {
+        "required": true
+      },
+      {
+        "format": "string"
+      }
+    ],
+    "title": "游戏描述",
+    "label": "游戏描述"
+  },
+  "game_imgUrl": {
+    "rules": [
+      {
+        "required": true
+      },
       {
         "format": "string"
       }
@@ -32,15 +62,12 @@ const validator = {
     "title": "游戏大图地址",
     "label": "游戏大图地址"
   },
-  "icon_id": {
+  "platforms": {
     "rules": [
       {
-        "format": "string"
+        "format": "array"
       }
-    ],
-    "title": "icon的ID集合",
-    "defaultValue": "_id",
-    "label": "icon的ID集合"
+    ]
   }
 }
 

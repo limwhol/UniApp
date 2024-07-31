@@ -1,26 +1,34 @@
 <template>
   <view class="container">
-    <unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="options" :collection="collectionList" field="title,description,productImgUrl,icon_id" :where="queryWhere" :getone="true" :manual="true">
+    <unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="options" :collection="collectionList" field="publish_date,game_title,game_type,game_description,game_imgUrl,platforms" :where="queryWhere" :getone="true" :manual="true">
       <view v-if="error">{{error.message}}</view>
       <view v-else-if="loading">
         <uni-load-more :contentText="loadMore" status="loading"></uni-load-more>
       </view>
       <view v-else-if="data">
         <view>
+          <text>游戏产品注册时间</text>
+          <uni-dateformat :threshold="[0, 0]" :date="data.publish_date"></uni-dateformat>
+        </view>
+        <view>
           <text>游戏名</text>
-          <text>{{data.title}}</text>
+          <text>{{data.game_title}}</text>
+        </view>
+        <view>
+          <text>游戏类型</text>
+          <text>{{data.game_type}}</text>
         </view>
         <view>
           <text>游戏描述</text>
-          <text>{{data.description}}</text>
+          <text>{{data.game_description}}</text>
         </view>
         <view>
           <text>游戏大图地址</text>
-          <text>{{data.productImgUrl}}</text>
+          <text>{{data.game_imgUrl}}</text>
         </view>
         <view>
-          <text>icon的ID集合</text>
-          <text>{{data.icon_id}}</text>
+          <text>platforms</text>
+          <text>{{data.platforms}}</text>
         </view>
       </view>
     </unicloud-db>
