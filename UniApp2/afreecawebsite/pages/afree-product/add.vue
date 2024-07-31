@@ -1,7 +1,14 @@
 <template>
 	<view class="uni-container">
 		<view class="topout" style="margin: 50px;">
-			<h1>阿飞卡游戏官网产品管理后台 CMS</h1>
+			<h1>阿飞卡游戏产品管理后台 CMS V0.0.1</h1>
+		</view>
+		<view class=""
+			style="border-radius: 3px;padding: 5px;background-color: antiquewhite;display: flex;justify-content: flex-start;align-items: center;margin-bottom: 10px;height: 24px;">
+			<view class="" style="width:5px;background-color: #cc754d;height: 20px;margin-right: 10px">
+		
+			</view>
+			<h5>填写产品基础信息</h5>
 		</view>
 		<uni-forms ref="form" :model="formData" validate-trigger="submit" err-show-type="toast">
 			
@@ -29,21 +36,21 @@
 					<view class="" style="width:5px;background-color: #cc754d;height: 20px;margin-right: 10px">
 
 					</view>
-					<h5>平台{{index+1}}</h5>
+					<h5>添加第{{index+1}}个平台</h5>
 				</view>
-				<uni-forms-item :name="'platformName' + index" label="平台名称">
+				<uni-forms-item :name="'formData.platforms[index].platform_name' + index" label="平台名称">
 					<uni-easyinput placeholder="如：抖音平台" v-model="formData.platforms[index].platform_name" trim="both"></uni-easyinput>
 				</uni-forms-item>
-				<uni-forms-item :name="'platformIconUrl' + index" label="平台ICON">
+				<uni-forms-item :name="'formData.platforms[index].platform_iconUrl' + index" label="平台ICON">
 					<uni-easyinput placeholder="平台ICON的图片链接" v-model="formData.platforms[index].platform_iconUrl" trim="both"></uni-easyinput>
 				</uni-forms-item>
-				<uni-forms-item :name="'platformLink' + index" label="跳转链接">
+				<uni-forms-item :name="'formData.platforms[index].platform_link' + index" label="跳转链接">
 					<uni-easyinput placeholder="平台的跳转链接" v-model="formData.platforms[index].platform_link" trim="both"></uni-easyinput>
 				</uni-forms-item>
 			</view>
 
 			<!-- 添加平台信息按钮 -->
-			<button type="default" class="uni-button" @click="addPlatform">添加平台信息</button>
+			<button type="default" class="uni-button" @click="addPlatform">+ 添加平台</button>
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" @click="submit">提交</button>
 			</view>
@@ -112,6 +119,7 @@
 					mask: true
 				})
 				this.$refs.form.validate().then((res) => {
+					console.log(res);
 					return this.submitForm(res)
 				}).catch(() => {}).finally(() => {
 					uni.hideLoading()
@@ -141,9 +149,14 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	.uni-container {
 		padding: 15px 600px;
+		.topout{
+			text-align: center;
+			padding: 10px;
+			border-bottom: 4px solid #0f3fff;
+		}
 	}
 
 	.uni-input-border,

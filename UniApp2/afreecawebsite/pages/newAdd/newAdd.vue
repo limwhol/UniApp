@@ -29,7 +29,7 @@
 			</div>
 
 			<!-- 添加平台信息按钮 -->
-			<button type="default" class="uni-button" @click="addPlatform">添加平台信息</button>
+			<button type="default" class="uni-button" @click="addPlatform"> + 添加平台</button>
 
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" @click="submit">提交</button>

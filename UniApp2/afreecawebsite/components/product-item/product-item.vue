@@ -70,12 +70,13 @@
 			margin-top: 10px;
 
 			.gamename {
+				margin-top: 10px;
 				font-size: 24px;
 				font-weight: bold;
 			}
 
 			.gamedes {
-				margin-top: 6px;
+				margin-top: 10px;
 				font-size: 14px;
 				color: #858585;
 				white-space: pre-wrap;
@@ -85,7 +86,7 @@
 			}
 
 			.launchgame {
-				margin-top: 6px;
+				margin-top: 10px;
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
