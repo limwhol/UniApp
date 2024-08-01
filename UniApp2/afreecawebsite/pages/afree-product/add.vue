@@ -38,13 +38,13 @@
 					</view>
 					<h5>添加第{{index+1}}个平台</h5>
 				</view>
-				<uni-forms-item :name="'formData.platforms[index].platform_name' + index" label="平台名称">
+				<uni-forms-item :name="'platforms.' + index + '.platform_name'" label="平台名称">
 					<uni-easyinput placeholder="如：抖音平台" v-model="formData.platforms[index].platform_name" trim="both"></uni-easyinput>
 				</uni-forms-item>
-				<uni-forms-item :name="'formData.platforms[index].platform_iconUrl' + index" label="平台ICON">
+				<uni-forms-item :name="'platforms.' + index + '.platform_iconUrl'" label="平台ICON">
 					<uni-easyinput placeholder="平台ICON的图片链接" v-model="formData.platforms[index].platform_iconUrl" trim="both"></uni-easyinput>
 				</uni-forms-item>
-				<uni-forms-item :name="'formData.platforms[index].platform_link' + index" label="跳转链接">
+				<uni-forms-item :name="'platforms.' + index + '.platform_link'" label="跳转链接">
 					<uni-easyinput placeholder="平台的跳转链接" v-model="formData.platforms[index].platform_link" trim="both"></uni-easyinput>
 				</uni-forms-item>
 			</view>
