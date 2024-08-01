@@ -4,8 +4,8 @@
 			<h1>阿飞卡游戏产品管理后台 CMS V0.0.1</h1>
 		</view>
 		<view class=""
-			style="border-radius: 3px;padding: 5px;background-color: antiquewhite;display: flex;justify-content: flex-start;align-items: center;margin-bottom: 10px;height: 24px;">
-			<view class="" style="width:5px;background-color: #cc754d;height: 20px;margin-right: 10px">
+			style="border-radius: 3px;padding: 5px;background-color: rgb(234, 246, 255);display: flex;justify-content: flex-start;align-items: center;margin-bottom: 10px;height: 24px;">
+			<view class="" style="width:3px;background-color: rgb(142, 187, 255);height: 20px;margin-right: 10px">
 		
 			</view>
 			<h5>填写产品基础信息</h5>
@@ -23,7 +23,7 @@
 					trim="right"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="game_imgUrl" label="游戏大图地址" required>
-				<uni-easyinput placeholder="游戏产品在首页的展示大图" v-model="formData.game_imgUrl" trim="both"></uni-easyinput>
+				<uni-easyinput placeholder="游戏产品在首页的展示大图,300x400像素" v-model="formData.game_imgUrl" trim="both"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="publish_date" label="游戏产品注册时间">
 				<uni-datetime-picker return-type="timestamp" v-model="formData.publish_date"></uni-datetime-picker>
@@ -32,8 +32,8 @@
 			<!-- 平台信息列表 -->
 			<view v-for="(platform, index) in formData.platforms" :key="index">
 				<view class=""
-					style="border-radius: 3px;padding: 5px;background-color: antiquewhite;display: flex;justify-content: flex-start;align-items: center;margin-bottom: 10px;height: 24px;">
-					<view class="" style="width:5px;background-color: #cc754d;height: 20px;margin-right: 10px">
+					style="border-radius: 3px;padding: 5px;background-color: rgb(234, 246, 255);display: flex;justify-content: flex-start;align-items: center;margin-bottom: 10px;height: 24px;">
+					<view class="" style="width:3px;background-color: rgb(142, 187, 255);height: 20px;margin-right: 10px">
 
 					</view>
 					<h5>添加第{{index+1}}个平台</h5>
@@ -42,10 +42,10 @@
 					<uni-easyinput placeholder="如：抖音平台" v-model="formData.platforms[index].platform_name" trim="both"></uni-easyinput>
 				</uni-forms-item>
 				<uni-forms-item :name="'platforms.' + index + '.platform_iconUrl'" label="平台ICON">
-					<uni-easyinput placeholder="平台ICON的图片链接" v-model="formData.platforms[index].platform_iconUrl" trim="both"></uni-easyinput>
+					<uni-easyinput placeholder="如:http://xx.com/douyin.png" v-model="formData.platforms[index].platform_iconUrl" trim="both"></uni-easyinput>
 				</uni-forms-item>
 				<uni-forms-item :name="'platforms.' + index + '.platform_link'" label="跳转链接">
-					<uni-easyinput placeholder="平台的跳转链接" v-model="formData.platforms[index].platform_link" trim="both"></uni-easyinput>
+					<uni-easyinput placeholder="如:www.douyin.com" v-model="formData.platforms[index].platform_link" trim="both"></uni-easyinput>
 				</uni-forms-item>
 			</view>
 
@@ -155,7 +155,7 @@
 		.topout{
 			text-align: center;
 			padding: 10px;
-			border-bottom: 4px solid #0f3fff;
+			border-bottom: 4px solid rgb(142, 187, 255);
 		}
 	}
 

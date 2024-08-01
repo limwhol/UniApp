@@ -31,7 +31,7 @@
 			<aboutus></aboutus>
 		</view>
 		<view class="endbox">
-			<enditem></enditem>
+			<enditem :currentYear="currentYear"></enditem>
 		</view>
 	</view>
 </template>
@@ -41,17 +41,19 @@
 	export default {
 		data() {
 			return {
-				newsArr: []
+				newsArr: [],
+				currentYear: null
 			}
 		},
 		onLoad() {
 			this.getData()
+			this.currentYear = new Date().getFullYear();
 		},
 		methods: {
 			async getData() {
 				let res
 				try{
-					res=await db.collection("afree-product").get()
+					res=await db.collection("afree-product").field("game_description,game_imgUrl,game_title,game_type,publish_date").orderBy("publish_date desc").get()
 					this.newsArr=res.result.data
 					console.log(res);
 				}catch(error){
@@ -107,23 +109,16 @@
 					/* 下方阴影 */
 					0 -3px 2px -2px rgba(0, 0, 0, 0.2);
 				/* 上方阴影 */
-				border-radius: 10px;
-				padding-top: 70px;
-				padding-left: 70px;
-				padding-right: 70px;
-				padding-bottom: 70px;
+				border-radius: 5px;
+				padding: 70px;
 				background-color: #fff;
 				width: 1000px;
 
 				display: flex;
-				justify-content: space-between;
-				align-items: center;
+				justify-content: space-around;
+				align-items: flex-start;
 				flex-wrap: wrap;
-
-				.subbox:nth-last-child(-n+3) {
-					// background-color: #b845ff;
-					margin-bottom: 0px;
-				}
+				gap: 50px;
 			}
 		}
 

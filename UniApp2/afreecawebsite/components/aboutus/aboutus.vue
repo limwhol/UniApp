@@ -35,7 +35,7 @@
 			/* 下方阴影 */
 			0 -3px 2px -2px rgba(0, 0, 0, 0.2);
 		/* 上方阴影 */
-		border-radius: 10px;
+		border-radius: 5px;
 		padding-top: 70px;
 		padding-left: 70px;
 		padding-right: 70px;

@@ -1,7 +1,7 @@
 <template>
 	<view class="top">
 		<view class="leftcontainer">
-			<img src="@/static/images/logo.png" alt="阿飞卡游戏" />
+			<img src="@/static/images/logo.png" alt="阿飞卡游戏" @click="backtoindex" />
 		</view>
 		<view class="rightcontainer">
 			<view class="navBtn">
@@ -27,6 +27,13 @@
 			return {
 
 			};
+		},
+		methods:{
+			backtoindex(){
+				uni.navigateTo({
+					url:"/pages/index/index"
+				})
+			}
 		}
 	}
 </script>

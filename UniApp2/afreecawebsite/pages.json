@@ -35,6 +35,13 @@
     "style": {
         "navigationBarTitleText": "详情"
     }
+},
+{
+	"path" : "pages/details/details",
+	"style" : 
+	{
+		"navigationBarTitleText" : ""
+	}
 }
 ],
 	"globalStyle": {
