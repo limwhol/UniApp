@@ -7,8 +7,8 @@
 			<view>《{{productObj.game_title}}》</view>
 			<view class="titlesub">类型：{{productObj.game_type}}</view>
 			<view class="fatherbigpic">
-				<view class="bigpic" v-for="(item,index) in 5" :key="index">
-					<img :src="productObj.game_imgUrl" alt="" />
+				<view class="bigpic">
+					<img src="https://env-00jxgwihfpse.normal.cloudstatic.cn/dushidatu.jpg" alt="" />
 				</view>
 			</view>
 
@@ -21,7 +21,7 @@
 							<img :src="find.platform_iconUrl" alt="find.platform_name" class="platformImg"
 								@click="goPlatform(find.platform_link)" />
 						</view>
-						<view class="rightbox">{{find.platform_name}}</view>
+						<view class="rightbox">{{find.platform_name}}平台下载</view>
 					</view>
 				</view>
 			</view>
@@ -117,19 +117,21 @@
 				.bigpic {
 					margin-right: 20px;
 					margin-top: 10px;
-					width: 200px;
+					width: 1200px;
+					height: auto;
 
 					img {
 						width: 100%;
 						height: 100%;
 						border-radius: 5px;
+						border: 1rpx solid #e2e2e2
 					}
 				}
 			}
 
 			.downloadpad {
 				margin-top: 40px;
-				width: 600px;
+				width: 900px;
 				height: 200px;
 				border-radius: 5px;
 				background-color: #fff;
@@ -138,6 +140,7 @@
 				flex-direction: column;
 				justify-content: center;
 				align-items: center;
+
 				.download {
 					font-size: 24px;
 					color: #474747;
@@ -150,7 +153,7 @@
 				.launchgame {
 					margin-top: 20px;
 					display: flex;
-					justify-content: center;
+					justify-content: space-around;
 					align-items: center;
 
 					.platform {
@@ -158,13 +161,16 @@
 						display: flex;
 						justify-content: space-around;
 						align-items: center;
-						background-color: #cefbff;
-						border-radius: 30px 0 0 30px;
+
+						color: #474747;
 
 						.leftbox {
-							margin-right: 10px;
-							width: 60px;
-							height: 60px;
+							margin-right: 4px;
+							width: 40px;
+							height: 40px;
+							display: flex;
+							justify-content: center;
+							align-items: center;
 
 							img {
 								width: 100%;
@@ -174,7 +180,7 @@
 
 						.rightbox {
 							font-size: 18px;
-							height: 30px;
+							// height: 30px;
 							margin-right: 10px;
 							display: flex;
 							justify-content: center;
