@@ -4,7 +4,7 @@
 			<img class="imgview" :src="item.game_imgUrl" alt="" />
 		</view>
 		<view class="downinfo">
-			<view class="gamename">《{{item.game_title}}》</view>
+			<view class="gamename">{{item.game_title}}</view>
 			<view class="gametype">{{item.game_type}}</view>
 			<view class="gamedes">{{item.game_description}}</view>
 			<!-- 			<view class="launchgame">
