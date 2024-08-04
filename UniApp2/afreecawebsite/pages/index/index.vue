@@ -1,5 +1,8 @@
 <template>
 	<view class="totalbox">
+		<view class="" @click="toAdmin">
+			toAdmin
+		</view>
 		<view class="out">
 			<top />
 		</view>
@@ -50,6 +53,11 @@
 			this.currentYear = new Date().getFullYear();
 		},
 		methods: {
+			toAdmin(){
+				uni.navigateTo({
+					url:"/pages/admin/admin"
+				})
+			},
 			async getData() {
 				let res
 				try{

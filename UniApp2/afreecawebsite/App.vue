@@ -12,7 +12,8 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
+	@import "@/static/fonts/iconfont.css";
 	page {
 		padding-top: 0;
 		/* 确保页面顶部没有内边距 */

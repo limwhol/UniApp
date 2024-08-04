@@ -3,9 +3,9 @@
 	"required": ["game_title", "game_description", "game_type", "game_imgUrl"],
 	"permission": {
 		"read": true,
-		"create": true,
-		"update": true,
-		"delete": true
+		"create": "auth.uid!=null",
+		"update": "auth.uid!=null",
+		"delete": "auth.uid!=null"
 	},
 	"properties": {
 		"_id": {
