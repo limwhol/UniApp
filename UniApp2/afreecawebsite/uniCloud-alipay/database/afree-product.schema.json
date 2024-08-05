@@ -32,6 +32,12 @@
 			"description": "如：放置挂机类",
 			"trim": "both"
 		},
+		"game_bigpicUrl": {
+			"bsonType": "string",
+			"title": "游戏详情页横图",
+			"description": "游戏详情页横图",
+			"trim": "both"
+		},
 		"game_description": {
 			"bsonType": "string",
 			"title": "游戏描述",

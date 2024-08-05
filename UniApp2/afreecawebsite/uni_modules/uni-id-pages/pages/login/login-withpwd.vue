@@ -1,8 +1,8 @@
 <!-- 账号密码登录页 -->
 <template>
 	<view class="uni-content">
-		<view class="login-logo">
-			<image :src="logo"></image>
+		<view class="dashboard">
+			<h2>阿飞卡游戏产品管理后台 CMS V0.0.1</h2>
 		</view>
 		<!-- 顶部文字 -->
 		<text class="title title-box">账号密码登录</text>
@@ -21,16 +21,16 @@
 		<uni-id-pages-agreements scope="login" ref="agreements"></uni-id-pages-agreements>
 		<button class="uni-btn" type="primary" @click="pwdLogin">登录</button>
 		<!-- 忘记密码 -->
-		<view class="link-box">
-			<view v-if="!config.isAdmin">
+		<!-- <view class="link-box"> -->
+		<!-- <view v-if="!config.isAdmin">
 				<text class="forget">忘记了？</text>
 				<text class="link" @click="toRetrievePwd">找回密码</text>
 			</view>
-			<text class="link" @click="toRegister">{{config.isAdmin ? '注册管理员账号': '注册账号'}}</text>
-			<!-- <text class="link" @click="toRegister" v-if="!config.isAdmin">注册账号</text> -->
-		</view>
+			<text class="link" @click="toRegister">{{config.isAdmin ? '注册管理员账号': '注册账号'}}</text> -->
+		<!-- <text class="link" @click="toRegister" v-if="!config.isAdmin">注册账号</text> -->
+		<!-- </view> -->
 		<!-- 悬浮登录方式组件 -->
-		<uni-id-pages-fab-login ref="uniFabLogin"></uni-id-pages-fab-login>
+		<!-- <uni-id-pages-fab-login ref="uniFabLogin"></uni-id-pages-fab-login> -->
 	</view>
 </template>
 
@@ -153,6 +153,18 @@
 	@media screen and (min-width: 690px) {
 		.uni-content {
 			height: auto;
+			.dashboard {
+				border-radius: 5px;
+				width: 100%;
+				justify-content: center;
+				display: flex;
+				align-items: center;
+				// background-color: #555;
+				// background: rgb(14, 93, 197);
+				padding: 20px;
+				color: #414141;
+				height: 200rpx;
+			}
 		}
 	}
 
@@ -161,14 +173,14 @@
 		color: #8a8f8b;
 	}
 
-	.link-box {
-		/* #ifndef APP-NVUE */
-		display: flex;
-		/* #endif */
-		flex-direction: row;
-		justify-content: space-between;
-		margin-top: 20px;
-	}
+	// .link-box {
+	// 	/* #ifndef APP-NVUE */
+	// 	display: flex;
+	// 	/* #endif */
+	// 	flex-direction: row;
+	// 	justify-content: space-between;
+	// 	margin-top: 20px;
+	// }
 
 	.link {
 		font-size: 12px;

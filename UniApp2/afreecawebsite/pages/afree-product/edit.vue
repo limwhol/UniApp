@@ -6,7 +6,7 @@
 		<view class=""
 			style="border-radius: 3px;padding: 5px;background-color: rgb(234, 246, 255);display: flex;justify-content: flex-start;align-items: center;margin-bottom: 10px;height: 24px;">
 			<view class="" style="width:3px;background-color: rgb(142, 187, 255);height: 20px;margin-right: 10px">
-		
+
 			</view>
 			<h5>修改产品基础信息</h5>
 		</view>
@@ -19,6 +19,9 @@
 			</uni-forms-item>
 			<uni-forms-item name="game_type" label="游戏类型" required>
 				<uni-easyinput placeholder="如：放置挂机类" v-model="formData.game_type" trim="both"></uni-easyinput>
+			</uni-forms-item>
+			<uni-forms-item name="game_bigpicUrl" label="游戏详情页横图">
+				<uni-easyinput placeholder="游戏详情页横图" v-model="formData.game_bigpicUrl" trim="both"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="game_description" label="游戏描述" required>
 				<uni-easyinput placeholder="如：这是一款以中世纪题材为背景的游戏，讲述的是亚瑟王和他的武士们打天下的故事。" v-model="formData.game_description"
@@ -62,6 +65,10 @@
 
 <script>
 	import {
+		store,
+		mutations
+	} from '@/uni_modules/uni-id-pages/common/store.js'
+	import {
 		validator
 	} from '../../js_sdk/validator/afree-product.js';
 
@@ -86,6 +93,7 @@
 				"publish_date": null,
 				"game_title": "",
 				"game_type": "",
+				"game_bigpicUrl": "",
 				"game_description": "",
 				"game_imgUrl": "",
 				"platforms": []
@@ -103,13 +111,27 @@
 				const id = e.id
 				this.formDataId = id
 				this.getDetail(id)
+				this.onLoginChecking()
 			}
 		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
+			onLoginChecking() {
+				if (!this.hasLogin) {
+					uni.showToast({
+						title: "还未登录，请登录！",
+						icon: "error"
+					})
+					setTimeout(res => {
+						uni.navigateTo({
+							url: "../../uni_modules/uni-id-pages/pages/login/login-withpwd"
+						})
+					}, 2000)
 
+				}
+			},
 			/**
 			 * 验证表单并提交
 			 */
@@ -153,33 +175,29 @@
 					mask: true
 				})
 				db.collection(dbCollectionName).doc(id).field(
-					"publish_date,game_title,game_type,game_description,game_imgUrl,platforms").get().then((res) => {
-					const data = res.result.data[0]
-					if (data) {
-						this.formData = data
+						"publish_date,game_title,game_type,game_bigpicUrl,game_description,game_imgUrl,platforms").get()
+					.then((res) => {
+						const data = res.result.data[0]
+						if (data) {
+							this.formData = data
 
-					}
-				}).catch((err) => {
-					uni.showModal({
-						content: err.message || '请求服务失败',
-						showCancel: false
+						}
+					}).catch((err) => {
+						uni.showModal({
+							content: err.message || '请求服务失败',
+							showCancel: false
+						})
+					}).finally(() => {
+						uni.hideLoading()
 					})
-				}).finally(() => {
-					uni.hideLoading()
-				})
 			}
 		}
 	}
 </script>
 
-<style lang="scss">
+<style>
 	.uni-container {
-		padding: 15px 600px;
-		.topout{
-			text-align: center;
-			padding: 10px;
-			border-bottom: 4px solid rgb(142, 187, 255);
-		}
+		padding: 15px;
 	}
 
 	.uni-input-border,

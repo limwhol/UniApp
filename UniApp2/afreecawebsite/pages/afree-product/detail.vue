@@ -6,8 +6,8 @@
 		<view class="main">
 			<unicloud-db class="mainblock" ref="udb" v-slot:default="{data, loading, error, options}" :options="options"
 				:collection="collectionList"
-				field="publish_date,game_title,game_type,game_description,game_imgUrl,platforms" :where="queryWhere"
-				:getone="true" :manual="true">
+				field="publish_date,game_title,game_type,game_bigpicUrl,game_description,game_imgUrl,platforms"
+				:where="queryWhere" :getone="true" :manual="true">
 				<view v-if="error">{{error.message}}</view>
 				<view v-else-if="loading">
 					<uni-load-more :contentText="loadMore" status="loading"></uni-load-more>
@@ -29,9 +29,13 @@
 						<text>游戏描述：</text>
 						<text>{{data.game_description}}</text>
 					</view>
-					<view class="item">
+					<view class="item" style="margin-bottom:15px;display: flex;align-items: center;">
 						<text>游戏大图地址：</text>
-						<text>{{data.game_imgUrl}}</text>
+						<img style="width: 150px;height: 200px;" :src="data.game_imgUrl" alt="item.game_title" />
+					</view>
+					<view class="item" style="margin-bottom:15px;display: flex;align-items: center;">
+						<text>游戏详情页横图地址：</text>
+						<img style="width: 400px;height: 300px;" :src="data.game_bigpicUrl" alt="item.game_title" />
 					</view>
 					<view class="item">
 						<view class="subitem" style="font-weight: bold;margin-top: 10px;">
@@ -41,9 +45,10 @@
 							style="margin-bottom:14px;border-bottom: 1px dashed #e5e5e5;">
 							<view style="margin-bottom:4px;">平台名称：{{item.platform_name}}</view>
 							<view style="margin-bottom:4px;">平台连接：{{item.platform_link}}</view>
-							<view style="margin-bottom:4px;">平台ICON地址：{{item.platform_iconUrl}}</view>
+							<view style="margin-bottom:4px;display: flex;align-items: center;">平台ICON地址：<img
+									style="width: 30px;height: 30px;" :src="item.platform_iconUrl"
+									alt="item.game_title" /> {{item.platform_iconUrl}}</view>
 						</view>
-
 					</view>
 				</view>
 			</unicloud-db>
@@ -68,6 +73,7 @@
 	const db = uniCloud.database()
 
 	export default {
+
 		data() {
 			return {
 				queryWhere: '',
@@ -178,6 +184,7 @@
 				.mainbox {
 					.item {
 						line-height: 1.8;
+						
 					}
 				}
 			}

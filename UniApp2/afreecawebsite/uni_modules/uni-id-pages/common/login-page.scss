@@ -33,8 +33,9 @@
 	padding: 30px 40px 80px 40px;
 	max-width: 450px;
 	max-height: 450px;
-	border-radius: 10px;
-	box-shadow: 0 0 20px #efefef;
+	border-radius: 5px;
+	border: 1px solid #efefef;
+	// box-shadow: 0 0 20px #efefef;
 	background-color: #FFF;
 	/* #endif */
   }
@@ -72,7 +73,8 @@
   display: flex;
   /* #endif */
   padding: 18px 0;
-  font-weight: 800;
+  color: #868688;
+  font-weight: 400;
   flex-direction: column;
 }
 
@@ -119,6 +121,7 @@
 	color: #FFF !important;
 	border-radius: 5px;
 	font-size: 16px;
+	
 }
 
 .uni-body.uni_modules-uni-id-pages-pages-login-login-withoutpwd{

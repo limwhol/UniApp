@@ -5,16 +5,16 @@
 		</view>
 		<view class="rightcontainer">
 			<view class="navBtn">
-				<view class="maintitle">产品列表</view>
-				<view class="subtitle">Products List</view>
+				<view class="maintitle" @click="tolatestproduct">最新产品</view>
+				<view class="subtitle">products latest</view>
 			</view>
 			<view class="navBtn">
 				<view class="maintitle">商务合作</view>
-				<view class="subtitle">Business</view>
+				<view class="subtitle">business</view>
 			</view>
 			<view class="navBtn">
 				<view class="maintitle">关于我们</view>
-				<view class="subtitle">About Us</view>
+				<view class="subtitle">about</view>
 			</view>
 		</view>
 	</view>
@@ -33,7 +33,12 @@
 				uni.navigateTo({
 					url:"/pages/index/index"
 				})
-			}
+			},
+			tolatestproduct(){
+				uni.navigateTo({
+				    url: "/pages/index/index?scrollTo=latestproduct"
+				});
+			},
 		}
 	}
 </script>
@@ -61,9 +66,10 @@
 						justify-content: center;
 						align-items: center;
 						margin-left: 20px;
+						padding: 4px 10px;
 						/* background-color: #c52121; */
-						width: 80px;
-						height: 40px;
+						width: auto;
+						height: auto;
 
 						.maintitle {
 							display: flex;
@@ -78,13 +84,13 @@
 							display: flex;
 							justify-content: center;
 							align-items: center;
-							font-size: 10px;
+							font-size: 12px;
 							color: #9ebef5d2;
 							/* background-color: #32c018; */
 						}
 
-						&:first-child {
-							border-bottom: 1px solid #ffffff;
+						&:hover {
+							border-bottom: 2px solid #dee7f5d2;
 						}
 
 						/* background-color: #858585; */

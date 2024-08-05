@@ -1,7 +1,7 @@
 <template>
 	<view class="subbox" @click="toDetails(item._id)">
 		<view class="uppic">
-			<img class="imgview" :src="item.game_imgUrl" alt="" />
+			<image class="imgview" :src="item.game_imgUrl" alt="" mode="aspectFill" />
 		</view>
 		<view class="downinfo">
 			<view class="gamename">{{item.game_title}}</view>
@@ -62,7 +62,7 @@
 				width: 100%;
 				height: 100%;
 				border-radius: 5px;
-				border: 1rpx solid #e2e2e2
+				border: 1rpx solid #cfcfcf
 			}
 		}
 

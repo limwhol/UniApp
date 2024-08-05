@@ -11,25 +11,26 @@
 		</view>
 		<view class="main">
 			<uni-forms ref="form" :model="formData" validate-trigger="submit" err-show-type="toast">
-
+				<uni-forms-item name="publish_date" label="游戏产品注册时间">
+					<uni-datetime-picker return-type="timestamp" v-model="formData.publish_date"></uni-datetime-picker>
+				</uni-forms-item>
 				<uni-forms-item name="game_title" label="游戏名" required>
 					<uni-easyinput placeholder="如：暗黑破坏神" v-model="formData.game_title" trim="both"></uni-easyinput>
 				</uni-forms-item>
 				<uni-forms-item name="game_type" label="游戏类型" required>
 					<uni-easyinput placeholder="如：放置挂机类" v-model="formData.game_type" trim="both"></uni-easyinput>
 				</uni-forms-item>
+				<uni-forms-item name="game_bigpicUrl" label="游戏详情页横图">
+					<uni-easyinput placeholder="游戏详情页横图" v-model="formData.game_bigpicUrl" trim="both"></uni-easyinput>
+				</uni-forms-item>
 				<uni-forms-item name="game_description" label="游戏描述" required>
 					<uni-easyinput placeholder="如：这是一款以中世纪题材为背景的游戏，讲述的是亚瑟王和他的武士们打天下的故事。"
 						v-model="formData.game_description" trim="right"></uni-easyinput>
 				</uni-forms-item>
 				<uni-forms-item name="game_imgUrl" label="游戏大图地址" required>
-					<uni-easyinput placeholder="游戏产品在首页的展示大图,300x400像素" v-model="formData.game_imgUrl"
+					<uni-easyinput placeholder="游戏产品在首页的展示大图" v-model="formData.game_imgUrl"
 						trim="both"></uni-easyinput>
 				</uni-forms-item>
-				<uni-forms-item name="publish_date" label="游戏产品注册时间">
-					<uni-datetime-picker return-type="timestamp" v-model="formData.publish_date"></uni-datetime-picker>
-				</uni-forms-item>
-
 				<!-- 平台信息列表 -->
 				<view v-for="(platform, index) in formData.platforms" :key="index">
 					<view class=""
@@ -67,12 +68,13 @@
 
 <script>
 	import {
-		validator
-	} from '../../js_sdk/validator/afree-product.js';
-	import {
 		store,
 		mutations
 	} from '@/uni_modules/uni-id-pages/common/store.js'
+	import {
+		validator
+	} from '../../js_sdk/validator/afree-product.js';
+
 	const db = uniCloud.database();
 	const dbCollectionName = 'afree-product';
 
@@ -94,13 +96,10 @@
 				"publish_date": null,
 				"game_title": "",
 				"game_type": "",
+				"game_bigpicUrl": "",
 				"game_description": "",
 				"game_imgUrl": "",
-				"platforms": [{
-					"platform_name": "",
-					"platform_iconUrl": "",
-					"platform_link": ""
-				}]
+				"platforms": []
 			}
 			return {
 				formData,
@@ -155,7 +154,6 @@
 					mask: true
 				})
 				this.$refs.form.validate().then((res) => {
-					console.log(res);
 					return this.submitForm(res)
 				}).catch(() => {}).finally(() => {
 					uni.hideLoading()
@@ -173,7 +171,7 @@
 						title: '新增成功'
 					})
 					this.getOpenerEventChannel().emit('refreshData')
-					setTimeout(() => uni.navigateBack(), 1000)
+					setTimeout(() => uni.navigateBack(), 500)
 				}).catch((err) => {
 					uni.showModal({
 						content: err.message || '请求服务失败',

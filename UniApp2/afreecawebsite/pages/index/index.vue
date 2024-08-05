@@ -6,7 +6,7 @@
 		<view class="out">
 			<top />
 		</view>
-		<view class="title">
+		<view class="title" id="latestproduct">
 			<view>AFREECA GAMES` LATEST</view>
 			<view class="titlesub">最新发布的游戏</view>
 		</view>
@@ -17,7 +17,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="title">
+		<view class="title" id="businesscooperations">
 			<view>BUSINESS COOPERATIONS</view>
 			<view class="titlesub">商务合作洽谈</view>
 		</view>
@@ -26,7 +26,7 @@
 				<business-item></business-item>
 			</view>
 		</view>
-		<view class="title">
+		<view class="title" id="aboutus">
 			<view>ABOUT US</view>
 			<view class="titlesub">关于我们团队</view>
 		</view>
@@ -48,23 +48,34 @@
 				currentYear: null
 			}
 		},
-		onLoad() {
+		onLoad(e) {
 			this.getData()
 			this.currentYear = new Date().getFullYear();
+			this.latestproductAnchor(e)
 		},
 		methods: {
-			toAdmin(){
+			latestproductAnchor(options) {
+				if (options.scrollTo) {
+					uni.pageScrollTo({
+						selector: '#' + options.scrollTo,
+						duration: 300
+					});
+				}
+			},
+			toAdmin() {
 				uni.navigateTo({
-					url:"/pages/admin/admin"
+					url: "/pages/admin/admin"
 				})
 			},
 			async getData() {
 				let res
-				try{
-					res=await db.collection("afree-product").field("game_description,game_imgUrl,game_title,game_type,publish_date").orderBy("publish_date desc").get()
-					this.newsArr=res.result.data
+				try {
+					res = await db.collection("afree-product").field(
+						"game_description,game_imgUrl,game_title,game_type,publish_date").orderBy(
+						"publish_date desc").get()
+					this.newsArr = res.result.data
 					console.log(res);
-				}catch(error){
+				} catch (error) {
 					console.log("Database query failed:", error);
 				}
 			}
@@ -82,7 +93,7 @@
 			background-color: rgb(14, 93, 197);
 			color: #fff;
 
-			
+
 		}
 
 		.title {

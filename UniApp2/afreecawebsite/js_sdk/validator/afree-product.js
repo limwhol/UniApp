@@ -38,6 +38,15 @@ const validator = {
     "title": "游戏类型",
     "label": "游戏类型"
   },
+  "game_bigpicUrl": {
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "title": "游戏详情页横图",
+    "label": "游戏详情页横图"
+  },
   "game_description": {
     "rules": [
       {

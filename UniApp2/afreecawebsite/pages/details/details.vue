@@ -6,7 +6,7 @@
 		<view class="title">
 			<view class="fatherbigpic">
 				<view class="bigpic">
-					<img src="https://env-00jxgwihfpse.normal.cloudstatic.cn/dushidatu.jpg" alt="" />
+					<img :src="productObj.game_bigpicUrl" alt="" />
 				</view>
 			</view>
 			<view class="maintitle">{{productObj.game_title}}</view>
