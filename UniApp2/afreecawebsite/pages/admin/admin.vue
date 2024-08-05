@@ -89,9 +89,6 @@
 						})
 					}, 2000)
 
-				} else {
-					let res = await db.collection("uni-id-users").get()
-					console.log(res);
 				}
 			},
 			// showUserData() {
