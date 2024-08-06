@@ -78,6 +78,8 @@
 				})
 			},
 			async getUserInfo() {
+				console.log(this.hasLogin+"ADMIN");
+				console.log(this.userInfo);
 				if (!this.hasLogin) {
 					uni.showToast({
 						title: "还未登录，请登录！",

@@ -109,6 +109,7 @@
 		},
 		methods: {
 			onLoginChecking() {
+				console.log(this.hasLogin+"DETAIL");
 				if (!this.hasLogin) {
 					uni.showToast({
 						title: "还未登录，请登录！",

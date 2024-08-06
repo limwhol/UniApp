@@ -74,7 +74,7 @@
 						"game_description,game_imgUrl,game_title,game_type,publish_date").orderBy(
 						"publish_date desc").get()
 					this.newsArr = res.result.data
-					console.log(res);
+					// console.log(res);
 				} catch (error) {
 					console.log("Database query failed:", error);
 				}

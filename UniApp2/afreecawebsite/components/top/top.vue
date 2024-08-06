@@ -36,7 +36,7 @@
 			},
 			tolatestproduct(){
 				uni.navigateTo({
-				    url: "/pages/index/index?scrollTo=latestproduct"
+				    url: "#aboutus"
 				});
 			},
 		}

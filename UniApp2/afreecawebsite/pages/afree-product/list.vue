@@ -74,6 +74,9 @@
 		onReachBottom() {
 			this.$refs.udb.loadMore()
 		},
+		onLoad() {
+			this.onLoginChecking()
+		},
 		methods: {
 			handleItemClick(id) {
 				uni.navigateTo({
@@ -81,6 +84,7 @@
 				})
 			},
 			onLoginChecking() {
+				console.log(this.hasLogin+"LIST");
 				if (!this.hasLogin) {
 					uni.showToast({
 						title: "还未登录，请登录！",

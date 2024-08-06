@@ -1,65 +1,68 @@
 <template>
 	<view class="uni-container">
-		<view class="topout" style="margin: 50px;">
+		<view class="topout">
 			<h1>阿飞卡游戏产品管理后台 CMS V0.0.1</h1>
 		</view>
-		<view class=""
-			style="border-radius: 3px;padding: 5px;background-color: rgb(234, 246, 255);display: flex;justify-content: flex-start;align-items: center;margin-bottom: 10px;height: 24px;">
-			<view class="" style="width:3px;background-color: rgb(142, 187, 255);height: 20px;margin-right: 10px">
-
-			</view>
-			<h5>修改产品基础信息</h5>
-		</view>
-		<uni-forms ref="form" :model="formData" validate-trigger="submit" err-show-type="toast">
-			<uni-forms-item name="publish_date" label="游戏产品注册时间">
-				<uni-datetime-picker return-type="timestamp" v-model="formData.publish_date"></uni-datetime-picker>
-			</uni-forms-item>
-			<uni-forms-item name="game_title" label="游戏名" required>
-				<uni-easyinput placeholder="如：暗黑破坏神" v-model="formData.game_title" trim="both"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="game_type" label="游戏类型" required>
-				<uni-easyinput placeholder="如：放置挂机类" v-model="formData.game_type" trim="both"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="game_bigpicUrl" label="游戏详情页横图">
-				<uni-easyinput placeholder="游戏详情页横图" v-model="formData.game_bigpicUrl" trim="both"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="game_description" label="游戏描述" required>
-				<uni-easyinput placeholder="如：这是一款以中世纪题材为背景的游戏，讲述的是亚瑟王和他的武士们打天下的故事。" v-model="formData.game_description"
-					trim="right"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="game_imgUrl" label="游戏大图地址" required>
-				<uni-easyinput placeholder="游戏产品在首页的展示大图" v-model="formData.game_imgUrl" trim="both"></uni-easyinput>
-			</uni-forms-item>
-			<!-- 平台信息列表 -->
-			<view v-for="(platform, index) in formData.platforms" :key="index">
-				<view class=""
-					style="border-radius: 3px;padding: 5px;background-color: rgb(234, 246, 255);display: flex;justify-content: flex-start;align-items: center;margin-bottom: 10px;height: 24px;">
-					<view class=""
-						style="width:3px;background-color: rgb(142, 187, 255);height: 20px;margin-right: 10px">
-
-					</view>
-					<h5>修改第{{index+1}}个平台</h5>
+		<view class="main">
+			<view class=""
+				style="border-radius: 3px;padding: 5px;background-color: rgb(234, 246, 255);display: flex;justify-content: flex-start;align-items: center;margin-bottom: 10px;height: 24px;">
+				<view class="" style="width:3px;background-color: rgb(142, 187, 255);height: 20px;margin-right: 10px">
+			
 				</view>
-				<uni-forms-item :name="'platforms.' + index + '.platform_name'" label="平台名称">
-					<uni-easyinput placeholder="如：抖音平台" v-model="formData.platforms[index].platform_name"
-						trim="both"></uni-easyinput>
-				</uni-forms-item>
-				<uni-forms-item :name="'platforms.' + index + '.platform_iconUrl'" label="平台ICON">
-					<uni-easyinput placeholder="如:http://xx.com/douyin.png"
-						v-model="formData.platforms[index].platform_iconUrl" trim="both"></uni-easyinput>
-				</uni-forms-item>
-				<uni-forms-item :name="'platforms.' + index + '.platform_link'" label="跳转链接">
-					<uni-easyinput placeholder="如:www.douyin.com" v-model="formData.platforms[index].platform_link"
-						trim="both"></uni-easyinput>
-				</uni-forms-item>
+				<h5>修改产品基础信息</h5>
 			</view>
+			<uni-forms ref="form" :model="formData" validate-trigger="submit" err-show-type="toast">
+				<uni-forms-item name="publish_date" label="游戏产品注册时间">
+					<uni-datetime-picker return-type="timestamp" v-model="formData.publish_date"></uni-datetime-picker>
+				</uni-forms-item>
+				<uni-forms-item name="game_title" label="游戏名" required>
+					<uni-easyinput placeholder="如：暗黑破坏神" v-model="formData.game_title" trim="both"></uni-easyinput>
+				</uni-forms-item>
+				<uni-forms-item name="game_type" label="游戏类型" required>
+					<uni-easyinput placeholder="如：放置挂机类" v-model="formData.game_type" trim="both"></uni-easyinput>
+				</uni-forms-item>
+				<uni-forms-item name="game_bigpicUrl" label="游戏详情页横图">
+					<uni-easyinput placeholder="游戏详情页横图" v-model="formData.game_bigpicUrl" trim="both"></uni-easyinput>
+				</uni-forms-item>
+				<uni-forms-item name="game_description" label="游戏描述" required>
+					<uni-easyinput placeholder="如：这是一款以中世纪题材为背景的游戏，讲述的是亚瑟王和他的武士们打天下的故事。" v-model="formData.game_description"
+						trim="right"></uni-easyinput>
+				</uni-forms-item>
+				<uni-forms-item name="game_imgUrl" label="游戏大图地址" required>
+					<uni-easyinput placeholder="游戏产品在首页的展示大图" v-model="formData.game_imgUrl" trim="both"></uni-easyinput>
+				</uni-forms-item>
+				<!-- 平台信息列表 -->
+				<view v-for="(platform, index) in formData.platforms" :key="index">
+					<view class=""
+						style="border-radius: 3px;padding: 5px;background-color: rgb(234, 246, 255);display: flex;justify-content: flex-start;align-items: center;margin-bottom: 10px;height: 24px;">
+						<view class=""
+							style="width:3px;background-color: rgb(142, 187, 255);height: 20px;margin-right: 10px">
+			
+						</view>
+						<h5>修改第{{index+1}}个平台</h5>
+					</view>
+					<uni-forms-item :name="'platforms.' + index + '.platform_name'" label="平台名称">
+						<uni-easyinput placeholder="如：抖音平台" v-model="formData.platforms[index].platform_name"
+							trim="both"></uni-easyinput>
+					</uni-forms-item>
+					<uni-forms-item :name="'platforms.' + index + '.platform_iconUrl'" label="平台ICON">
+						<uni-easyinput placeholder="如:http://xx.com/douyin.png"
+							v-model="formData.platforms[index].platform_iconUrl" trim="both"></uni-easyinput>
+					</uni-forms-item>
+					<uni-forms-item :name="'platforms.' + index + '.platform_link'" label="跳转链接">
+						<uni-easyinput placeholder="如:www.douyin.com" v-model="formData.platforms[index].platform_link"
+							trim="both"></uni-easyinput>
+					</uni-forms-item>
+				</view>
+			
+				<!-- 添加平台信息按钮 -->
+				<button type="default" class="uni-button" @click="addPlatform">+ 添加平台</button>
+				<view class="uni-button-group">
+					<button type="primary" class="uni-button" @click="submit">提交</button>
+				</view>
+			</uni-forms>
+		</view>
 
-			<!-- 添加平台信息按钮 -->
-			<button type="default" class="uni-button" @click="addPlatform">+ 添加平台</button>
-			<view class="uni-button-group">
-				<button type="primary" class="uni-button" @click="submit">提交</button>
-			</view>
-		</uni-forms>
 	</view>
 </template>
 
@@ -111,14 +114,25 @@
 				const id = e.id
 				this.formDataId = id
 				this.getDetail(id)
-				this.onLoginChecking()
+				
 			}
+			this.onLoginChecking()
 		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)
 		},
+		computed: {
+			userInfo() {
+				return store.userInfo
+			},
+			hasLogin() {
+				return store.hasLogin
+			}
+		
+		},
 		methods: {
 			onLoginChecking() {
+				console.log(this.hasLogin+"EDIT");
 				if (!this.hasLogin) {
 					uni.showToast({
 						title: "还未登录，请登录！",
@@ -136,14 +150,9 @@
 			 * 验证表单并提交
 			 */
 			submit() {
-				uni.showLoading({
-					mask: true
-				})
 				this.$refs.form.validate().then((res) => {
 					return this.submitForm(res)
-				}).catch(() => {}).finally(() => {
-					uni.hideLoading()
-				})
+				}).catch(() => {})
 			},
 
 			/**
@@ -171,9 +180,6 @@
 			 * @param {Object} id
 			 */
 			getDetail(id) {
-				uni.showLoading({
-					mask: true
-				})
 				db.collection(dbCollectionName).doc(id).field(
 						"publish_date,game_title,game_type,game_bigpicUrl,game_description,game_imgUrl,platforms").get()
 					.then((res) => {
@@ -187,17 +193,29 @@
 							content: err.message || '请求服务失败',
 							showCancel: false
 						})
-					}).finally(() => {
-						uni.hideLoading()
 					})
 			}
 		}
 	}
 </script>
 
-<style>
+<style lang="scss">
 	.uni-container {
-		padding: 15px;
+		.topout {
+			width: 100%;
+			text-align: center;
+			// background-color: #555;
+			background: rgb(14, 93, 197);
+			margin-bottom: 20px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: #efefef;
+			height: 300rpx;
+		}
+		.main{
+			padding: 5px 600px;
+		}
 	}
 
 	.uni-input-border,

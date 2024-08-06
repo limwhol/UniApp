@@ -33,6 +33,12 @@
 			}
 		},
 		{
+			"path": "pages/afree-product/test",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
 			"path": "pages/details/details",
 			"style": {
 				"navigationBarTitleText": ""
@@ -124,10 +130,9 @@
 			}
 		},
 		{
-			"path" : "pages/admin/admin",
-			"style" : 
-			{
-				"navigationBarTitleText" : "产品管理中心"
+			"path": "pages/admin/admin",
+			"style": {
+				"navigationBarTitleText": "产品管理中心"
 			}
 		}
 	],
