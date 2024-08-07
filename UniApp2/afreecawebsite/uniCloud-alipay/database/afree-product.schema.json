@@ -1,6 +1,6 @@
 {
 	"bsonType": "object",
-	"required": ["game_title", "game_description", "game_type", "game_imgUrl"],
+	"required": ["game_title", "game_bigpicUrl","game_description", "game_type", "game_imgUrl"],
 	"permission": {
 		"read": true,
 		"create": "auth.uid!=null",
