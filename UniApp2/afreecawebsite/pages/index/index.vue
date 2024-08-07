@@ -88,7 +88,7 @@
 			</view>
 		</view>
 		<view class="endbox">
-			<enditem :currentYear="currentYear"></enditem>
+			<enditem></enditem>
 		</view>
 
 	</view>
@@ -105,18 +105,8 @@
 		},
 		onLoad(e) {
 			this.getData()
-			this.currentYear = new Date().getFullYear();
-			this.latestproductAnchor(e)
 		},
 		methods: {
-			latestproductAnchor(options) {
-				if (options.scrollTo) {
-					uni.pageScrollTo({
-						selector: '#' + options.scrollTo,
-						duration: 300
-					});
-				}
-			},
 			toAdmin() {
 				uni.navigateTo({
 					url: "/pages/admin/admin"

@@ -9,13 +9,11 @@
 		name: "enditem",
 		data() {
 			return {
+				currentYear:null
 			};
 		},
-		props: {
-			currentYear: {
-				type: Number,
-				default:null
-			}
+		mounted() {
+			this.currentYear = new Date().getFullYear();
 		}
 	}
 </script>

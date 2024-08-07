@@ -134,15 +134,15 @@
 				})
 			},
 			/* 前往注册 */
-			toRegister() {
-				uni.navigateTo({
-					url: this.config.isAdmin ? '/uni_modules/uni-id-pages/pages/register/register-admin' :
-						'/uni_modules/uni-id-pages/pages/register/register',
-					fail(e) {
-						console.error(e);
-					}
-				})
-			}
+			// toRegister() {
+			// 	uni.navigateTo({
+			// 		url: this.config.isAdmin ? '/uni_modules/uni-id-pages/pages/register/register-admin' :
+			// 			'/uni_modules/uni-id-pages/pages/register/register',
+			// 		fail(e) {
+			// 			console.error(e);
+			// 		}
+			// 	})
+			// }
 		}
 	}
 </script>

@@ -142,5 +142,11 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	"uniIdRouter": {}
+	"uniIdRouter": {
+		"loginPage": "uni_modules/uni-id-pages/pages/login/login-withpwd", // 登录页面路径
+		"needLogin": [
+			"pages/edit/edit"
+		],
+		"resToLogin": true
+	}
 }
