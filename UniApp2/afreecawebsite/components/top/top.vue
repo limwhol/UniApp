@@ -67,9 +67,10 @@
 						align-items: center;
 						margin-left: 20px;
 						padding: 4px 10px;
-						/* background-color: #c52121; */
+						background-color: rgb(14, 93, 197);
 						width: auto;
 						height: auto;
+						transition: background-color 0.4s;
 
 						.maintitle {
 							display: flex;
@@ -85,12 +86,13 @@
 							justify-content: center;
 							align-items: center;
 							font-size: 12px;
-							color: #9ebef5d2;
+							opacity: 0.5;
 							/* background-color: #32c018; */
 						}
 
 						&:hover {
 							border-bottom: 2px solid #dee7f5d2;
+							background-color: rgb(5, 42, 91);
 						}
 
 						/* background-color: #858585; */
