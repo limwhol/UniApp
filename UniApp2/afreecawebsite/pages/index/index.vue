@@ -33,60 +33,6 @@
 		<view class="aboutus">
 			<aboutus></aboutus>
 		</view>
-		<view class="relativebox">
-			<view class="introtext">
-				<h3 style="color: beige;">About Afreeca Game Studio</h3>
-
-				<p>Founded with a passion for immersive storytelling and innovative gameplay, Afreeca Game Studio is
-					dedicated to creating unforgettable gaming experiences. Our team is a diverse collective of
-					visionary
-					developers, artists, and storytellers who are united by a shared love for gaming. At Afreeca, we
-					believe
-					in pushing the boundaries of creativity and technology to craft games that not only entertain but
-					also
-					inspire and resonate with players around the world.</p>
-				</br>
-
-				<h3 style="color: beige;">Our Vision</h3>
-
-				<p>At Afreeca, we envision a world where games transcend traditional boundaries, merging art and
-					technology
-					to create deeply engaging experiences. We aim to produce games that captivate the imagination,
-					challenge
-					the intellect, and evoke emotions, offering players not just entertainment, but a journey they will
-					cherish.</p>
-				</br>
-				<h3 style="color: beige;">Our Mission</h3>
-
-				<p>Our mission is to develop games that leave a lasting impact. By blending innovative gameplay
-					mechanics
-					with compelling narratives, we strive to create worlds where players can lose themselves, exploring
-					new
-					dimensions of fun, strategy, and storytelling. We are committed to quality, creativity, and the
-					relentless pursuit of excellence in every project we undertake.</p>
-				</br>
-				<h3 style="color: beige;">Our Games</h3>
-
-				<p>From epic adventures to thought-provoking puzzles, Afreeca Game Studio’s portfolio reflects our
-					commitment
-					to diversity in gaming. Whether you are a casual player or a hardcore enthusiast, our games are
-					designed
-					to offer something unique for everyone. Each title is crafted with care, ensuring a rich, immersive
-					experience that stays with you long after the game is over.</p>
-				</br>
-				<h3 style="color: beige;">Join Us on Our Journey</h3>
-
-				<p>As we continue to grow and evolve, we invite players, collaborators, and partners to join us on our
-					journey. At Afreeca, we are not just creating games—we are building a community of dreamers,
-					creators,
-					and gamers who share our passion for the extraordinary. Together, we can shape the future of gaming.
-				</p>
-			</view>
-
-			<view class="absolutebox">
-				1
-			</view>
-		</view>
 		<view class="endbox">
 			<enditem></enditem>
 		</view>
@@ -217,47 +163,6 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-		}
-
-		.relativebox {
-			position: relative;
-			padding: 50px;
-			background-color: #292828;
-			height: auto;
-			color: #858585;
-			width: 1000px;
-			text-align: left;
-			z-index: 10;
-			margin: 50px;
-			border-radius: 5px;
-			line-height: 1.8;
-
-			p {
-				text-indent: 2em;
-			}
-
-
-			.absolutebox {
-				border-radius: 50%;
-				// display: flex;
-				// justify-content: center;
-				// align-items: center;
-				text-align: center;
-				position: absolute;
-				color: #fff;
-				font-weight: bold;
-				width: 60px;
-				height: 60px;
-				background-color: red;
-				top: -35px;
-				right: -35px;
-				z-index: 12;
-				font-size: 30px;
-				border: 4px solid #fff;
-				text-align: center;
-				/* 确保文本水平居中 */
-				line-height: 60px;
-			}
 		}
 	}
 </style>

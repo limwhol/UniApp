@@ -130,6 +130,7 @@
 				this.editorCtx.format("italic")
 				this.headshow = false
 			},
+			//上传图片
 			insertImage() {
 				uni.chooseImage({
 					success: async res => {
