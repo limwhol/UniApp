@@ -1,0 +1,54 @@
+@import '@/uni_modules/uview-ui/theme.scss';
+
+$brand-theme-color:#ec544f;
+$brand-theme-color-aux:#576b95;
+$page-bg-color:#f7f7f7;
+$border-color:#e0e0e0;
+$border-color-light:#efefef;
+$text-font-color-1:#000;
+$text-font-color-2:#676767;
+$text-font-color-3:#a7a7a7;
+
+@mixin flex-box{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+@mixin flex-box-set($jc:center,$ai:center){
+	@include flex-box();
+	@if($jc==center){
+		justify-content:center;
+	}
+	@if($jc==start){
+		justify-content:flex-start;
+	}
+	@if($jc==end){
+		justify-content:flex-end;
+	}
+	@if($jc==between){
+		justify-content:space-between;
+	}
+	@if($jc==around){
+		justify-content:space-around;
+	}
+	@if($ai==center){
+		align-items: center;
+	}
+	@if($ai==start){
+		align-items: flex-start;
+	}
+	@if($ai==end){
+		align-items: flex-end;
+	}
+}
+
+@mixin ellipsis($row:1){
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: $row;
+	line-clamp: $row;
+	-webkit-box-orient: vertical;
+}
